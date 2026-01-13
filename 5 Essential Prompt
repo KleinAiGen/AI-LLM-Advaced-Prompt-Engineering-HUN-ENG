@@ -1,0 +1,147 @@
+5 Essential Prompts for the Advanced Prompt Engineer
+
+Ahhoz, hogy valaki sikeres prompt mérnökké váljon, nem elég ismerni az elméletet, hanem képesnek kell lennie a gyakorlatban is alkalmazni a technikákat. A fejlett prompt mérnöki tudás a Chain-of-Thought (CoT) prompting erejének kihasználásával emeli a nagy nyelvi modellek (LLM-ek) teljesítményét. Az alábbiakban 5 alapvető promptot mutatunk be, amelyek a CoT prompting különböző aspektusait használják ki, segítve a komplex problémák megoldását, a logikai érvelés fejlesztését és a modell válaszainak minőségének javítását.
+1. Zero-Shot CoT Prompting: "Gondolkodjunk lépésről lépésre"
+
+A Zero-Shot CoT prompting az egyik legegyszerűbb, mégis rendkívül hatékony technika, amely nem igényel előzetes példákat a modell képzéséhez. Pusztán egy egyszerű kiegészítéssel a prompt végén arra ösztönözzük a modellt, hogy elemezze a problémát, és mutassa be a megoldás felé vezető gondolatmenetét. Ezáltal a modell képes felbontani a komplex feladatokat kisebb, kezelhetőbb lépésekre, jelentősen növelve a helyes válaszok arányát még összetett logikai vagy aritmetikai feladatok esetén is.
+
+Alkalmazás és Előnyök:
+
+    Komplex Problémamegoldás: Ideális összetett matematikai feladatok, logikai rejtvények vagy többlépcsős döntéshozatali szituációk esetében.
+    Átláthatóság: A modell válasza nem csak a végeredményt adja meg, hanem a gondolkodás folyamatát is, ami segít a hibák felderítésében és a modell működésének megértésében.
+    Hatékonyság: Nem igényel adatgyűjtést vagy példákat a képzéshez, így gyorsan alkalmazható.
+
+Példa:
+javascript
+
+Kérdés: Egy boltban 5 kg alma 1200 Ft-ba kerül. Mennyibe kerül 3 kg alma? Gondolkodjunk lépésről lépésre.
+
+Várható Modell Válasz (részlet):
+javascript
+
+Ahhoz, hogy kiszámoljuk, mennyibe kerül 3 kg alma, először meg kell határoznunk 1 kg alma árát.
+1.  5 kg alma ára = 1200 Ft.
+2.  1 kg alma ára = 1200 Ft / 5 kg = 240 Ft/kg.
+3.  Ezután kiszámolhatjuk 3 kg alma árát: 3 kg * 240 Ft/kg = 720 Ft.
+Tehát, 3 kg alma 720 Ft-ba kerül.
+
+2. Few-Shot CoT Prompting: Irányított Példák a Precízióért
+
+A Few-Shot CoT prompting a Zero-Shot CoT kiterjesztése, ahol konkrét példákat adunk a modellnek, amelyek illusztrálják a kívánt gondolatmenetet és a megoldási stratégiát. Ez a technika különösen akkor hasznos, ha a modellnek speciális formátumot kell követnie, vagy ha a feladat természete miatt a zero-shot megközelítés önmagában nem elegendő a kívánt pontosság eléréséhez. A példák bemutatják, hogyan bontsa le a modellt a problémát, milyen lépéseket tegyen, és milyen módon fogalmazza meg a végeredményt.
+
+Alkalmazás és Előnyök:
+
+    Fokozott Pontosság: A példák segítenek a modellnek jobban megérteni a feladat árnyalatait és a specifikus követelményeket.
+    Formátum Betartása: Ideális, ha a válasznak meghatározott struktúrával vagy lépéssorrenddel kell rendelkeznie.
+    Komplex és Nuanszált Feladatok: Jól működik olyan esetekben, ahol a nyelvi árnyalatok vagy a kontextus különösen fontos.
+
+Példa:
+javascript
+
+Kérdés: Egy könyv ára 2500 Ft. Egy másik könyv ára 30%-kal olcsóbb. Mennyibe kerül a második könyv?
+Gondolkodjunk lépésről lépésre.
+
+Példa:
+Kérdés: Egy bicikli ára 50000 Ft. Egy akciós napon 20%-os kedvezményt adnak rá. Mennyibe kerül a bicikli az akciós napon?
+Gondolkodjunk lépésről lépésre.
+1.  A bicikli eredeti ára 50000 Ft.
+2.  A kedvezmény mértéke 20%.
+3.  A kedvezmény összege: 50000 Ft * 0.20 = 10000 Ft.
+4.  Az akciós ár: 50000 Ft - 10000 Ft = 40000 Ft.
+Válasz: A bicikli 40000 Ft-ba kerül az akciós napon.
+
+Most válaszolj az eredeti kérdésre: Egy könyv ára 2500 Ft. Egy másik könyv ára 30%-kal olcsóbb. Mennyibe kerül a második könyv?
+
+Várható Modell Válasz (részlet):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1.  Az első könyv ára 2500 Ft.
+2.  A második könyv ára 30%-kal olcsóbb, mint az első.
+3.  A kedvezmény mértéke: 2500 Ft * 0.30 = 750 Ft.
+4.  A második könyv ára: 2500 Ft - 750 Ft = 1750 Ft.
+Válasz: A második könyv 1750 Ft-ba kerül.
+
+3. Self-Consistency CoT Prompting: A Konszenzus Ereje
+
+A Self-Consistency CoT prompting a Zero-Shot CoT vagy Few-Shot CoT technika kiterjesztése, ahol a modellt többször is megkérjük, hogy generáljon gondolatmenetet és megoldást ugyanarra a problémára, de minden alkalommal kissé eltérő megközelítéssel vagy megfogalmazással. A cél az, hogy több különböző, de érvényes gondolatmenetet kapjunk, majd ezekből válasszuk ki azt a választ, amely a legtöbb gondolatmenetben konzisztensen megjelenik. Ez a megközelítés drámaian javíthatja az LLM-ek robusztusságát és pontosságát, különösen összetett logikai érvelést igénylő feladatokban.
+
+Alkalmazás és Előnyök:
+
+    Robusztusság: Csökkenti az egyedi hibák valószínűségét azáltal, hogy több perspektívából vizsgálja meg a problémát.
+    Pontosság Növelése: A konszenzusos válasz általában megbízhatóbb, mint egyetlen, izolált válasz.
+    Komplex Logikai Feladatok: Kiválóan alkalmazható olyan feladatoknál, ahol több lehetséges útvonal vezethet a megoldáshoz, vagy ahol a modell hajlamos lehet "hallucinálni" egy-egy lépésben.
+
+Példa:
+javascript
+
+Prompt sablon (ismétléshez):
+Kérdés: [Kérdés]. Gondolkodjunk lépésről lépésre.
+
+A mérnök feladata, hogy a modellt többször futtassa le ugyanazzal a prompt-sablonnal, majd elemezze a különböző gondolatmeneteket és a végeredményeket.
+
+Első futtatás: Kérdés: Anna és Péter együtt 10 órát dolgoztak egy projekten. Anna órabére 2000 Ft, Péter órabére 2500 Ft. Összesen 22500 Ft-ot kerestek. Hány órát dolgozott Anna és hányat Péter? Gondolkodjunk lépésről lépésre.
+
+Modell Válasz 1 (részlet):
+
+    Legyen Anna által dolgozott óra x, Péter által dolgozott óra y.
+    x + y = 10 (összesen 10 óra)
+    2000x + 2500y = 22500 (összesen 22500 Ft)
+    Az első egyenletből: y = 10 - x. Helyettesítsük be a másodikba: 2000x + 2500(10 - x) = 22500 2000x + 25000 - 2500x = 22500 -500x = 22500 - 25000 -500x = -2500 x = 5
+    y = 10 - 5 = 5. Válasz: Anna 5 órát, Péter 5 órát dolgozott.
+
+Második futtatás (más gondolatmenet, ha lehetséges): Kérdés: Anna és Péter együtt 10 órát dolgoztak egy projekten. Anna órabére 2000 Ft, Péter órabére 2500 Ft. Összesen 22500 Ft-ot kerestek. Hány órát dolgozott Anna és hányat Péter? Gondolkodjunk lépésről lépésre.
+
+Modell Válasz 2 (részlet):
+
+    Átlagos órabér (ha egyenlően osztoztak volna): 22500 Ft / 10 óra = 2250 Ft/óra.
+    Ez azt jelenti, hogy Péter többet keres az átlagnál, Anna kevesebbet.
+    Létrehozunk egyenleteket: x + y = 10 (órák száma), 2000x + 2500y = 22500 (keresett összeg). ... (folytatás hasonlóan az 1. válaszhoz) Válasz: Anna 5 órát, Péter 5 órát dolgozott.
+
+Elemzés: Mindkét gondolatmenet ugyanarra az eredményre jut, ami erősíti a megoldás helyességét.
+4. Tree of Thoughts (ToT) Prompting: Elágazó Gondolkodásmód
+
+A Tree of Thoughts (ToT) prompting egy fejlett CoT technika, amely a modell számára lehetővé teszi, hogy ne csak lineárisan, hanem elágazóan gondolkodjon, felfedezve több lehetséges utat és stratégiát a megoldáshoz. Ez a módszer különösen akkor hasznos, ha a feladat több lépésből áll, és minden lépésben több érvényes választás is lehetséges, amelyek különböző végeredményekhez vezethetnek. A ToT arra ösztönzi a modellt, hogy "ágakat" generáljon a gondolatmenetben, értékelje azokat, és visszalépjen, ha egy út zsákutcának bizonyul.
+
+Alkalmazás és Előnyök:
+
+    Komplex Problématerületek: Ideális stratégiai játékokhoz, kreatív íráshoz, bonyolult tervezési feladatokhoz, ahol több opciót kell megfontolni.
+    Jobb Minőségű Megoldások: Azáltal, hogy több útvonalat is feltár, a modell nagyobb eséllyel találja meg az optimális vagy legkreatívabb megoldást.
+    Önálló Értékelés: A modell képes önállóan értékelni a különböző ágak "jóságát" vagy "ígéretes voltát".
+
+Példa (kicsit absztraktabb, de a lényeget érzékelteti):
+javascript
+
+Kérdés: Tervezz egy rövid marketing kampányt egy új, környezetbarát tisztítószerhez. Milyen lépéseket tennél, és miért? Vizsgálj meg több lehetséges stratégiai irányt, és értékeld azok előnyeit és hátrányait.
+
+Gondolkodjunk lépésről lépésre, elágazva.
+
+**Gondolatmenet ág 1: Fókusz a közösségi médiára**
+1.  **Lépés:** Célcsoport azonosítása: Fiatal, környezettudatos városi lakosok.
+2.  **Lépés:** Platformok kiválasztása: Instagram, TikTok, Facebook.
+3.  **Lépés:** Tartalom stratégia: Influencer marketing, felhasználói tartalom generálása, rövid videók a termék használatáról és környezeti előnyeiről.
+4.  **Értékelés:** Előnyök: Nagy elérés a célcsoport körében, alacsony költség, gyors visszajelzés. Hátrányok: Nehéz mérni a közvetlen értékesítést, "noise" a platformokon.
+
+**Gondolatmenet ág 2: Fókusz a hagyományos médiára és partnerkapcsolatokra**
+1.  **Lépés:** Célcsoport azonosítása: Családos anyukák, egészségtudatos háziasszonyok.
+2.  **Lépés:** Platformok kiválasztása: Magazinok, TV reklám (regionaliś), együttműködés öko boltokkal.
+3.  **Lépés:** Tartalom stratégia: Részletes cikkek a termék összetevőiről, hiteles szakértői vélemények, bolti akciók.
+4.  **Értékelés:** Előnyök: Hitelesség, nagyobb vásárlóerő elérése, mérhető értékesítés. Hátrányok: Magasabb költség, hosszabb átfutási idő, nehezebb interakció.
+
+**Összegzés és Ajánlás:** Mindkét stratégia rendelkezik előnyökkel. A rövid távú elérés és brand awareness növelésére az 1. ág (közösségi média) hatékonyabb lehet. Hosszú távon, a megbízhatóság és a hűség kiépítésére a 2. ág (hagyományos média + partnerkapcsolatok) kiegészíthető vagy később bevezethető. Ajánlás: Kezdjük egy hibrid stratégiával, hangsúlyozva a közösségi médiát, de beépítve a lokális öko boltokkal való együttműködést.
+
+5. ReAct Prompting: Gondolkodás és Akció a Dinamikus Problémamegoldásért
+
+A ReAct (Reasoning and Acting) prompting a CoT és az "akció" kombinációja, amely lehetővé teszi a modell számára, hogy gondolkodjon (CoT), de ezen felül külső eszközöket, például keresőmotorokat, API-kat vagy adatbázisokat is használjon a probléma megoldása során. Ez a technika kulcsfontosságú a dinamikus, valós idejű információszerzést igénylő feladatoknál, ahol a modellnek nem elegendő pusztán a belső tudására támaszkodnia. A ReAct prompting arra ösztönzi a modellt, hogy "gondolatokat" generáljon (mit kell tennie), majd "akciókat" hajtson végre (hogyan tegye), végül pedig "megfigyeléseket" tegyen (mi történt az akció után), és ezen ciklus mentén haladjon a megoldás felé.
+
+Alkalmazás és Előnyök:
+
+    Valós Idejű Információk: Lehetővé teszi a modellnek, hogy friss, aktuális adatokhoz jusson hozzá.
+    Komplex Külső Feladatok: Ideális kérdések megválaszolására, amelyekhez webes keresés, számítások vagy API hívások szükségesek.
+    Multimodális Képességek: Kapuként szolgál a modell és a külső világ között.
+    Önkorrekció: A megfigyelések alapján a modell képes módosítani a gondolatmenetét és a következő akcióit.
+
+Példa (illusztratív, feltételezve, hogy a modell képes külső eszközöket hívni):
+javascript
+
+Kérdés: Ki a jelenlegi miniszterelnök Magyarországon, és 
