@@ -1,0 +1,88 @@
+A Prompt mint szándék-kompiláció: Döntések, Folyamatok és Mérhető Kimenetek
+
+A prompt nem csupán egy szöveges bemenet a mesterséges intelligencia számára; sokkal inkább egy gondosan megkomponált jelrendszer, amely mögöttes szándékot hordoz. Ez a megközelítés azt jelenti, hogy egy hatékony prompt célja nem a puszta kommunikáció, hanem a konkrét döntések kikényszerítése, egy specifikus folyamat elindítása, és ami a legfontosabb, mérhető, ellenőrizhető kimenetek generálása. Ezen útmutató részletesen bemutatja, hogyan lehet ilyen szándékvezérelt promptokat tervezni és optimalizálni, figyelembe véve a pontos célkitűzéseket és a rendszeres validációt.
+A Prompt mint Szándék-Kompiláció
+
+A „szándék-kompiláció” kifejezés lényege, hogy a prompt minden eleme egy nagyobb cél része, hasonlóan ahhoz, ahogy egy programkód fordítása egy futtatható alkalmazássá alakítja az utasításokat. Ebben az esetben a prompt „kódja” a modell számára érthető és feldolgozható formában tartalmazza a felhasználó akaratát és elvárásait.
+Döntések Kikényszerítése a Promptokkal
+
+Egy jól megfogalmazott prompt arra kényszeríti a modellt, hogy specifikus döntéseket hozzon a rendelkezésére álló információk és a beágyazott korlátok alapján. Ez nem csupán arról szól, hogy a modell választ adjon, hanem arról is, hogy a választ egy előre meghatározott keretrendszeren belül adja meg, elkerülve a homályos vagy irreleváns kimeneteket.
+
+    Explicit Korlátok: A promptban egyértelműen meg kell határozni a megengedett válaszok tartományát, a stílust, a formátumot, és minden egyéb paramétert, amely befolyásolja a modell döntéseit. Például, ha egy összefoglalást kérünk, megadhatjuk a maximális szószámot, a kulcsszavak listáját, vagy a célközönséget.
+    Prioritások Jelzése: Amennyiben több szempont is releváns, a promptnak jeleznie kell azok prioritását. Ez segíti a modellt abban, hogy konfliktus esetén melyik szempontot vegye figyelembe elsődlegesen.
+    Kimeneti Formátum: A pontos kimeneti formátum előírása (pl. JSON, Markdown táblázat, felsorolás) szintén egy döntési kényszer. Ez biztosítja, hogy a kapott adat könnyen feldolgozható és integrálható legyen más rendszerekbe.
+
+Folyamatok Indítása a Promptokkal
+
+A prompt nem csak statikus információt közöl, hanem egy dinamikus folyamatot is elindít a modellben. Ez a folyamat a bemenet értelmezésétől a kimenet generálásáig tart, és magában foglalhatja az információkeresést, az elemzést, a szintetizálást és a formázást.
+
+    Lépésről lépésre történő útmutatás: Komplex feladatok esetén érdemes a promptot lépésekre bontani. Ezzel nem csak a modell megértését segítjük, hanem a folyamat egyes fázisaiban hozott döntéseket is ellenőrizhetővé tesszük.
+    Moduláris felépítés: Hasonlóan a szoftverfejlesztéshez, a promptok is épülhetnek modulárisan. Egy „orchestrator” prompt koordinálhatja több „al-prompt” végrehajtását, amelyek mindegyike egy-egy specifikus részfeladatot lát el.
+    Visszacsatolási hurkok: Bár a prompt maga egyszeri bemenet, egy rendszer részeként képes visszacsatolási hurkokat alkotni. Például egy első kimenet alapján egy második prompt finomíthatja a folyamatot.
+
+markdown
+
+START_INPUT
+# Feladat: Útmutató készítése roadmap.sh témában
+# Cél: 3 útmutató létrehozása a "high impact, viral, money, success, life" témakörökben.
+# Formátum: Minden útmutató egy H2 címmel kezdődjön, alatta egy bevezető bekezdés, majd legalább 3 H3 alfejezet felsorolásokkal.
+# Korlátok:
+#   - Minden útmutató max. 500 szót tartalmazzon.
+#   - Ne tartalmazzon forráskód példát.
+#   - Kerülje a marketinges buzzword-öket, helyette gyakorlati tanácsokat adjon.
+# Elvárás: Az útmutatók legyenek relevánsak a roadmap.sh kontextusában, azaz a karrierút, készségfejlesztés szemszögéből közelítsék meg a témákat.
+END_INPUT
+
+Ez a példa egyértelműen meghatározza a célt, a formátumot, a korlátokat és az elvárásokat, egyértelműen irányítva a modell által elindított generálási folyamatot.
+Mérhető Kimenetek Létrehozása
+
+A prompt igazi ereje abban rejlik, hogy képes mérhető és validálható kimeneteket produkálni. Ez elengedhetetlen a minőségbiztosításhoz, az automatizáláshoz és a hatékonyság folyamatos javításához.
+
+    Done Criteria (Kész Kritáriumok): Minden promptnak tartalmaznia kell olyan kritériumokat, amelyek alapján egyértelműen megállapítható, hogy a feladat sikeresen befejeződött-e. Ezek a kritériumok lehetnek mennyiségiek (pl. X számú elem, Y szószám) vagy minőségiek (pl. bizonyos információk megléte, adott stílus).
+    Automatizált Validáció: Amennyiben a kimeneti formátum strukturált (pl. JSON), akkor automatizált szkriptekkel is ellenőrizhető a kritériumoknak való megfelelés. Ez különösen hasznos nagyméretű, ismétlődő feladatok esetén.
+    Visszacsatolás a modell felé: A mérhető kimenetek lehetővé teszik a modell teljesítményének objektív értékelését. A hibák vagy hiányosságok alapján finomítható a prompt, vagy akár a modell is újra tanítható specifikus adatokkal.
+
+Példa Mérhető Kritáriumokra
+
+Egy "DoD-alapú output" vagy a "minőségi kapuk" (Quality Gates) bevezetése a prompt rendszerbe kiemelten fontos. Ezek a mechanizmusok biztosítják, hogy a generált kimenet ne csak "valahogy" nézzen ki, hanem megfeleljen a szigorú minőségi és tartalmi elvárásoknak.
+javascript
+
+KÖTELEZŐ MINŐSÉGI KAPUK:
+- G1: követelmények lefedve
+- G2: nincs ellentmondás
+- G3: formátum pontos
+- G4: feltételezések jelölve (ha volt hiány)
+- G5: ha MODE=DOD_PACK, akkor DoD-sablon mezők mind szerepelnek
+
+Ezek a kapuk konkrét, ellenőrizhető pontokat jelölnek ki, amelyek alapján a modell kimenete értékelhető. Például a G3: formátum pontos kapu azt jelenti, hogy ha a prompt JSON kimenetet kér, akkor a modellnek érvényes JSON-t kell generálnia. Ha nem teszi, az egyértelműen mérhető hiba.
+Heurisztikus Score-Szabályok
+
+A minőségi kapukat kiegészíthetik heurisztikus score-szabályok, amelyek részletesebb diagnózist biztosítanak a prompt és a kimenet minőségéről:
+
+    ClarityScore (0–10): A prompt céljának, formátumának, hatókörének és kész-kritériumainak egyértelműsége. Minél magasabb a pontszám, annál kevesebb a félreértelmezési lehetőség.
+    ConstraintCompleteness (0–10): A hard/soft/formátum korlátok teljessége. Egy 10 pontos prompt minden releváns korlátot egyértelműen meghatároz.
+    AmbiguityCount: Homályos elemek, hiányzó szám/terjedelem, vagy ellentmondások száma. Minél alacsonyabb, annál jobb.
+    PatternFit: A kimenet mennyire illeszkedik az elvárt algoritmikus vagy strukturális mintázatokhoz (pl. "mindig három elemből álló felsorolás").
+    FactualRisk: A külső adatokra vagy aktuális információkra való függés mértéke. Magas kockázat esetén a modell hajlamosabb tévedni vagy elavult információkat szolgáltatni.
+
+Ezen score-ok segítségével nem csupán azt tudjuk megmondani, hogy egy kimenet "jó" vagy "rossz", hanem azt is, hogy miért az, és hol szükséges a prompt finomítása. Ezáltal a prompttervezés egy iteratív, adatokra alapozott folyamattá válik, ahol minden javítás mérhető eredménnyel jár.
+Az Orchestrátor Szerepe
+
+A komplex prompt rendszerekben, ahol a szándék-kompiláció maximális hatékonysággal működik, egy orchestrátor modul felel a prompt teljes életciklusáért, a bemenet feldolgozásától a végrehajtásig és a validációig.
+A Prompt Életciklusa
+
+Az orchestrátor a következő modulokból épülhet fel, biztosítva a strukturált és ellenőrzött folyamatot:
+
+    InputExtractor: Kizárólag a releváns bemenetet emeli ki a teljes kontextusból, elválasztva azt a vezérlőutasításoktól. Ez alapvető a fókusz fenntartásához.
+    MML_Builder (Machine Model Language - Intermediate Representation): A nyers bemenetet egy standardizált köztes reprezentációvá (IR) alakítja. Ez az IR már strukturált, gépileg könnyen értelmezhető formában tartalmazza a prompt szándékát, a korlátokat és az elvárásokat. Ez a lépés kritikus, mivel lehetővé teszi a prompt nyelvtől független elemzését és optimalizálását.
+    IntegrityScanner: Elemzi az IR-t ellentmondások, hiányosságok és a ténybeli pontosság szempontjából, kategóriákba sorolva az állításokat (pl. {HELYES, VALÓSZÍNŰ, HAMIS/ELLENTMONDÓ, KÜLSŐ ADAT}).
+    Check_Forward: Ellenőrzi, hogy az MML-ből egyértelműen levezethető-e a kívánt kimeneti specifikáció. Hiányok esetén jelzi, hol lehetne pontosítani a promptot.
+    Check_Backward (Backcasting): A kívánt kimenetből visszafelé haladva ellenőrzi, hogy a prompt tartalmazza-e azokat az inputokat és korlátokat, amelyek a kimenet eléréséhez szükségesek.
+    RepairEngine: Az előző lépésekben azonosított hiányosságokat és ambiguitásokat kezeli, javaslatokat tesz a javításra, default értékeket alkalmaz, és jelzi a feltételezéseket.
+    GoldPrompt_Generator: Az optimalizált MML alapján generálja a végleges, "Gold Prompt"-ot. Ez a prompt már a modell számára leginkább érthető és hatékony formában tartalmazza az összes információt.
+    DryRun_Simulator: Egy gyors, "száraz futtatást" szimulál, előállítva egy vázlatos kimenetet. Ezt követően minőségi kapuk és tesztek segítségével ellenőrzi a kimenet minőségét, anélkül, hogy ténylegesen elindítaná a modellt.
+    IterateOnceIfFail: Amennyiben a DryRun sikertelen, a rendszer egyszeri finomítást végez a Gold Prompt-on, majd újra lefuttatja a DryRun-t. Ez egy beépített öntanulási mechanizmus.
+    Executor: Végrehajtja a végleges Gold Promptot a kiválasztott AI modellen.
+    Validator: Egy gyors ellenőrzőlistával validálja a végrehajtás kimenetét, biztosítva a minimális minőségi standardok teljesülését.
+
+Ez a moduláris felépítés garantálja, hogy a prompt nem csupán egy szál a levegőben, hanem egy gondosan tervezett és végrehajtott műveletsor, amelynek minden fázisa hozzájárul a mérhető és megbízható kimenethez. A szándék-kompiláció így válik valósággá, ahol a promptok valóban döntéseket kényszerítenek ki, folyamatokat indítanak és ellenőrizhető eredményeket hoznak létre.
