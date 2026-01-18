@@ -1,0 +1,95 @@
+Red Hat Enterprise Linux (RHEL) – Átfogó Útmutató
+
+A Red Hat Enterprise Linux (RHEL) egy vezető kereskedelmi Linux disztribúció, amelyet a Red Hat fejleszt. Ez az útmutató bemutatja a RHEL alapvető jellemzőit, architektúráját, és azt a szerepet, amelyet az üzleti és nagyvállalati környezetben betölt. Megvizsgáljuk, hogyan illeszkedik a RHEL a szélesebb Red Hat ökoszisztémába, és miért vált megbízható alappá a kritikus rendszerek számára világszerte.
+Mi az a Red Hat Enterprise Linux?
+
+A Red Hat Enterprise Linux egy stabil, biztonságos és teljesítményorientált operációs rendszer, amelyet kifejezetten vállalati igényekre terveztek. A Red Hat által fejlesztett és támogatott RHEL nem csupán egy ingyenes, nyílt forráskódú disztribúció, hanem egy fizetős előfizetéses modellben kínált megoldás, amely magában foglalja a hosszú távú támogatást, biztonsági frissítéseket, és a Red Hat szakértői segítségét. Ez a modell teszi a RHEL-t vonzóvá azok számára, akik megbízható és skálázható infrastruktúrát igényelnek.
+Fő Jellemzők és Előnyök
+
+A RHEL számos előnyös tulajdonsággal rendelkezik, amelyek megkülönböztetik más Linux disztribúcióktól:
+
+    Stabilitás és Megbízhatóság: Hosszú kiadási ciklusok és szigorú tesztelés biztosítja a rendkívüli stabilitást, ami kritikus az üzleti alkalmazások és szolgáltatások számára.
+    Biztonság: Integrált biztonsági funkciók, mint az SELinux (Security-Enhanced Linux) és a rendszeres biztonsági frissítések védik a rendszert a fenyegetésekkel szemben.
+    Teljesítmény: Optimalizált kernel és felhasználói terek garantálják a magas teljesítményt, különösen nagy terhelésű szerver környezetekben.
+    Skálázhatóság: Képes kezelni a legkülönfélébb számítási feladatokat, a kis szerverektől a nagyszabású adatközpontokig és felhőalapú környezetekig.
+    Vállalati Támogatás: A Red Hat világszínvonalú támogatást nyújt, amely hozzáférést biztosít a tudásbázishoz, frissítésekhez és szakértői segítséghez.
+    Minősített Hardver és Szoftver: A RHEL számos hardver- és szoftvergyártó által tanúsított, ami garantálja a kompatibilitást és a megbízható működést.
+
+A RHEL Architektúrája és Verziói
+
+A RHEL különböző architektúrákra optimalizált verziókban érhető el, hogy a legszélesebb körű hardvereszközöket támogassa. Ez a rugalmasság lehetővé teszi a vállalatok számára, hogy a RHEL-t a meglévő infrastruktúrájukba integrálják.
+Támogatott Architektúrák
+
+A RHEL támogatja a leggyakoribb szerver architektúrákat és egy asztali verziót is kínál:
+
+    x86-64: A legelterjedtebb architektúra, amely a legtöbb modern szerver és asztali számítógép alapja.
+    Power ISA (pl. IBM Power Systems): Az IBM nagyteljesítményű szerverplatformjaihoz.
+    ARM64: Növekvő népszerűségű, energiahatékony architektúra, különösen felhő- és edge computing környezetekben.
+    IBM Z (korábban System z): Az IBM mainframe rendszereihez, amelyek rendkívül magas rendelkezésre állást és biztonságot igényelnek.
+    Asztali Verzió (x86-64): Míg a RHEL elsősorban szerver oldalon domináns, létezik asztali verziója is, amelyet fejlesztők és rendszergazdák gyakran használnak.
+
+A RHEL Helye a Red Hat Ökoszisztémában
+
+A RHEL nem egy elszigetelt termék, hanem szerves része a Red Hat nyílt forráskódú ökoszisztémájának. Két kulcsfontosságú upstream forrása van, amelyek alapvető szerepet játszanak a fejlesztési és kiadási folyamatban: a Fedora Linux és a CentOS Stream.
+Fedora Linux – Az Innováció Laboratóriuma
+
+A Fedora Linux a Red Hat közösségi támogatású disztribúciója, amely az upstream fejlesztés élvonalában helyezkedik el. Ez a "cutting-edge" disztribúció szolgál tesztpadként az új technológiák és funkciók számára, amelyek később a RHEL-be is bekerülhetnek.
+
+    Célja: Gyors innováció, új szoftververziók és technológiák kipróbálása.
+    Kiadási Ciklus: Rövid, általában 6 havonta új verzió.
+    Közösségi Támogatás: Elsősorban a közösség által támogatott, nincs hivatalos Red Hat vállalati támogatás.
+    Szerepe a RHEL-ben: A Fedora a "jövő RHEL-jét" reprezentálja, mivel a sikeresen tesztelt funkciók és stabilizált kód kerül be a RHEL fejlesztési ciklusába.
+
+CentOS Stream – A RHEL Fejlesztési Ága
+
+A CentOS Stream a Red Hat és a CentOS közösség együttműködésének eredménye, amely a RHEL egy folyamatosan frissülő, előzetes verziójaként funkcionál. A CentOS Stream a Fedora és a RHEL között helyezkedik el a fejlesztési folyamatban.
+
+    Célja: Átlátható és nyilvános fejlesztési platformot biztosítani a következő RHEL verzió számára.
+    Kiadási Ciklus: Folyamatosan frissülő, "rolling release" jellegű, de stabilabb, mint a Fedora.
+    Közösségi és Red Hat Támogatás: A Red Hat aktívan hozzájárul és támogatja, miközben a közösség is részt vesz a fejlesztésben és a tesztelésben.
+    Szerepe a RHEL-ben: A CentOS Stream a RHEL fejlesztési ágának "nyilvános" nézete. Ez azt jelenti, hogy a fejlesztők és felhasználók előre láthatják, milyen változások várhatók a következő RHEL kiadásokban, és visszajelzést adhatnak.
+
+bash
+
+# Példa a CentOS Stream verziójának ellenőrzésére
+cat /etc/centos-release
+# Vagy általánosabb Linux parancs
+cat /etc/os-release
+
+RHEL a Vállalati Környezetben
+
+A RHEL a modern IT infrastruktúrák gerincét képezi számos iparágban. Kiemelkedő megbízhatósága, biztonsága és a Red Hat átfogó támogatása miatt ideális választás a kritikus üzleti alkalmazások futtatására.
+Alkalmazási Területek
+
+    Adatbázis Szerverek: Nagyteljesítményű adatbázisok, mint az Oracle, MySQL, PostgreSQL.
+    Webszerverek és Alkalmazásszerverek: Apache, Nginx, Tomcat, JBoss.
+    Konténerizációs Platformok: Alapja a Red Hat OpenShift-nek, amely a Kubernetes vállalati verziója.
+    Nagy Teljesítményű Számítástechnika (HPC): Tudományos kutatás és szimulációk.
+    Felhő Infrastruktúra: Privát és hibrid felhők alapja, például OpenStack környezetekben.
+    Mesterséges Intelligencia és Gépi Tanulás (AI/ML): A RHEL biztosítja a stabil alapot a nagy teljesítményű számításokhoz.
+
+Előfizetéses Modell
+
+A RHEL egy előfizetéses modellen keresztül érhető el, ami a következőket foglalja magában:
+
+    Szoftverhozzáférés: A RHEL telepítési fájljai és frissítései.
+    Red Hat Támogatás: Hozzáférés a Red Hat mérnökeihez és szakértői segítség.
+    Tudásbázis: Kiterjedt dokumentáció és problémamegoldó cikkek.
+    Red Hat Insights: Proaktív analitika a rendszerek optimalizálásához és a problémák azonosításához.
+    Tanúsított Hardver és Szoftver: Garancia a kompatibilitásra.
+
+Következtetés
+
+A Red Hat Enterprise Linux egy kulcsfontosságú operációs rendszer a modern vállalati IT számára. Stabilitása, biztonsága, teljesítménye és a Red Hat átfogó támogatása teszi megbízható alappá a kritikus infrastruktúrák számára. A Fedora és a CentOS Stream révén a RHEL egy dinamikus, mégis stabil fejlesztési modellt képvisel, amely folyamatosan integrálja az innovációkat, miközben fenntartja a vállalati felhasználók által elvárt megbízhatóságot. A RHEL választása egy befektetés a hosszú távú stabilitásba és biztonságba.
+
+Was this guide helpful?
+Related Topics
+
+Explore related concepts to expand your knowledge
+Comparison of Enterprise Linux Distributions
+IT Infrastructure Planning with Linux
+Dive Deeper
+
+Take a deeper dive into specific areas
+Optimizing RHEL for Database Workloads
+Advanced SELinux Configuration and Policies
