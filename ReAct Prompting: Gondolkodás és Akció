@@ -1,0 +1,147 @@
+ReAct Prompting: Gondolkodás és Akció a Dinamikus Problémamegoldásért
+
+A ReAct (Reasoning and Acting) prompting egy fejlett technika, amely a nyelvi modellek képességeit új szintre emeli a komplex problémamegoldás terén. Ez a megközelítés a hagyományos Chain-of-Thought (CoT) érvelést kombinálja a külső eszközök használatával, lehetővé téve a modell számára, hogy ne csak gondolkodjon és tervezzen, hanem aktívan interakcióba lépjen a külvilággal is a pontos és releváns információk megszerzése érdekében. Ez a guide bemutatja a ReAct prompting alapjait, működését és alkalmazási területeit.
+Mi az a ReAct Prompting?
+
+A ReAct prompting a gondolkodás (Reasoning) és a cselekvés (Acting) szinergikus kombinációja. Míg a Chain-of-Thought (CoT) prompting a modell belső tudására és logikai érvelésére támaszkodik a probléma lépésről lépésre történő megoldásában, addig a ReAct ezt kiegészíti azzal, hogy a modell képessé válik külső eszközök, például keresőmotorok, API-k vagy adatbázisok meghívására. Ez a képesség kulcsfontosságú az olyan feladatoknál, ahol a modell belső tudása elavult, hiányos, vagy egyszerűen nem elegendő a pontos és aktuális megoldás eléréséhez. A ReAct hidat képez a modell "gondolkodása" és a "valóság" között, lehetővé téve a dinamikus, valós idejű információgyűjtést és -feldolgozást.
+Hogyan működik a ReAct?
+
+A ReAct prompting egy iteratív folyamaton alapul, ahol a modell felváltva generál gondolatokat (Reasoning) és hajt végre cselekvéseket (Acting), majd értékeli a cselekvések eredményét. Ez a ciklikus működés lehetővé teszi a modell számára, hogy folyamatosan finomítsa a problémamegoldási stratégiáját, és alkalmazkodjon a változó körülményekhez.
+Az Iteratív Folyamat Lépései:
+
+    Observation (Megfigyelés): A folyamat a kezdeti felhasználói kéréssel vagy egy korábbi cselekvés eredményével indul. Ez az aktuális állapot, amit a modellnek fel kell dolgoznia.
+
+    Thought (Gondolat): A modell megfogalmaz egy gondolatot, amely magyarázza a jelenlegi helyzetet, megtervezi a következő lépést, vagy megfogalmazza, milyen információra van szüksége a probléma megoldásához. Ez a CoT rész, ahol a modell érvel.
+
+    Action (Cselekvés): A gondolat alapján a modell kiválaszt egy megfelelő eszközt, és végrehajt egy cselekvést. Ez lehet például egy keresés indítása, egy API hívás, vagy egy adatbázis lekérdezés. Az akció specifikus parancsokat és paramétereket igényel.
+
+    Observation (Megfigyelés): Az akció végrehajtása után a modell megkapja a cselekvés eredményét (pl. keresési találatok, API válasz). Ez az új megfigyelés, amelyet a modellnek fel kell dolgoznia a következő "Gondolat" generálásához.
+
+Ez a ciklus addig ismétlődik, amíg a modell úgy nem ítéli meg, hogy elegendő információval rendelkezik a probléma megoldásához, vagy el nem éri a végcélját, és meg nem fogalmaz egy végső választ.
+Prompt Struktúra
+
+A ReAct prompting megvalósításához egy jól strukturált prompt szükséges, amely irányítja a modellt a gondolkodás és cselekvés ciklusában. A prompt általában tartalmazza a következő elemeket:
+
+    Feladat leírása: Tisztán megfogalmazott feladat, amit a modellnek meg kell oldania.
+    Elérhető eszközök: A modell számára elérhető külső eszközök listája, leírásukkal és a használatukra vonatkozó instrukciókkal.
+    Példák (opcionális, de ajánlott): Néhány példa a gondolkodás-cselekvés ciklusra, hogy a modell megértse a kívánt viselkedést.
+    Formátum: A modell által elvárt kimeneti formátum (pl. Thought:, Action:, Observation:, Final Answer:).
+
+Példa egy egyszerű ReAct prompt prompt struktúrára (magyarul):
+javascript
+
+Válaszolj a felhasználó kérdéseire a következő eszközök használatával. Csak azokat az eszközöket használd, amelyek valóban szükségesek.
+
+Eszközök:
+- `search_engine`: Egy keresőmotor, amely az interneten tud információt találni.
+  Paraméterek: `query` (string) - A keresési kifejezés.
+  Használat: `search_engine("keresési kifejezés")`
+
+A válaszodat a következő formátumban add meg:
+
+Thought: [Gondolat]
+Action: [Akció (ha szükséges)]
+Observation: [Az akció eredménye (ha volt akció)]
+... (ismétlődik a Thought/Action/Observation ciklus)
+Final Answer: [A végső válasz]
+
+Kérdés: Mi a jelenlegi időjárás Budapesten?
+
+Thought: Meg kell tudnom a jelenlegi időjárást Budapesten. Ehhez a keresőmotort tudom használni.
+Action: search_engine("időjárás Budapest")
+Observation: [A keresőmotor eredménye, pl. "Budapesten jelenleg 15°C van, enyhe szél fúj, felhős az ég."]
+Final Answer: Budapesten jelenleg 15°C van, enyhe szél fúj, felhős az ég.
+
+ReAct prompt lépésről lépésre
+
+A ReAct prompting megértéséhez és hatékony alkalmazásához fontos részletesen áttekinteni az egyes fázisokat és a modell szerepét mindegyikben.
+1. Kezdő kérés és kezdeti megfigyelés
+
+Minden ReAct interakció egy felhasználói kéréssel kezdődik. Ez a kérés képezi az első "Observation"-t a modell számára. A modellnek meg kell értenie a feladatot, és fel kell mérnie, hogy belső tudása elegendő-e, vagy külső eszközökre van szüksége.
+
+Példa kérés: "Ki volt a 2008-as olimpiai játékok úszó bajnoka 100 méteres pillangóúszásban, és milyen időt úszott?"
+2. Gondolkodás (Thought) fázis
+
+Ez az a szakasz, ahol a modell a belső logikai érvelési képességeit használja. A Thought: (Gondolat:) címke alatt a modell:
+
+    Elemezi a feladatot.
+    Azonosítja a hiányzó információkat.
+    Megtervezi a következő lépéseket.
+    Kiválasztja a megfelelő eszközt, ha szükséges.
+    Megfogalmazza a célt, amit az aktuális akcióval el akar érni.
+
+Példa gondolat: Thought: A kérdés egy konkrét sportesemény eredményére vonatkozik, ami valószínűleg nem található meg a belső tudásomban, vagy ha igen, ellenőrzésre szorulhat. A legmegbízhatóbb módszer a keresőmotor használata. Keresnem kell a 2008-as olimpiai játékok úszó eredményeit, különösen a 100 méteres pillangóúszást.
+3. Akció (Action) fázis
+
+A gondolatfázis után a modell végrehajt egy cselekvést. Ez egy külső eszköz meghívását jelenti, melyet a modell előre definiált formátumban ad meg. Fontos, hogy a modell pontosan tudja, milyen eszközök állnak rendelkezésére, azok hogyan hívhatók meg, és milyen paramétereket várnak.
+
+Példa akció: Action: search_engine("2008 olimpia úszás 100m pillangó eredmények")
+
+A modell elküldi ezt a parancsot a háttérrendszernek (amely "végrehajtja" az akciót, pl. meghívja a Google API-t), és várja az eredményt.
+4. Megfigyelés (Observation) fázis
+
+Miután az akció végrehajtódott, az eredmény (pl. a keresőmotor találata) visszakerül a modellhez mint egy új "Observation" (Megfigyelés). Ez az információ válik a következő gondolkodási ciklus bemenetévé. Fontos, hogy az Observation tartalmazza a releváns adatokat, de lehet, hogy szűrni vagy értelmezni is kell azt a modellnek.
+
+Példa megfigyelés: Observation: [A keresési eredmények között szerepel egy cikk: "Michael Phelps nyerte a 100 méteres pillangóúszást a 2008-as pekingi olimpián 50.58 másodperces idővel."]
+5. Iteráció és végső válasz
+
+Az "Observation" után a modell visszatér a "Thought" fázishoz, és megismétli a ciklust. Értékeli az új információt, és eldönti, hogy:
+
+    Elegendő-e az információ a végső válasz megfogalmazásához?
+    Szükséges-e további információgyűjtés, vagy pontosabb keresés?
+    Értelmezni kell-e az adatokat, esetleg több forrásból származó információt kell-e szintetizálni?
+
+Ez addig folytatódik, amíg a modell úgy nem ítéli meg, hogy a feladat teljesen meg lett oldva. Ekkor megfogalmazza a Final Answer: (Végső válasz:) címszó alatt a megoldást.
+
+Folytatás a példán:
+
+Thought: Az előző keresés alapján megtaláltam a bajnokot és az idejét. Ez elegendő információ a kérdés megválaszolásához. Final Answer: A 2008-as olimpiai játékok úszó bajnoka 100 méteres pillangóúszásban Michael Phelps volt, 50.58 másodperces idővel.
+ReAct vs. Hagyományos CoT és Eszközhasználat
+
+Fontos megérteni a ReAct prompting egyediségét a hasonló technikákhoz képest.
+ReAct vs. Chain-of-Thought (CoT)
+
+    CoT: A modell kizárólag a belső tudására és logikai érvelésére támaszkodik. Lépésről lépésre halad a megoldás felé, de nem tud külső információt szerezni. Ideális, ha a megoldás a modell betanítási adatai között van, és nem igényel valós idejű, külső adatokat.
+    ReAct: Kombinálja a CoT érvelést a külső eszközhasználattal. A modell "gondolkodik" (CoT), majd "csekszik" (eszközhasználat), majd a cselekvés eredményét ismét "gondolatba" foglalja. Ezáltal képes valós idejű, dinamikus információk beszerzésére és feldolgozására.
+
+ReAct vs. Egyszerű Eszközhasználat
+
+Néha a modelleket egyszerűen betanítják arra, hogy egy kulcsszóra vagy egy adott formátumra reagálva meghívjanak egy eszközt.
+
+    Egyszerű Eszközhasználat: A modell közvetlenül hívja meg az eszközt egy trigger alapján, kevés vagy semmilyen belső érvelés nélkül. Ha a trigger és az eszköz közötti megfeleltetés egyértelmű és statikus, ez működhet. Pl. "search for X" -> hívja a keresőt X-el.
+    ReAct: A modell dönt arról, hogy mikor és milyen eszközt hívjon meg, miután mérlegelte a helyzetet és megfogalmazta a célt. A Thought fázis teszi lehetővé ezt a rugalmasságot és a hibakezelést. A modell képes több lépésben, iteratívan használni az eszközöket, és az egyes lépések eredményei alapján módosítani a stratégiáját.
+
+A ReAct ereje pontosan ebben a dinamikus, iteratív, "gondolkodj, cselekedj, tanulj" megközelítésben rejlik.
+Alkalmazási területek
+
+A ReAct prompting különösen hatékony olyan feladatoknál, amelyek:
+
+    Dinamikus vagy valós idejű információt igényelnek: Időjárás-előrejelzés, tőzsdei adatok, friss hírek, aktuális események.
+    A modell belső tudását meghaladják: Nagyon specifikus, niche témák, amelyek valószínűleg nem voltak dominánsak a betanítási adatokban, vagy a betanítási dátum után jelentek meg.
+    Több lépésből álló problémamegoldást igényelnek: Olyan feladatok, ahol a megoldáshoz több információforrásra vagy több egymásra épülő lépésre van szükség (pl. utazástervezés, komplex adatelemzés).
+    Külső API-kkal vagy adatbázisokkal való interakciót igényelnek: Termékadatbázisok lekérdezése, ügyfélszolgálati rendszerek kezelése, szoftveres műveletek végrehajtása.
+    Hibakezelést és alkalmazkodást igényelnek: Ha egy eszközhívás sikertelen, vagy az eredmény nem megfelelő, a modell képes újra gondolni a stratégiáját és új akciót kezdeményezni.
+
+Konkrét példák:
+
+    Aktuális események összefoglalása: A modell keresőmotor segítségével összegyűjti a legfrissebb híreket egy témában, majd összefoglalja azokat.
+    Utazástervezés: A modell megkeresi a repülőjegyárakat, szálláslehetőségeket, helyi látványosságokat különböző API-k segítségével, majd egy útitervet generál.
+    Technikai problémamegoldás: Egy szoftver hibakódjának értelmezése, dokumentáció átböngészése, majd megoldási javaslatok adása.
+    Adatbázis-lekérdezés és elemzés: Egy adott feltételnek megfelelő adatok kinyerése adatbázisból, majd statisztikai elemzések elvégzése.
+    Online vásárlás segítése: Termékek összehasonlítása, vélemények elemzése, legjobb ár megtalálása e-kereskedelmi API-k használatával.
+
+ReAct Prompting Implementációja
+
+A ReAct prompting implementálása általában egy nyelvi modell és egy "ügynök" (agent) keretrendszer kombinációjával történik. Az ügynök felelős a modell által generált Action: parancsok értelmezéséért, a külső eszközök meghívásáért és az Observation: eredmények visszajuttatásáért a modellnek.
+Alapvető komponensek:
+
+    Nyelvi Modell (LLM): A "gondolkodás" és az "akció" generálására szolgál.
+    Eszközök (Tools): Azok a függvények vagy API-k, amelyeket a modell meghívhat (pl. search_engine, calculator, weather_api). Ezeket a fejlesztő írja meg.
+    Ügynök (Agent/Orchestrator): Ez a komponens vezérli a ReAct ciklust.
+        Elküldi a promptot az LLM-nek.
+        Kinyeri az LLM válaszából a Thought, Action, Final Answer részeket.
+        Ha Action van, meghívja a megfelelő eszközt a megadott paraméterekkel.
+        Az eszköz eredményét Observation formájában visszaküldi az LLM-nek a következő körben.
+        Ha Final Answer van, befejezi a ciklust.
+
+Egyszerű Python példa (konceptuális, nem teljes értékű futtatható kód):
