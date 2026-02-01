@@ -1,0 +1,143 @@
+Az Autonóm Kereskedési Rendszer Architektúrája: Adatgyűjtés és Előkészítés
+
+Egy teljesen autonóm, LLM és RAG alapú kereskedési rendszer felépítése több kulcsfontosságú modulból áll, amelyek együttműködve biztosítják a zökkenőmentes és profit-orientált működést. A kulcsfontosságú szempont az, hogy az emberi beavatkozás minimalizálva, vagy teljesen eliminálva legyen. Ez a guide az architektúra első és alapvető lépésére fókuszál: az adatgyűjtésre és előkészítésre, amely a rendszer intelligenciájának alapját képezi.
+Az Adatgyűjtés Stratégiája
+
+Az adatgyűjtés az autonóm kereskedési rendszer gerince, biztosítva a releváns, pontos és naprakész információkat a megalapozott döntésekhez. A különféle adatforrások integrálása és feldolgozása kulcsfontosságú a piaci trendek, a vállalatok fundamentumai és a globális makrogazdasági események átfogó megértéséhez.
+Pénzügyi Adatforrások
+
+A pénzügyi adatok képezik a kereskedési döntések alapját. Ezeket az adatokat megbízható és gyors forrásokból kell beszerezni.
+
+    Valós idejű és történelmi áradatok: Ez magában foglalja a részvények, devizák, árupiaci termékek és kriptovaluták nyitó, záró, magas és alacsony árait, valamint a volumet.
+        Források: Tőzsdei adatszolgáltatók (pl. Bloomberg, Refinitiv, Quandl), bróker API-k (pl. Interactive Brokers, Alpaca), ingyenes API-k (pl. Yahoo Finance API, Alpha Vantage).
+    Fundamentális adatok: Vállalati pénzügyi jelentések (mérleg, eredménykimutatás, cash flow), éves és negyedéves jelentések, SEC filingok (10-K, 10-Q).
+        Források: Edgar Database, FactSet, S&P Global Market Intelligence.
+    Makrogazdasági adatok: Kamatlábak, infláció, GDP, munkanélküliségi adatok, jegybanki bejelentések.
+        Források: Központi bankok (Fed, EKB), statisztikai hivatalok (Eurostat, BEA), IMF, Világbank.
+    Opciós és határidős adatok: Strike árak, lejárati dátumok, implied volatilitás.
+        Források: Tőzsdei adatszolgáltatók.
+
+Alternatív Adatforrások
+
+Az alternatív adatok kiegészítik a hagyományos pénzügyi adatokat, mélyebb betekintést nyújtva a piaci hangulatba és a kevésbé nyilvánvaló trendekbe.
+
+    Hírcikkek és sajtóközlemények: Főbb hírügynökségek (Reuters, AP, Bloomberg News), szakmai portálok, cégközlemények.
+        Források: RSS feedek, hírszolgáltató API-k (pl. News API, GDELT).
+    Közösségi média adatok: Twitter, Reddit, StockTwits bejegyzések, fórumok, sentiment analízishez.
+        Források: Közösségi média API-k (pl. Twitter API), scraping eszközök (etikusan és a felhasználási feltételek betartásával).
+    Web scraping: Vállalati weboldalak, termékértékelések, blogok, iparági elemzések.
+        Források: Python könyvtárak (BeautifulSoup, Scrapy), headless böngészők (Selenium).
+    Műholdfelvételek és geolokációs adatok: Kiskereskedelmi forgalom, gyárak működése, mezőgazdasági termelés elemzéséhez.
+        Források: Speciális adatszolgáltatók.
+
+Adatgyűjtés Műszaki Megoldásai
+
+Az adatgyűjtéshez hatékony és skálázható megoldásokra van szükség.
+
+    API-integrációk: A legtöbb pénzügyi és hírügynökség API-n keresztül biztosítja az adatokat. Ez a legmegbízhatóbb és legstrukturáltabb módszer.
+    python
+
+    import requests
+    import json
+
+    def fetch_stock_data(symbol, api_key):
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
+        response = requests.get(url)
+        data = response.json()
+        return data
+
+    # Példa használat
+    # api_key = "YOUR_ALPHA_VANTAGE_API_KEY"
+    # apple_data = fetch_stock_data("AAPL", api_key)
+    # print(apple_data)
+
+    Web scraping: Akkor alkalmazható, ha nincs elérhető API, de fontos az adat. Fontos a jogi és etikai szempontok figyelembevétele, valamint az oldal felhasználási feltételeinek betartása.
+    Adatbázisok és adattárházak: A gyűjtött adatok tárolására relációs (pl. PostgreSQL) vagy NoSQL (pl. MongoDB) adatbázisok használhatók. Idősoros adatokhoz optimalizált adatbázisok (pl. InfluxDB, TimescaleDB) különösen hasznosak.
+    Streamelő rendszerek: Valós idejű adatokhoz (pl. tick-by-tick árfolyamok, hírcsatornák) streamelő platformok (pl. Kafka, Apache Flink) alkalmazása javasolt.
+
+Az Adatok Előkészítése
+
+Az adatgyűjtés után az adatok előkészítése következik, amely magában foglalja a tisztítást, transzformációt és normalizálást. Ez a lépés elengedhetetlen a konzisztens, megbízható és az LLM, RAG modellek számára feldolgozható adathalmaz létrehozásához.
+Adattisztítás
+
+Az adatok ritkán érkeznek tökéletes formában. A tisztítási folyamat célja az inkonzisztenciák, hiányzó értékek és hibák kezelése.
+
+    Hiányzó értékek kezelése:
+        Interpoláció: Idősoros adatoknál gyakori, pl. lineáris vagy polinom interpoláció.
+        Imputáció: Átlag, medián vagy módusz használata, vagy fejlettebb technikák, mint a gépi tanulás alapú imputáció.
+        Törlés: Ha a hiányzó értékek aránya magas, és az adat nem pótolható, az adott sor vagy oszlop törlése is szóba jöhet.
+    Zajos adatok eltávolítása/simítása:
+        Szűrés: Mozaikszűrés, Gauss-szűrés a zaj csökkentésére.
+        Outlier kezelés: Statisztikai módszerek (pl. Z-score, IQR) vagy gépi tanulás alapú anomália detekció.
+    Adattípus konverzió: Dátumok, számok, szövegek megfelelő formátumba konvertálása.
+    Duplikált adatok kezelése: Azonos rekordok azonosítása és eltávolítása.
+
+Adattranszformáció és Normalizálás
+
+Az adatok transzformálása és normalizálása segíti a modelleket abban, hogy jobban megértsék az adatok közötti összefüggéseket és javítja a tanulási folyamat stabilitását.
+
+    Skálázás (Scaling): Az adatok egy meghatározott tartományba (pl. [0, 1] vagy -1, 1]) skálázása. Gyakori módszerek:
+        Min-Max Scaling (Normalizálás): Xnorm=X−XminXmax−XminXnorm​=Xmax​−Xmin​X−Xmin​​
+        Standardizálás (Standard Scaling): Xstd=X−μσXstd​=σX−μ​ (ahol μμ az átlag, σσ a szórás)
+    python
+
+    from sklearn.preprocessing import MinMaxScaler
+    import pandas as pd
+    import numpy as np
+
+    # Példa adat
+    data = {'Ár': [100, 105, 98, 110, 102],
+            'Volumen': [10000, 12000, 9500, 15000, 11000]}
+    df = pd.DataFrame(data)
+
+    # Min-Max skálázás
+    scaler = MinMaxScaler()
+    df_scaled = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
+    # print(df_scaled)
+
+    Jellemző mérnökösködés (Feature Engineering): Új jellemzők létrehozása a meglévő adatokból, amelyek javíthatják a modellek teljesítményét.
+        Technikai indikátorok: Mozgóátlagok (SMA, EMA), RSI, MACD, Bollinger szalagok.
+        Időbeli jellemzők: Nap, hét napja, hónap, évszám, ünnepek.
+        Árvolatilitás: Standard deviáció, ATR (Average True Range).
+        Százalékos változások: Napi, heti, havi hozamok.
+    Szöveges adatok előkészítése (NLP Preprocessing):
+        Tokenizálás: A szöveg szavakra vagy szótagokra bontása.
+        Stop szavak eltávolítása: Gyakori, de kevés információs értékkel bíró szavak (pl. "a", "az", "és") eltávolítása.
+        Stemming/Lemmatizálás: A szavak alapszavára való redukálása (pl. "futott", "futva" -> "fut").
+        Kisbetűssé alakítás: Az egységes kezelés érdekében.
+        Nevesített entitás felismerés (NER): Vállalatok, személyek, helyek, dátumok azonosítása.
+        Sentiment analízis: A szövegben rejlő érzelmi töltet (pozitív, negatív, semleges) kinyerése.
+    python
+
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    from nltk.stem import WordNetLemmatizer
+
+    # Töltse le a szükséges NLTK adatokat egyszer
+    # nltk.download('punkt')
+    # nltk.download('stopwords')
+    # nltk.download('wordnet')
+
+    def preprocess_text(text):
+        tokens = word_tokenize(text.lower())
+        stop_words = set(stopwords.words('english'))
+        filtered_tokens = [word for word in tokens if word.isalnum() and word not in stop_words]
+        lemmatizer = WordNetLemmatizer()
+        lemmatized_tokens = [lemmatizer.lemmatize(word) for word in filtered_tokens]
+        return " ".join(lemmatized_tokens)
+
+    # text = "Apple's stock prices soared today due to strong earnings report."
+    # preprocessed_text = preprocess_text(text)
+    # print(preprocessed_text) # Output: 'apple stock price soared today due strong earning report'
+
+Adatok Tárolása és Kezelése
+
+Az előkészített adatok hatékony tárolása és elérhetősége alapvető fontosságú a további modulok számára.
+
+    Adattárházak (Data Warehouses): Strukturált, tisztított és transzformált adatok tárolására, optimalizálva elemzési célokra.
+    Adattavak (Data Lakes): Nyers, strukturálatlan és félig strukturált adatok tárolására, lehetővé téve a rugalmas feldolgozást és elemzést.
+    Vektor adatbázisok (Vector Databases): Különösen fontosak a RAG (Retrieval-Augmented Generation) rendszer számára. A szöveges adatokból generált embeddingek (vektoros reprezentációk) tárolására szolgálnak, lehetővé téve a gyors szemantikai keresést.
+        Példa: Pinecone, Milvus, Weaviate. Ezek az adatbázisok képesek hatalmas mennyiségű vektoros adat tárolására és a legközelebbi szomszédok (nearest neighbors) hatékony keresésére, ami elengedhetetlen a releváns információk lekéréséhez az LLM számára.
+
+Az adatgyűjtés és előkészítés modul az alapja az autonóm kereskedési rendszernek. Egy robusztus és jól strukturált adat pipeline biztosítja, hogy a későbbi LLM és RAG alapú modulok a legpontosabb és legrelevánsabb információkkal dolgozhassanak, maximalizálva ezzel a rendszer profitabilitását és megbízhatóságát. Az adatok folyamatos frissítése és az adatminőség fenntartása kritikus a rendszer hosszú távú sikeréhez.
