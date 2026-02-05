@@ -1,0 +1,177 @@
+Az AI már nem játékszer: Az Agentic AI Forradalom Küszöbén
+
+A mesterséges intelligencia iparág egy monumentális átalakuláson megy keresztül. Ami eddig a jobb keresési találatok vagy a szórakoztató chatbotok fejlesztéséről szólt, az most egy új, sokkal mélyebb paradigmaváltásba torkollik. Ez az új korszak nem csupán "jobb AI"-t jelent, hanem az Agentic AI megjelenését, amely alapjaiban írja át azt, ahogyan az AI-ról gondolkodunk, és ahogyan interakcióba lépünk vele. Ez a guide segít megérteni ezt az átalakulást, és felkészülni az előttünk álló lehetőségekre és kihívásokra.
+Miért nem játékszer többé az AI?
+
+A korábbi AI-generációk jellemzően reaktívak voltak: inputot kaptak, feldolgozták, majd outputot generáltak. Gondoljunk egy chatbotra, amely válaszol egy kérdésre, vagy egy képgenerálóra, amely leírás alapján képet készít. Ezek a rendszerek rendkívül hasznosak voltak, de önmagukban nem rendelkeztek a proaktív problémamegoldás képességével. A "játékszer" jelleg onnan ered, hogy bár lenyűgözőek voltak, korlátozott volt az autonómiájuk és a komplex feladatok önálló végrehajtására való képességük.
+Az Agentic AI Megértése
+
+Az agentic AI (vagy ügynök AI) nem csupán jobb válaszokat ad vagy aranyosabb chatbotokat hoz létre. Lényegében olyan AI rendszerekről van szó, amelyek képesek:
+
+    Autonómiára és Célok Meghatározására: Nem csak utasításokra várnak, hanem saját maguk is képesek célokat kitűzni és azokat elérni.
+    Tervezésre és Végrehajtásra: Komplex feladatokat kisebb, kezelhető lépésekre bontanak, majd ezeket a lépéseket önállóan végrehajtják.
+    Tanulásra és Adaptációra: Képesek a környezetükből vagy a korábbi tapasztalataikból tanulni, és ennek megfelelően módosítani a viselkedésüket.
+    Eszközök Használatára: Képesek külső eszközöket (pl. API-k, böngészők, kódinterpretálók) használni feladataik elvégzéséhez.
+    Reflexióra és Önkorrekcióra: Képesek értékelni saját teljesítményüket, felismerni a hibákat és korrigálni a tervüket.
+
+Ez a proaktív, célirányos viselkedés az, ami gyökeresen megkülönbözteti őket a korábbi AI-tól. Az agentic AI rendszerek már nem csak "eszközök" a kezünkben, hanem sokkal inkább "partnerek", amelyek képesek bonyolult problémákat önállóan megoldani.
+Az Agentic AI Magja: A Tervezési Hurok
+
+Az agentic AI működésének alapja egy iteratív tervezési és végrehajtási hurok. Bár a konkrét implementációk változhatnak, a legtöbb ügynök a következő lépéseket követi:
+
+    Cél Meghatározása (Goal Definition): Az ügynök egy magas szintű célt kap (pl. "Foglalj repülőjegyet Budapestről New Yorkba a legolcsóbban.").
+    Tervezés (Planning): Az ügynök lebontja a célt kisebb, végrehajtható feladatokra (pl. "Keress járatokat", "Hasonlítsd össze az árakat", "Foglalj jegyet").
+    Végrehajtás (Execution): Az ügynök végrehajtja a terv egyes lépéseit, gyakran külső eszközök (pl. web scraping eszköz, légitársaság API) segítségével.
+    Megfigyelés és Visszajelzés (Observation & Feedback): Az ügynök figyeli a végrehajtás eredményeit.
+    Reflexió és Korrekció (Reflection & Correction): Az eredmények alapján az ügynök értékeli, hogy a célhoz közeledett-e. Ha szükséges, módosítja a tervet, vagy újratervez. Ez a hurok addig ismétlődik, amíg a cél el nem éri.
+
+Példa egy Egyszerű Agentic AI Működésére
+
+Képzeljünk el egy egyszerű ügynököt, amelynek feladata, hogy megtalálja a mai budapesti időjárást és elküldje nekünk e-mailben.
+
+Cél: "Find today's weather in Budapest and email it to me."
+
+Tervezés:
+
+    Keresd meg Budapest mai időjárását.
+    Formázd az időjárási adatokat egy e-mail üzenetbe.
+    Küldd el az e-mailt a megadott címre.
+
+Végrehajtás (Iteráció 1):
+
+    Lépés: Keresd meg Budapest mai időjárását.
+        Eszközhasználat: weather_api.get_weather("Budapest")
+        Eredmény: {"temperature": 25, "condition": "sunny"}
+    Reflexió: Sikerült az időjárás lekérése. Tovább a következő lépésre.
+
+Végrehajtás (Iteráció 2):
+
+    Lépés: Formázd az időjárási adatokat egy e-mail üzenetbe.
+        Belső logikai művelet: Üzenet összeállítása: "A mai budapesti időjárás: 25°C, napos."
+        Eredmény: Formázott szöveg.
+    Reflexió: Sikerült az üzenet formázása. Tovább a következő lépésre.
+
+Végrehajtás (Iteráció 3):
+
+    Lépés: Küldd el az e-mailt a megadott címre.
+        Eszközhasználat: email_sender.send_email("én@példa.com", "Időjárás Budapest", "A mai budapesti időjárás: 25°C, napos.")
+        Eredmény: E-mail elküldve.
+    Reflexió: A cél sikeresen teljesítve.
+
+Ez egy nagyon leegyszerűsített példa, de jól illusztrálja a tervezési-végrehajtási-reflexiós ciklust. Valós ügynökök sokkal komplexebb problémákat oldanak meg, több eszközt használnak, és hosszabb, bonyolultabb terveket hajtanak végre.
+Miért most? A Forradalom Hajtóerői
+
+Az agentic AI koncepciója nem teljesen új, de az utóbbi időben tapasztalható robbanásszerű fejlődés több tényezőnek is köszönhető:
+
+    Nagy Nyelvi Modellek (LLM-ek) Fejlődése: Az olyan modellek, mint a GPT-4, Claude 3, Gemini, hihetetlenül jók a logikai következtetésben, a tervezésben és a természetes nyelv megértésében és generálásában. Ezek az LLM-ek az agentic AI "agyai", amelyek a tervezést és a reflexiót végzik.
+    Eszközintegráció (Tool Use/Function Calling): Az LLM-ek ma már képesek külső API-kat és eszközöket meghívni és azok kimeneteit értelmezni. Ez kritikus, mert így az AI nem csak gondolkodik, hanem cselekedni is képes a valós világban.
+    Keretrendszerek Megjelenése: Az olyan keretrendszerek, mint a LangChain, LlamaIndex, vagy a Microsoft AutoGen, egyszerűsítik az ügynökök építését, modularitást és szabványosított komponenseket biztosítva a tervezéshez, memóriakezeléshez és eszközhasználathoz.
+    Fokozott Kereslet az Automatizálásra: A vállalatok és egyének egyre inkább keresik a módját, hogy a komplex, többlépcsős feladatokat automatizálják, amelyek túlmutatnak az egyszerű scriptek vagy robotok képességein.
+
+Az Agentic AI Alkalmazási Területei
+
+Az agentic AI forradalom ígérete hatalmas, és számos iparágat és tevékenységi kört alakíthat át:
+
+    Szoftverfejlesztés:
+        Autonóm Kódolás: AI ügynökök, amelyek képesek specifikációk alapján kódot írni, tesztelni, hibát keresni és refaktorálni.
+        CI/CD Pipeline Automatizálás: Intelligens ügynökök, amelyek monitorozzák a build folyamatokat, automatikusan javítanak kisebb hibákat, vagy javaslatokat tesznek.
+    Ügyfélszolgálat és Támogatás:
+        Proaktív Támogatási Ügynökök: Olyan AI, amely nemcsak válaszol a kérdésekre, hanem képes komplex problémákat megoldani (pl. visszatérítést intézni, időpontot foglalni külső rendszerekben).
+        Személyre Szabott Vásárlási Asszisztensek: Ügynökök, amelyek segítik a felhasználót a termékek megtalálásában, összehasonlításában, és akár a vásárlás lebonyolításában is.
+    Kutatás és Adatbányászat:
+        Tudományos Asszisztensek: Ügynökök, amelyek irodalmat kutatnak, adatokat gyűjtenek, hipotéziseket generálnak és kísérleteket terveznek (szimulált környezetben).
+        Piaci Trendek Elemzése: Agentek, amelyek folyamatosan figyelik a piaci híreket, elemzéseket és a közösségi média trendeket, majd összefoglalókat és előrejelzéseket készítenek.
+    Pénzügy és Befektetések:
+        Intelligens Kereskedési Ügynökök: Ügynökök, amelyek valós idejű piaci adatokat elemeznek, stratégiai döntéseket hoznak és végrehajtanak tranzakciókat.
+        Pénzügyi Tervezés: Személyes pénzügyi asszisztensek, amelyek nyomon követik a kiadásokat, befektetési tanácsokat adnak és automatizálják a megtakarításokat.
+    Egészségügy:
+        Diagnosztikai Támogatás: Ügynökök, amelyek elemzik a betegadatokat, orvosi irodalmat és segítenek a diagnózis felállításában vagy kezelési tervek kidolgozásában.
+        Gyógyszerfejlesztés: AI ügynökök, amelyek szimulálják molekuláris interakciókat és segítenek új gyógyszerek felfedezésében.
+
+Agentic AI Keretrendszerek és Technikai Alapok
+
+Az agentic AI megvalósításához számos nyílt forráskódú és kereskedelmi keretrendszer áll rendelkezésre, amelyek megkönnyítik az ügynökök építését.
+Népszerű Keretrendszerek
+
+    LangChain: Az egyik legnépszerűbb keretrendszer, amely moduláris komponenseket (LLM-ek, prompt template-ek, eszközök, ügynökök, memóriák) biztosít komplex LLM alkalmazások, így ügynökök építéséhez.
+        Kulcskomponensek:
+            Chains (Láncok): Meghatározott sorrendben futó komponensek.
+            Agents (Ügynökök): Dinamikusan döntő komponensek, amelyek a bemenet alapján választják ki a következő lépést és az eszközöket.
+            Tools (Eszközök): Az LLM által meghívható funkciók (pl. kereső, számológép, API hívás).
+            Memory (Memória): Az ügynök képes emlékezni a korábbi interakciókra.
+
+    LlamaIndex: Főleg az RAG (Retrieval-Augmented Generation) alkalmazásokra fókuszál, de agentic képességeket is kínál, különösen a strukturálatlan adatok feldolgozásában és felhasználásában.
+
+    Microsoft AutoGen: Lehetővé teszi több autonóm ügynök együttműködését, amelyek társalognak egymással és közösen oldanak meg feladatokat. Ez különösen hasznos komplex, többlépcsős problémák esetén, ahol különböző "szakértelmű" ügynökökre van szükség.
+
+Egy Egyszerű Agentic AI Példa (Python LangChain-nel)
+
+Ez a példa bemutatja, hogyan lehet egy egyszerű ügynököt építeni, amely képes webes keresést végezni és matematikai műveleteket végrehajtani.
+python
+
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain_core.prompts import PromptTemplate
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_community.utilities import WikipediaAPIWrapper
+from langchain.tools import WikipediaQueryRun
+from langchain.chains import LLMMathChain
+from langchain_openai import OpenAI
+
+# 1. Eszközök definiálása
+# Webes keresés
+search = TavilySearchResults()
+
+# Matematikai számítás
+llm_math_chain = LLMMathChain.from_llm(llm=OpenAI(temperature=0))
+
+# Wikipédia keresés
+wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+
+tools = [
+    search,
+    llm_math_chain,
+    wikipedia
+]
+
+# 2. LLM inicializálása
+llm = OpenAI(temperature=0) # Alacsonyabb temperature a determinisztikusabb viselkedésért
+
+# 3. Prompt Template definiálása
+# Ez a prompt segít az ügynöknek gondolkodni (ReAct mintázat)
+template = """Válaszolj a következő kérdésekre a lehető legjobban. Szükség esetén hozzáférésed van a következő eszközökhöz:
+
+{tools}
+
+Használd a következő formátumot:
+
+Question: a bemeneti kérdés, amire válaszolnod kell
+Thought: mindig el kell gondolkodnod azon, hogy mit tegyél
+Action: a végrehajtandó művelet (csak egyet a {tool_names} közül)
+Action Input: a művelet bemenete
+Observation: a művelet eredménye
+... (ez a Thought/Action/Action Input/Observation ismétlődhet)
+Thought: tudom a végső választ
+Final Answer: a végső válasz a bemeneti kérdésre
+
+Kezdődjön!
+
+Question: {input}
+Thought:{agent_scratchpad}"""
+
+prompt = PromptTemplate.from_template(template)
+
+# 4. Ügynök létrehozása
+agent = create_react_agent(llm, tools, prompt)
+
+# 5. Ügynök futtató környezet (Executor) létrehozása
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# 6. Kérdés feltevése
+question = "Mi a 237 szorzata 14-gyel? Ez az eredmény hány százaléka a 5000-nek? Keress rá az eredmény Wikipédia oldalára."
+agent_executor.invoke({"input": question})
+
+Magyarázat:
+
+    Tools (Eszközök): Definiáltunk három eszközt: webes keresőt (Tavily), matematikai láncot (LLMMathChain) és Wikipédia keresőt. Ezeket az ügynök hívhatja meg a feladatok elvégzésére.
+    LLM (Nagy Nyelvi Modell): A OpenAI modell az ügynök "agyát" képezi, amely a gondolkodást és a döntéshozást végzi.
+    Prompt Template: A template irányítja az LLM-et, hogy gondolkodjon (Thought), válasszon eszközt (Action), hajtsa végre azt (Action Input), figyelje meg az eredményt (Observation), majd ismételje a ciklust, amíg el nem jut a végső válaszig (Final Answer)
