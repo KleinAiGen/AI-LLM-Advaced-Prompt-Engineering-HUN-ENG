@@ -1,0 +1,142 @@
+Láthatatlan Tinta a Digitális Világban: Steganográfia és NLP a Zero-Width Karakterekkel
+
+A digitális kommunikáció korszakában az üzenetek titkossága és észrevétlensége egyre nagyobb figyelmet kap. Miközben a titkosítás széles körben ismert módszer az adatok védelmére, a steganográfia egy másik, sokkal finomabb megközelítést kínál: az üzenetek elrejtését oly módon, hogy magának a titkosítás tényének nyoma sem marad. Ez a guide a steganográfia és a modern természetes nyelvfeldolgozás (NLP) izgalmas metszéspontjára kalauzolja az olvasót, különös tekintettel a zero-width karakterek (ZWC) kihasználására mint "digitális láthatatlan tintára".
+A Steganográfia Alapjai: Több mint Titkosítás
+
+A steganográfia célja nem az üzenet olvashatatlanná tétele, hanem a létezésének elrejtése. A titkosítás egy zárt boríték, melyen jól látható, hogy valamit elrejtettek benne, csak éppen nem olvasható. A steganográfia viszont egy teljesen hétköznapi tárgyba rejti el a titkot, anélkül, hogy annak gyanús jellege lenne. Történelmileg ez jelenthette a viasztáblára írt üzenet haj alatti elrejtését, vagy a tinta használatát, amely csak hő hatására válik láthatóvá. A digitális korban a képfájlok pixeladatainak manipulálása, vagy hangfájlok zajszintjének modulálása voltak a gyakori módszerek.
+
+A steganográfia és a titkosítás gyakran kéz a kézben jár. Egy titkosított üzenet elrejtése steganográfiai módszerekkel tovább növeli a biztonságot, hiszen még ha valaki észleli is az üzenet létezését, akkor is meg kell küzdenie a titkosítással.
+A Rejtett Üzenetek Motivációi
+
+Az üzenetrejtés motivációi sokrétűek lehetnek, és nem feltétlenül rosszindulatúak. Míg a bűnözők és a kémek előszeretettel használják a steganográfiát, addig újságírók, aktivisták vagy éppen a cenzúra sújtotta országok lakói számára létfontosságú lehet a biztonságos, észrevétlen kommunikáció. Gondoljunk csak olyan esetekre, amikor egy diktatórikus rezsim minden kommunikációt ellenőriz, és a legkisebb gyanús jel is súlyos következményekkel járhat. Ebben a környezetben a "digitális láthatatlan tinta" nem csupán technikai érdekesség, hanem szabadságharc eszközévé is válhat.
+Zero-Width Karakterek: A Láthatatlan Tinta Digitális Megtestesülése
+
+A Unicode szabvány számos olyan karaktert definiál, amelyeknek nincs vizuális szélessége vagy reprezentációja. Ezeket nevezzük zero-width karaktereknek (ZWC). Bár elsődleges céljuk a szövegek helyes megjelenítésének és formázásának segítése (pl. ligatúrák létrehozása, vagy összetett írásrendszerekben a karakterek összekapcsolása), láthatatlanságuk miatt kiválóan alkalmasak steganográfiai célokra.
+
+A leggyakrabban használt ZWC-k a következők:
+
+    Zero Width Joiner (ZWJ, U+200D): Összekapcsol két vagy több karaktert, hogy egyetlen ligatúrát vagy összetett szimbólumot alkossanak. Például az "F" és "i" karakterek között elhelyezve létrehozhatja az "ﬁ" ligatúrát (bár ez a modern betűtípusokban gyakran automatikus).
+    Zero Width Non-Joiner (ZWNJ, U+200C): Megakadályozza, hogy két karakter összekapcsolódjon, még akkor is, ha a kontextus szerint össze kellene. Hasznos lehet például arab vagy indiai írásrendszerekben.
+    Zero Width Space (ZWS, U+200B): Egy olyan szóköz, amelynek nincs szélessége. Főleg szövegtörések jelzésére szolgál, ahol egy hosszú szó két sorba törhet.
+
+Ezek a karakterek teljesen láthatatlanok a legtöbb szövegszerkesztőben, weboldalon és kommunikációs platformon, mivel nem jelenítenek meg semmilyen vizuális elemet. Az egyetlen módja annak, hogy észrevegyük őket, az, ha speciális eszközökkel (pl. hexadecimális szerkesztővel, vagy erre a célra írt szkripttel) vizsgáljuk a szöveg belső reprezentációját.
+Üzenetek Kódolása ZWC-kkel
+
+A ZWC-kkel történő üzenetkódolás alapja bináris információk reprezentálása a karakterek kombinációival. A legegyszerűbb megközelítés az, ha minden egyes bitet (0 vagy 1) egy adott ZWC-vel kódolunk.
+
+Példa kódolási séma:
+
+    0 bit: U+200C (ZWNJ)
+    1 bit: U+200D (ZWJ)
+    Elválasztó (opcionális): U+200B (ZWS) – két karaktercsoport, például betűk vagy szavak közötti elhelyezéssel tovább növelhető a láthatatlanság és a rejtett adat elosztása.
+
+Folyamat:
+
+    A rejtendő üzenetet bináris formába alakítjuk (pl. ASCII karakterek bináris reprezentációja).
+    Minden egyes bitet a fenti séma szerint ZWC-re cserélünk.
+    Ezeket a ZWC-ket beillesztjük egy "fedőszövegbe" (carrier text). A beillesztés történhet például minden szó után, minden mondat után, vagy akár szavak belsejébe, a láthatóság minimalizálása érdekében.
+
+Példa:
+
+Rejtett üzenet: "Szia" Bináris reprezentáció (ASCII): S: 01010011 z: 01111010 i: 01101001 a: 01100001
+
+A fedőszöveg: "Ez egy nagyon fontos üzenet."
+
+Ha a bináris 0-t U+200C-vel, az 1-et U+200D-vel kódoljuk, a "Szia" üzenet ZWC reprezentációja a fedőszövegbe ágyazva valahogy így nézne ki (a láthatóság kedvéért szögletes zárójelekkel jelölve a ZWC-ket):
+
+"Ez egy[U+200D][U+200C][U+200D][U+200C][U+200C][U+200D][U+200D][U+200C] nagyon[U+200C][U+200D][U+200D][U+200D][U+200D][U+200C][U+200D][U+200C] fontos[U+200C][U+200D][U+200D][U+200C][U+200D][U+200C][U+200C][U+200D] üzenet.[U+200C][U+200D][U+200D][U+200C][U+200C][U+200C][U+200C][U+200D]"
+
+Ez a módszer rendkívül hatékony, mert az üzenet hossza gyakorlatilag korlátlan, ameddig van elegendő fedőszöveg. Emellett a ZWC-k nem befolyásolják a szöveg vizuális megjelenését, így a legtöbb felhasználó számára teljesen észrevétlen marad a rejtett tartalom.
+Kódpélda (Python)
+python
+
+def text_to_binary(text):
+    return ''.join(format(ord(char), '08b') for char in text)
+
+def binary_to_zwc(binary_string):
+    zwc_map = {'0': '\u200c', '1': '\u200d'} # ZWNJ for 0, ZWJ for 1
+    return ''.join(zwc_map[bit] for bit in binary_string)
+
+def embed_zwc(carrier_text, secret_message):
+    binary_secret = text_to_binary(secret_message)
+    zwc_secret = binary_to_zwc(binary_secret)
+    
+    # Egyszerű beágyazás: minden szó után
+    words = carrier_text.split()
+    embedded_words = []
+    
+    zwc_index = 0
+    for i, word in enumerate(words):
+        embedded_words.append(word)
+        if zwc_index < len(zwc_secret):
+            # Példaként 8 bitet (1 karaktert) ágyazunk be minden szó után
+            # Komplexebb logika kellene a teljes üzenet beágyazásához
+            chars_to_embed = min(8, len(zwc_secret) - zwc_index)
+            embedded_words.append(zwc_secret[zwc_index : zwc_index + chars_to_embed])
+            zwc_index += chars_to_embed
+            
+    # Ha maradt ZWC, azt a szöveg végére rakjuk (ideális esetben ez nem történik meg)
+    if zwc_index < len(zwc_secret):
+        embedded_words.append(zwc_secret[zwc_index:])
+            
+    return ' '.join(embedded_words)
+
+def extract_zwc(embedded_text):
+    zwc_only = ''.join(char for char in embedded_text if char in ['\u200c', '\u200d'])
+    return zwc_only
+
+def zwc_to_binary(zwc_string):
+    binary_map = {'\u200c': '0', '\u200d': '1'}
+    return ''.join(binary_map[char] for char in zwc_string)
+
+def binary_to_text(binary_string):
+    # Biztosítani kell, hogy a bináris string 8 bites blokkokra osztható legyen
+    if len(binary_string) % 8 != 0:
+        return "" # Hiba vagy hiányos üzenet
+
+    text_chars = []
+    for i in range(0, len(binary_string), 8):
+        byte = binary_string[i:i+8]
+        text_chars.append(chr(int(byte, 2)))
+    return ''.join(text_chars)
+
+# Használat:
+carrier = "Ez egy példa szöveg, amiben elrejtünk egy titkos üzenetet."
+secret = "Szia, világ!"
+
+embedded_message_carrier = embed_zwc(carrier, secret)
+print(f"Eredeti: {carrier}")
+print(f"Beágyazott (vizuálisan ugyanaz): {embedded_message_carrier}")
+
+# Ellenőrzés: nyomtatjuk a beágyazott ZWC karaktereket külön (debug célra)
+print(f"Extrahált ZWC-k: {repr(extract_zwc(embedded_message_carrier))}")
+
+extracted_zwc_string = extract_zwc(embedded_message_carrier)
+binary_extracted = zwc_to_binary(extracted_zwc_string)
+decoded_secret = binary_to_text(binary_extracted)
+
+print(f"Kódolt bináris (részlet): {binary_extracted[:64]}...")
+print(f"Dekódolt titkos üzenet: {decoded_secret}")
+
+Ez a kód egy egyszerű példát mutat be a ZWC-kkel történő kódolásra és dekódolásra. Fontos megjegyezni, hogy a embed_zwc függvényben az "Egyszerű beágyazás: minden szó után" rész csak egy demonstrációs célú, alapvető logika. A valós alkalmazások sokkal kifinomultabb algoritmusokat használnak a ZWC-k elosztására a fedőszövegben, hogy minimalizálják az észlelés esélyét.
+A Modern NLP Szerepe: Több mint Egyszerű Beágyazás
+
+A zero-width karakterek önmagukban rendkívül hatékonyak a rejtett üzenetek átvitelére, de az észlelésük elleni védelem tovább növelhető a természetes nyelvfeldolgozás (NLP) eszközeivel. Egy intelligens steganográfiai rendszer nem csak beilleszti a ZWC-ket, hanem úgy teszi, hogy a fedőszöveg statisztikai jellemzői a lehető legkevésbé változzanak.
+
+A beágyazott ZWC-k megváltoztathatják a szöveg hossza (karakterszám) és esetleg a szógyakoriság egyes finomabb aspektusait, ha az elrejtési stratégia nem elég kifinomult. Az NLP technikák segítségével azonban optimalizálható a fedőszöveg kiválasztása és a ZWC-k elhelyezése.
+NLP Alapú Stratégiák
+
+    Szöveggenerálás és Parafrázis:
+        Generatív modellek (pl. GPT-3/4): Az üzenet elrejtéséhez nem egy létező szöveget módosítunk, hanem egy generatív NLP modellt használunk arra, hogy egy teljesen új szöveget hozzon létre, amelybe már a generálás során beágyazzuk a ZWC-ket. Ezáltal a szöveg "természetesnek" hat, és nem hordozza magán az utólagos módosítás nyomait.
+        Parafrázis: Egy létező szöveg átfogalmazása, miközben fenntartja az eredeti jelentést. Az átfogalmazott szövegbe az NLP eszközökkel úgy ágyazhatók be a ZWC-k, hogy a mondatok struktúrája, szóhasználata ne keltsen gyanút.
+
+    Statisztikai Szövegelemzés és Optimális Elhelyezés:
+        Gyakorisági elemzés: Az NLP segíthet azonosítani a szövegben azokat a pontokat (pl. írásjelek után, bizonyos szavak vagy kifejezések között), ahol a ZWC-k beillesztése a legkevésbé valószínű, hogy megváltoztatja a szöveg statisztikai jellemzőit vagy mintázatait (pl. a Markov-lánc modellek vagy n-gram gyakoriságok).
+        Kontextusfüggő elhelyezés: Az NLP modellek képesek megérteni a szöveg kontextusát, így a ZWC-ket olyan helyekre lehet beilleszteni, ahol a természetes nyelvtan vagy stílus megengedőbb. Például egy írói stílust utánzó modell segíthet meghatározni, hova illenek a "láthatatlan szóközök" anélkül, hogy a stílus felborulna.
+
+    Szintaktikai és Szemantikai Integritás Fenntartása:
+        Part-of-Speech Tagging (PoS): Az NLP segítségével azonosíthatók a szófajok, ami lehetővé teszi, hogy a ZWC-k elhelyezése ne zavarja meg a mondatok szintaktikai szerkezetét.
+        Named Entity Recognition (NER): Ha az üzenetet neveket vagy helyszíneket tartalmazó szövegbe ágyazzuk, a NER segíthet a megfelelő kontextus fenntartásában, és abban, hogy a rejtett üzenet ne befolyásolja a felismerést.
+
+    Adatvesztés Elleni Védelem (Reziliencia):
+        Redundancia: Az NLP-alapú steganográfia lehetőséget ad redundancia beépítésére a kódolási folyamatba. Ha valaki megpróbálja eltávolítani a ZWC-ket a szövegből (ami egy potenciális támadási mód), a redundáns kódolás segíthet az üzenet egy részének helyreállításában.
