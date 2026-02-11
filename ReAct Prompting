@@ -1,0 +1,211 @@
+ReAct Prompting: Gondolkodás és Akció a Dinamikus Problémamegoldásért
+
+A ReAct (Reasoning and Acting) prompting egy erőteljes technika, amely a gondolkodás (CoT - Chain-of-Thought) és a cselekvés ("akció") kombinációjával teszi lehetővé a nagy nyelvi modellek (LLM-ek) számára, hogy összetett problémákat oldjanak meg dinamikus környezetben. Ez a megközelítés felruházza a modellt azzal a képességgel, hogy nemcsak belsőleg érveljen egy feladat megoldása során, hanem külső eszközöket, például keresőmotorokat, API-kat vagy adatbázisokat is hatékonyan használjon fel az információgyűjtéshez és a döntéshozatalhoz. A ReAct prompting hidat képez a puszta gondolkodás és a valós világgal való interakció között, jelentősen kibővítve az LLM-ek alkalmazási területét és problémamegoldó képességét.
+A ReAct Prompting Alapjai
+
+A ReAct lényegében egy iteratív folyamat, ahol a modell felváltva generál "gondolkodás" (Thought) és "cselekvés" (Action) lépéseket. Minden egyes lépés célja a probléma megértésének elmélyítése és a megoldás felé való haladás.
+Gondolkodás (Thought)
+
+Ez a lépés a modell belső érvelését reprezentálja. Itt a modell elemzi a jelenlegi állapotot, megfogalmazza a következő lépés logikáját, azonosítja a hiányzó információkat, vagy megtervezi a további cselekvéseket. Ez hasonló a Chain-of-Thought promptinghoz, ahol a modell részletes, lépésenkénti magyarázatot ad a gondolatmenetéről.
+Cselekvés (Action)
+
+Miután a modell megfogalmazta a gondolatát, meghatározhat egy "akciót", amelyet végre kell hajtania. Ez az akció lehet például egy keresőmotor használata, egy API hívás, egy adatbázis lekérdezés, vagy akár egy specifikus számítás elvégzése. Az akciók lehetővé teszik a modell számára, hogy kilépjen a saját "tudásbázisából" és friss, valós idejű információkat gyűjtsön, vagy külső funkcionalitást használjon.
+Megfigyelés (Observation)
+
+Minden "akció" után a modell kap egy "megfigyelést" (Observation). Ez a megfigyelés az akció eredménye. Például, ha a modell egy keresőmotort használt, a megfigyelés a keresési eredmények listája lesz. Ha egy API-t hívott meg, a megfigyelés az API válasza lesz. Ez a visszajelzés kulcsfontosságú, mivel ez alapján tudja a modell értékeli az akció sikerességét, és megtervezni a következő gondolkodás/cselekvés lépést.
+Az Iteratív Folyamat
+
+A ReAct prompting lényege, hogy ez a Thought -> Action -> Observation ciklus iteratívan ismétlődik, amíg a modell el nem éri a megoldást, vagy amíg egy előre meghatározott lépésszámot el nem ér. Ez a ciklus teszi lehetővé a modell számára, hogy adaptívan reagáljon a változó körülményekre és a problémák komplexitására.
+Miért Hatékony a ReAct?
+
+A ReAct prompting több okból is rendkívül hatékony:
+
+    Valós idejű információszerzés: Képes friss és specifikus információkat beszerezni a külső eszközök (pl. webkereső) segítségével, áthidalva az LLM statikus tréningadatainak korlátait.
+    Problémamegoldó képesség javulása: Azáltal, hogy a modell lépésről lépésre érvel és cselekszik, képes lebontani a komplex problémákat kisebb, kezelhetőbb részekre.
+    Magyarázhatóság (Explainability): A gondolkodási lépések világosan dokumentálják a modell döntéshozatali folyamatát, ami javítja a magyarázhatóságot és a hibakeresést.
+    Robusztusság: A külső eszközök használata révén a modell robusztusabbá válik az ismeretlen vagy változó információkkal szemben.
+    Eszközhasználat (Tool Use): Alapvető mechanizmust biztosít az LLM-ek számára, hogy külső eszközöket hívjanak meg, ami egyre fontosabb a modern AI rendszerekben.
+
+ReAct Prompt Szerkezet
+
+A ReAct promptok általában egy specifikus formátumot követnek, hogy a modell könnyen értelmezze a feladatot és a szükséges lépéseket.
+javascript
+
+Kérdés: [A felhasználó által feltett probléma vagy kérdés]
+
+Eszközök:
+[Tool_Name_1](bemenet): [Leírás az eszközről, és milyen bemeneteket vár]
+[Tool_Name_2](bemenet): [Leírás az eszközről, és milyen bemeneteket vár]
+...
+
+Gondolat: Először is meg kell értenem a kérdést. Meg kell határoznom, milyen információra van szükségem, és milyen eszközök állnak rendelkezésemre.
+Akció: [Tool_Name](bemenet)
+Megfigyelés: [Az eszköz válasza]
+Gondolat: Az előző megfigyelés alapján most elemeznem kell az eredményt és meghatároznom a következő lépést.
+Akció: [Tool_Name](bemenet)  (opcionális, ha több eszközhasználat szükséges)
+Megfigyelés: [Az eszköz válasza]
+...
+Gondolat: A gyűjtött információk és az eddigi érvelés alapján meg tudom fogalmazni a végső választ.
+Végső válasz: [A megoldás]
+
+Példa ReAct Promptra
+
+Tegyük fel, hogy a modellnek meg kell találnia a "Hány lakosa van Londonnak és mi a leghíresebb folyója?" kérdésre a választ. Rendelkezésre áll egy search_tool nevű eszköz.
+javascript
+
+Kérdés: Hány lakosa van Londonnak és mi a leghíresebb folyója?
+
+Eszközök:
+search_tool(query: string): Keresést hajt végre a weben a megadott lekérdezéssel.
+
+Gondolat: Először is meg kell találnom London lakosságát. Ehhez a search_tool-t fogom használni.
+Akció: search_tool("London lakossága")
+Megfigyelés: London lakossága 2023-ban becslések szerint körülbelül 9 millió fő.
+
+Gondolat: Most, hogy megvan a lakosság, meg kell találnom London leghíresebb folyóját. Ehhez is a search_tool-t használom.
+Akció: search_tool("London leghíresebb folyója")
+Megfigyelés: London leghíresebb folyója a Temze (Thames).
+
+Gondolat: Mindkét információt megszereztem. Most összeállíthatom a végső választ.
+Végső válasz: London lakossága körülbelül 9 millió fő, és a leghíresebb folyója a Temze.
+
+Ez a példa illusztrálja, hogyan építi fel a modell lépésről lépésre a megoldást, miközben külső eszközt használ az információszerzéshez.
+ReAct Prompting Megvalósítása
+
+A ReAct prompting megvalósítása jellemzően két fő összetevőből áll: maga az LLM és egy "ügynök" (agent), amely koordinálja a LLM és a külső eszközök közötti interakciót.
+Az Ügynök (Agent) Szerepe
+
+Az ügynök felelős a következőkért:
+
+    A prompt felépítése: Összeállítja a promptot, beleértve a kérdést, az elérhető eszközöket és az előző Gondolat/Akció/Megfigyelés lépéseket.
+    Az LLM hívása: Elküldi a promptot az LLM-nek és fogadja a válaszát.
+    A válasz értelmezése: Kinyeri az LLM válaszából a "Gondolatot" és az "Akciót" (ha van).
+    Az Akció végrehajtása: Ha az LLM egy "Akciót" javasolt, az ügynök végrehajtja azt (pl. meghívja a search_tool-t).
+    A Megfigyelés rögzítése: Rögzíti az akció eredményét ("Megfigyelés").
+    Az iteráció folytatása: Hozzáadja a Megfigyelést a prompt történetéhez, és folytatja a ciklust, amíg a modell "Végső válasz"-t nem generál, vagy egy limitet el nem ér.
+
+Eszközök (Tools)
+
+Az eszközök olyan funkciók, amelyeket az LLM az ügynökön keresztül hívhat meg. Ezek lehetnek egyszerű Python függvények, API kliensek, adatbázis lekérdezők stb. Fontos, hogy az eszközök leírása egyértelmű legyen, hogy az LLM pontosan tudja, mikor és hogyan használja őket.
+Eszköz Deklaráció Példa (Python)
+python
+
+class SearchTool:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        # Inicializálja a keresőmotor klienst (pl. Google Search API)
+
+    def run(self, query: str) -> str:
+        """Keresést hajt végre a weben a megadott lekérdezéssel."""
+        # Itt valósul meg a tényleges keresés hívása
+        # Például: response = google_search_api.search(query)
+        # return response.results[0].snippet
+        if "London lakossága" in query:
+            return "London lakossága 2023-ban becslések szerint körülbelül 9 millió fő."
+        elif "London leghíresebb folyója" in query:
+            return "London leghíresebb folyója a Temze (Thames)."
+        else:
+            return "Nincs releváns találat."
+
+# Az ügynöknek átadott eszközök
+tools = {
+    "search_tool": SearchTool(api_key="YOUR_API_KEY")
+}
+
+# Az LLM számára a promptban leírt eszköz
+tool_descriptions = """
+Eszközök:
+search_tool(query: string): Keresést hajt végre a weben a megadott lekérdezéssel.
+"""
+
+Az LLM Kérés Kezelése
+
+Az LLM-nek generálnia kell a Thought, Action, és Végső válasz tagokat. Az ügynöknek képesnek kell lennie ezeket a struktúrákat felismerni és kivonatolni az LLM válaszából. Ez általában reguláris kifejezésekkel vagy specifikus tokenek keresésével történik.
+python
+
+import re
+
+def parse_llm_response(response: str):
+    thought_match = re.search(r"Gondolat: (.*)", response)
+    action_match = re.search(r"Akció: (\w+)\((.*)\)", response)
+    final_answer_match = re.search(r"Végső válasz: (.*)", response)
+
+    if final_answer_match:
+        return "FINAL_ANSWER", final_answer_match.group(1).strip()
+    elif thought_match and action_match:
+        thought = thought_match.group(1).strip()
+        action_name = action_match.group(1).strip()
+        action_input = action_match.group(2).strip()
+        return "ACTION", thought, action_name, action_input
+    elif thought_match:
+        return "THOUGHT", thought_match.group(1).strip()
+    else:
+        return "UNKNOWN", response
+
+A ReAct ciklus pszeudokódja
+python
+
+def react_agent(llm, tools, question, max_iterations=5):
+    history = f"Kérdés: {question}\n\n{tool_descriptions}\n"
+    
+    for i in range(max_iterations):
+        # 1. Hívjuk meg az LLM-et a jelenlegi történettel
+        llm_response = llm.generate(history + "Gondolat:")
+        
+        # 2. Értelmezzük az LLM válaszát
+        response_type, *parsed_data = parse_llm_response(llm_response)
+        
+        if response_type == "FINAL_ANSWER":
+            print(f"Végső válasz: {parsed_data[0]}")
+            return parsed_data[0]
+        elif response_type == "ACTION":
+            thought, action_name, action_input = parsed_data
+            print(f"Gondolat: {thought}")
+            print(f"Akció: {action_name}({action_input})")
+            history += f"Gondolat: {thought}\nAkció: {action_name}({action_input})\n"
+            
+            # 3. Hajtsuk végre az akciót
+            if action_name in tools:
+                tool_output = tools[action_name].run(action_input)
+                print(f"Megfigyelés: {tool_output}")
+                history += f"Megfigyelés: {tool_output}\n"
+            else:
+                error_msg = f"Hiba: Ismeretlen eszköz: {action_name}"
+                print(error_msg)
+                history += f"Megfigyelés: {error_msg}\n"
+        else:
+            print(f"Hiba az LLM válasz értelmezésében: {llm_response}")
+            break # Vagy kezelje a hibát másképp
+            
+    print("Elérte a maximális iterációt anélkül, hogy végső választ kapott volna.")
+    return None
+
+# Fiktív LLM osztály
+class MockLLM:
+    def generate(self, prompt_history):
+        if "London lakossága" in prompt_history and "London leghíresebb folyója" not in prompt_history:
+            return """
+Gondolat: Először is meg kell találnom London lakosságát. Ehhez a search_tool-t fogom használni.
+Akció: search_tool("London lakossága")
+"""
+        elif "London leghíresebb folyója" in prompt_history and "Temze" in prompt_history:
+             return """
+Gondolat: Mindkét információt megszereztem. Most összeállíthatom a végső választ.
+Végső válasz: London lakossága körülbelül 9 millió fő, és a leghíresebb folyója a Temze.
+"""
+        elif "London lakossága" in prompt_history: # Ha már megtaláltuk a lakosságot
+            return """
+Gondolat: Most, hogy megvan a lakosság, meg kell találnom London leghíresebb folyóját. Ehhez is a search_tool-t használom.
+Akció: search_tool("London leghíresebb folyója")
+"""
+        return "Gondolat: Nem tudom, mit tegyek."
+
+# Példa futtatása
+llm_instance = MockLLM()
+react_agent(llm_instance, tools, "Hány lakosa van Londonnak és mi a leghíresebb folyója?")
+
+Gyakorlati Tippek a ReAct Promptinghoz
+
+    Tiszta eszközleírások: A legfontosabb, hogy az eszközök leírása egyértelmű, pontos és tömör legyen. Az LLM ezek alapján dönti el, melyik eszközt használja és milyen bemenettel.
+    Prompt mérnöki munka: Kísérletezzen a prompt bevezető részével, a gondolat és akció lépések formátumával, hogy a modell a legmegbízhatóbban kövesse a ReAct mintát.
+    Hibakezelés: Készüljön fel arra, hogy az LLM hibás akciókat generálhat, vagy nem létező eszközöket hívhat meg. Az ügynöknek képesnek kell lennie ezeket a helyzeteket kezelni, például hibaüzenetekkel válaszolva, vagy újrapróbálkozva.
