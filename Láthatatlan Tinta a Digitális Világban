@@ -1,0 +1,40 @@
+Láthatatlan Tinta a Digitális Világban: Steganográfia és NLP a Zero-Width Karakterekkel
+
+A digitális kommunikáció korában, ahol a szavak áramlása látszólag korlátlan, léteznek olyan rejtett utak, amelyek az emberi szem számára láthatatlanok maradnak, mégis hordozhatnak titkos üzeneteket és utasításokat. Ez a terület, mely a steganográfia ősi művészetét ötvözi a modern természetes nyelvi feldolgozás (NLP) képességeivel, a hacker magazinok egyik legizgalmasabb technikai "csemege" lehet. A "digitális láthatatlan tinta" nem más, mint nulla szélességű karakterek (Zero-Width Characters – ZWC) intelligens felhasználása, amelyek lehetővé teszik a támadók számára, hogy utasításokat rejtsenek el látszólag ártatlan szövegekben, megkerülve a hagyományos biztonsági szűrőket és közvetlenül befolyásolva a mesterséges intelligencia modelleket.
+A Probléma Gyökere: Az Emberi Szem és az LLM-ek Közötti Rés
+
+A rejtett üzenetek ezen formája a mélytanulású nyelvi modellek (LLM-ek) működési mechanizmusának egy alapvető különbségét aknázza ki. Míg az emberi szem a képernyőn renderelt karaktereket (glifákat) érzékeli, addig az LLM-ek a szöveg mögöttes bináris reprezentációját, azaz a bájtokat és tokeneket dolgozzák fel. Ez a látszólag apró eltérés egy jelentős támadási felületet hoz létre, ahol a láthatatlan karakterek a kritikus láncszemek.
+Hogyan Működik a Támadás?
+
+A támadás lényege az, hogy a támadó egy látszólag normális, ártatlan mondatba nulla szélességű karakterek sorozatát fűzi be. Ezek a ZWC-k bináris kódként funkcionálnak, például a U+200B (Zero Width Space) 0-t, a U+200C (Zero Width Non-Joiner) pedig 1-et reprezentálhat. Így egy teljes titkos parancs (például egy adatkivonási utasítás) elrejthető a látható szövegben. Az LLM tokenizálója ezeket a karaktereket felismeri, és ha a modell belső promptja vagy védelmi rendszere nem szűri azokat, az AI értelmezheti és végrehajthatja a rejtett üzenetet.
+
+Fontos megjegyezni, hogy bár ez a módszer az Indirect Prompt Injection (IPI) alapvető eszköze, a modern védelmi rendszerek, különösen az Unicode normalizáció, egyre jobban felismerik és semlegesítik ezeket a fenyegetéseket. Ennek ellenére a folyamatosan fejlődő támadási technikák és a kifinomult kódolási módszerek miatt továbbra is releváns és tanulmányozásra érdemes terület marad.
+A "Láthatatlan" Fegyvertár: Nulla Szélességű Karakterek
+
+A magazin olvasói számára a technikai részletek kulcsfontosságúak. Íme egy részletesebb bemutató a leggyakrabban használt Unicode karakterekről és azok funkcióiról:
+Gyakran Használt Unicode ZWC-k
+
+    U+200B (Zero Width Space - ZWSP): Ez egy nem látható szóköz, amely segít a szöveg tördelésében. Emberi szem számára teljesen észrevétlen, de a gépek számára egy karakterként jelenik meg. Kódoláskor gyakran a "0" bitet jelöli.
+    U+200C (Zero Width Non-Joiner - ZWNJ): Megakadályozza két karakter automatikus összekapcsolódását (pl. arab írásnál vagy bizonyos speciális ligatúráknál). Ez a karakter a "1" bitet reprezentálhatja.
+    U+200D (Zero Width Joiner - ZWJ): Ellentétben az előzővel, ez a karakter két karaktert kapcsol össze, például emojik kombinálásánál (pl. család emojik, ahol több ember együtt jelenik meg).
+    U+FEFF (Zero Width No-Break Space / BOM): Eredetileg a bájtsorrend jelzésére (Byte Order Mark - BOM) szolgált, de null szélessége miatt steganográfiai célokra is felhasználható.
+
+Kódolási Technika: A Láthatatlan Morse-kód
+
+A támadó nem csupán véletlenszerűen szórja be ezeket a karaktereket. Egy egyszerű szkript segítségével a titkos parancsot (pl. "DROP TABLES") bináris formátumba alakítja, majd a bináris biteket nulla szélességű karakterekre cseréli.
+
+Példa kódolásra:
+
+Tegyük fel, hogy a titkos parancs bináris reprezentációja 0100. Ezt a következő ZWC sorozattá alakíthatjuk: [U+200B][U+200C][U+200B][U+200B]
+
+Látható szöveg: "Ez egy biztonságos mondat." Valóság (bájtszinten): "Ez[U+200B][U+200C][U+200B][U+200B] egy biztonságos mondat."
+
+Az LLM tokenizálója számára ezek a ZWC-k egyedi tokenekként vagy a környező karakterek módosítóiként jelennek meg. Ha a támadó előzetesen "betanította" a modellt (vagy egy korábbi injekcióval utasította), hogy figyeljen bizonyos ZWC szekvenciákra, akkor egy teljesen párhuzamos parancssort hozhat létre, amely az emberi szem elől rejtve marad.
+Miért "Üt" Ez Nagyot a Prompt Hackingben?
+
+A nulla szélességű karakterek használata különösen hatékony a prompt hacking területén, mert kihasználja a hagyományos biztonsági rendszerek gyengeségeit.
+Szűrőkerülés és Robusztus Értelmezés
+
+A legtöbb input szűrő és webes alkalmazás tűzfal (WAF) kulcsszavakat keres (pl. "ignore instructions", "system", "delete"). Ha azonban ezeket a kulcsszavakat ZWC karakterekkel "szennyezzük" be (pl. s[U+200B]y[U+200B]s[U+200B]t[U+200B]e[U+200B]m), a szűrő nem talál egyezést, mivel a szó a hagyományos formájában nem szerepel. Az LLM-ek viszont, amelyek sokkal robusztusabbak a zajjal és a kisebb módosításokkal szemben, képesek dekódolni és megérteni a szándékot a rejtett karakterek ellenére. Ez a képesség teszi a ZWC alapú steganográfiát rendkívül veszélyes eszközzé a prompt injekciók arzenáljában.
+
+Ez a "digitális láthatatlan tinta" technika rávilágít arra, hogy a kiberbiztonságban a látszat csalhat, és a legkisebb, láthatatlan rések is komoly biztonsági réseket rejthetnek magukban. A jövőbeli LLM-alapú rendszerek fejlesztése során elengedhetetlen lesz a mélyreható Unicode normalizáció és a kifinomultabb bemeneti validációs mechanizmusok bevezetése, amelyek képesek felismerni és semlegesíteni ezeket a rejtett fenyegetéseket.
