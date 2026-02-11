@@ -1,0 +1,142 @@
+Automatizált prompt generálás és optimalizálás: Mélyebb merülés a Gemini rejtett utasításaiba
+
+Ez az útmutató azoknak szól, akik már elsajátították a Gemini rejtett utasításainak alapjait és egy hatékony ügynök-prompt megalkotását, de most mélyebben szeretnének elmerülni az automatizált prompt generálás és optimalizálás technikáiba. Ahogy az LLM-ek (Large Language Models) képességei fejlődnek, úgy válik egyre kritikusabbá a precízen megtervezett és finomhangolt promptok szerepe. Az automatizált módszerek lehetővé teszik számunkra, hogy túlmutassunk a manuális próbálkozások korlátain, és szisztematikusan fedezzünk fel egy szélesebb prompt-teret, optimalizálva a teljesítményt és a robusztusságot.
+A manuális prompt tervezés korlátai és az automatizálás szükségessége
+
+Bár a kézi prompt-készítés intuícióra és tapasztalatra épít, korlátai gyorsan megmutatkoznak, különösen összetett feladatok vagy nagyméretű projektek esetén. A manuális megközelítés időigényes, skálázhatatlan, és gyakran nem képes az optimális megoldás megtalálására a lehetséges prompt-variációk hatalmas terében. Az automatizált technikák lehetővé teszik számunkra, hogy:
+
+    Skálázzuk a prompt-tervezést: Gyorsan generáljunk és teszteljünk nagyszámú prompt-variációt.
+    Objektíven optimalizáljunk: Mérhető metrikák alapján értékeljük a promptok teljesítményét.
+    Csökkentsük az emberi elfogultságot: A szisztematikus keresés révén új és váratlanul hatékony promptokat fedezzünk fel.
+    Fokozzuk a robusztusságot: Olyan promptokat hozzunk létre, amelyek kevésbé érzékenyek a bemeneti adatok apró változásaira.
+
+Automatizált prompt generálási stratégiák
+
+Az automatizált prompt generálás nem egyetlen technika, hanem számos megközelítés gyűjteménye, amelyek célja a hatékony promptok szisztematikus létrehozása.
+1. Prompt bővítés és mutáció (Prompt Augmentation and Mutation)
+
+Ez a technika a meglévő alap-promptokból indul ki, és azok módosításával hoz létre új variációkat.
+
+    Szinonimák és parafrázisok használata: Cseréljünk ki szavakat vagy kifejezéseket szinonimákkal, vagy fogalmazzuk át a mondatokat, hogy különböző stilisztikai vagy szemantikai árnyalatokat teszteljünk.
+    python
+
+    import nltk
+    from nltk.corpus import wordnet
+
+    def get_synonyms(word):
+        synonyms = set()
+        for syn in wordnet.synsets(word):
+            for lemma in syn.lemmas():
+                synonyms.add(lemma.name().replace('_', ' '))
+        return list(synonyms)
+
+    base_prompt = "Kérem, foglalja össze a következő szöveget."
+    # Egyszerű példa szinonimák cseréjére
+    mutated_prompt = base_prompt.replace("össze", "röviden")
+    print(mutated_prompt) # Kérem, foglalja röviden a következő szöveget.
+
+    Strukturális változtatások: Adjunk hozzá vagy távolítsunk el bevezető frázisokat, kontextuális információkat, példákat vagy kimeneti formátumra vonatkozó utasításokat.
+        Példa hozzáadása (Few-shot prompting): Dinamikusan hozzunk példákat a feladatra.
+        Korlátozások hozzáadása: "Max. 50 szóban", "Csak tényeket soroljon fel".
+        Formátum specifikáció: "JSON formátumban add vissza", "Pontokba szedve".
+
+2. Prompt generálás LLM-ekkel (LLM-as-a-Generator)
+
+Magát az LLM-et is használhatjuk promptok generálására. Ez egy erőteljes technika, mivel az LLM-ek képesek megérteni a nyelvet és kreatívan új szövegeket alkotni, amelyek potenciálisan hatékonyabb promptokká válhatnak.
+
+    Meta-prompting: Kérjük meg az LLM-et, hogy generáljon promptokat egy adott feladat elvégzésére.
+        Prompt: "A célom, hogy egy nyelvi modell egy szöveg kulcsszavait azonosítsa. Generálj 5 különböző promptot, amelyekkel ez a feladat elvégezhető."
+        LLM válasz (példa):
+            "Sorold fel a következő szöveg legfontosabb kulcsszavait."
+            "Extraháld a fő témákat és kulcsszavakat a szövegből."
+            "Milyen egyedi kifejezések jellemzik ezt a szöveget? Készíts listát."
+            "Keresd meg azokat a szavakat és frázisokat, amelyek a leginkább reprezentálják a szöveg tartalmát."
+            "Mutasd be a szöveg lényegét megragadó kulcsszavakat."
+
+    Prompt-tér felfedezése (Prompt Space Exploration): Használjunk egy LLM-et, hogy különböző stílusú, hangvételű vagy részletezettségű promptokat generáljon.
+        Például: Kérjük meg, hogy generáljon promptokat, amelyek "barátságos hangvételűek", "formálisak", "rövidek és tömörek", vagy "nagyon részletes instrukciókat tartalmaznak".
+
+3. Evolúciós prompt generálás (Evolutionary Prompt Generation)
+
+Az evolúciós algoritmusok, mint például a genetikus algoritmusok, ihlette megközelítések, amelyek populációalapú keresést alkalmaznak az optimális promptok megtalálására.
+
+    Populáció inicializálása: Hozzunk létre egy kezdeti populációt véletlenszerűen generált vagy manuálisan megírt promptokból.
+    Értékelés (Fitness Function): Minden promptot értékelünk egy "fitnesz-függvény" segítségével, amely azt méri, hogy mennyire jól teljesít a prompt egy adott feladaton. Ez jellemzően az LLM válaszainak minőségét jelenti, valamilyen metrika (pl. ROUGE, BLEU, F1-score vagy emberi értékelés) alapján.
+    Szelekció: A legjobb teljesítményű promptokat (magas fitnesz-pontszámúakat) kiválasztjuk.
+    Mutáció és keresztezés (Crossover): Azon kiválasztott promptokat módosítjuk (mutáljuk, pl. szavak cseréje, szerkezet módosítása) vagy kombináljuk (keresztezzük) egymással, hogy új prompt-gyermekeket hozzunk létre.
+    Iteráció: Ismételjük a folyamatot (generációkon keresztül), amíg el nem érünk egy előre meghatározott teljesítmény-küszöböt, vagy amíg a fejlesztés meg nem áll.
+
+Ez egy számításigényes módszer, de rendkívül hatékony lehet komplex, nagy teljesítményű promptok felfedezésében.
+Automatizált prompt optimalizálási technikák
+
+Miután generáltunk egy sor promptot, a következő lépés ezek optimalizálása. Az optimalizálás a promptok finomhangolását jelenti a kívánt kimeneti minőség maximalizálása érdekében.
+1. Metrikán alapuló értékelés
+
+Az automatizált optimalizálás alapja a kvantitatív értékelés. A promptok teljesítményét objektív metrikák alapján kell mérnünk.
+
+    Nyelvi metrikák:
+        ROUGE (Recall-Oriented Understudy for Gisting Evaluation): Összefoglalók értékelésére alkalmas, összehasonlítja a generált szöveget referenciákkal.
+        BLEU (Bilingual Evaluation Understudy): Gépi fordítások értékelésére fejlesztették ki, de más generatív feladatoknál is használható.
+        BERTScore: Kontextuális beágyazásokat használ a szemantikai hasonlóság mérésére, jobb a finomabb különbségek detektálásában.
+    Feladatspecifikus metrikák:
+        F1-score, pontosság, felidézés: Extrakciós, besorolási vagy Q&A feladatoknál.
+        Szemantikai távolság: Ha a kimenet valamilyen konkrét érték vagy entitás, mérhetjük a generált és az elvárt értékek közötti távolságot.
+        Stílus és hangnem: Ezen metrikákhoz gyakran további LLM-ekre van szükség, amelyek értékelik a generált szöveg stílusát vagy hangnemét, vagy erre képzett klasszifikációs modellekre.
+
+2. Bayesian optimalizálás (Bayesian Optimization)
+
+A Bayesian optimalizálás egy hatékony stratégia, amely különösen hasznos, ha a fitnesz-függvény kiértékelése drága (pl. minden egyes prompt tesztelése az LLM-mel sok időt és erőforrást igényel). Ez egy adaptív keresési stratégia, amely egy valószínűségi modellt épít a fitnesz-függvényre, és ezt a modellt használja a következő legjobb kipróbálandó pont (azaz prompt-variáció) kiválasztására.
+
+    Surrogate modell (szurrogátum modell): Ez a modell (gyakran Gaussian Process) becsüli meg a fitnesz-függvény értékét a prompt-tér ismeretlen pontjain.
+    Acquisition funkció (felvásárlási funkció): Ez határozza meg, hogy a szurrogátum modell alapján melyik következő promptot érdemes tesztelni. Olyan pontokat keres, ahol a potenciális javulás a legnagyobb, figyelembe véve a bizonytalanságot is.
+    Iteráció:
+        Tegyünk egy kísérletet (futtassunk egy promptot az LLM-en, értékeljük).
+        Frissítsük a szurrogátum modellt az új adatokkal.
+        Használjuk a felvásárlási funkciót a következő kísérleti pont kiválasztására.
+
+A Bayesian optimalizálás kevesebb LLM lekérdezést igényel, mint az egyszerű rácskeresés vagy véletlen keresés, és hatékonyabban találja meg az optimális promptokat.
+3. Gradien alapú optimalizálás (Gradient-based Optimization)
+
+Bár a promptok diszkrét szöveges entitások, és így nem közvetlenül differenciálhatók, vannak olyan technikák, amelyek megpróbálják közelíteni a gradienst a prompt térben.
+
+    Prompt-embedding alapú optimalizálás: Konvertáljuk a promptokat folytonos vektorokká (embeddingekké). Ekkor optimalizálhatjuk ezeket az embeddingeket egy differenciálható célfüggvény mentén (pl. valamilyen predikció pontossága), majd megpróbáljuk visszatéríteni a kapott optimalizált embeddingeket szöveges promptokká (pl. legközelebbi szomszéd kereséssel).
+    REINFORCE vagy más Reinforcement Learning (RL) alapú megközelítések: A prompt generálását úgy is kezelhetjük, mint egy RL problémát, ahol az ügynök (prompt generátor) promptokat generál (akciók), és jutalmat kap az LLM válaszainak minősége alapján.
+
+4. A/B tesztelés és emberi visszajelzés (Human-in-the-Loop)
+
+Az automatizált metrikák nem mindig rögzítik az emberi preferenciákat vagy a finomabb minőségi árnyalatokat. Ezért az emberi beavatkozás kulcsfontosságú lehet az optimalizálási folyamatban.
+
+    A/B tesztelés: Ha több prompt-variáció van, éles környezetben (pl. egy alkalmazásban) futtathatjuk őket, és mérhetjük a felhasználói elégedettséget, konverziót vagy más viselkedési metrikákat.
+    Emberi értékelők: Kérjünk fel embereket, hogy értékeljék a különböző promptokból származó LLM válaszokat, és adjanak visszajelzést (pl. skálán értékelve a pontosságot, relevanciát, olvashatóságot). Ez a visszajelzés ezután felhasználható a promptok finomhangolására, vagy súlyozott bemenetként szolgálhat a további automatizált optimalizálási lépésekhez.
+
+Gyakorlati megvalósítás és kihívások
+
+Az automatizált prompt generálás és optimalizálás bevezetésekor számos gyakorlati szempontot és kihívást kell figyelembe venni.
+1. Kísérletezési infrastruktúra
+
+Egy robusztus infrastruktúra elengedhetetlen a prompt-variációk tömeges teszteléséhez.
+
+    Prompt sablonok (Prompt Templates): Használjunk sablonokat, amelyekbe dinamikusan beilleszthetjük a változó paramétereket (pl. hőmérséklet, top_p, vagy magában a promptban szereplő specifikus kulcsszavak).
+    Verziókövetés: Kövessük nyomon a promptok verzióit, a tesztelési eredményeket és a felhasznált konfigurációkat. Az MLflow, Weights & Biases vagy egyszerű adatbázisok használhatók erre.
+    Párhuzamosítás: Az LLM-ek lekérdezései időigényesek lehetnek. Használjunk párhuzamos lekérdezéseket a folyamat gyorsítására.
+    Cache: Az ismétlődő lekérdezések elkerülése érdekében tároljuk a korábbi LLM válaszokat, ha a prompt és a paraméterek megegyeznek.
+
+2. Költség és erőforrás-igény
+
+Az LLM API-k lekérdezése költséges lehet, különösen nagyszámú prompt-variáció tesztelésekor.
+
+    Költségvetés-tervezés: Előre tervezzük meg a kísérletezésre szánt költségvetést.
+    Optimalizált mintavétel: Használjunk hatékony keresési stratégiákat (pl. Bayesian optimalizálás), amelyek minimalizálják a szükséges lekérdezések számát.
+    Kisebb modellek tesztelésre: Kezdetben kisebb, olcsóbb modellekkel tesztelhetjük a prompt-variációkat, és csak a legígéretesebbeket értékeljük a nagyobb, drágább modelleken.
+
+3. Prompt robusztusság
+
+Az optimalizált promptoknak nemcsak egy szűk adathalmazon kell jól teljesíteniük, hanem robusztusnak kell lenniük a változó bemenetekkel szemben is.
+
+    Adat diverzitás: Teszteljük a promptokat a lehetséges bemeneti adatok széles skáláján.
+    Adat augementáció: Módosítsuk a bemeneti adatokat (pl. kisebb változtatásokkal, elgépelésekkel), és vizsgáljuk meg, hogyan reagál erre a prompt.
+    Ellentétes példák (Adversarial Examples): Kísérletezzünk olyan bemenetekkel, amelyekről tudjuk, hogy problémát okozhatnak, és optimalizáljuk a promptokat, hogy kezeljék ezeket.
+
+4. Magyarázhatóság és ellenőrizhetőség
+
+Az automatizáltan generált és optimalizált promptok néha nehezen érthetőek vagy intuitívak lehetnek.
