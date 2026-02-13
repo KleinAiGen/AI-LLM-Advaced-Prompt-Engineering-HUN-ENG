@@ -1,0 +1,585 @@
+Chain-of-Thought (CoT) Prompting: Lépésről Lépésre Gondolkodás az LLM-ekkel
+
+A Chain-of-Thought (CoT) prompting egy kifinomult technika, amely a nagy nyelvi modelleket (LLM-eket) arra ösztönzi, hogy ne csak a végső választ adják meg, hanem mutassák be a megoldáshoz vezető gondolkodási folyamatukat is. Ez a megközelítés nem csupán egy explicit utasítás; sokkal inkább a modell belső állapotára és érvelési képességére hat, lehetővé téve számára, hogy komplex feladatokat bontson kisebb, kezelhetőbb lépésekre, javítva ezzel a pontosságot és a magyarázhatóságot. A CoT prompting megértése kulcsfontosságú az LLM-ek teljes potenciáljának kihasználásához.
+Miért Hatékony a CoT Prompting?
+
+A CoT prompting hatékonysága több alapelven nyugszik, amelyek mélyen befolyásolják az LLM működését. A modell számára az "gondolkodás" megjelenítése egyfajta "munkafüzetként" szolgál, ahol ideiglenes eredményeket tárolhat és hivatkozhat rájuk, mielőtt eljut a végső megoldáshoz.
+A Komplexitás Kezelése
+
+Az LLM-ek korlátozott kontextusablakkal rendelkeznek, és a túl komplex feladatok megoldása gyakran hibákhoz vezet. A CoT prompting segít felbontani a feladatot kisebb, szekvenciális lépésekre, amelyek mindegyike önmagában is kezelhető. Ez a dekompozíció lehetővé teszi a modell számára, hogy fókuszáltabban dolgozzon az egyes részfeladatokon.
+Hibák Azonosítása és Korrekciója
+
+Amikor a modell lépésről lépésre gondolkodik, könnyebbé válik az ember számára – és potenciálisan maga a modell számára is – a hibák azonosítása. Ha egy részeredmény hibás, az gyakran azonnal látható, és a prompt finomításával korrigálható anélkül, hogy az egész folyamatot újra kellene gondolni.
+Magyarázhatóság és Átláthatóság
+
+A CoT prompting növeli az LLM döntéshozatali folyamatának átláthatóságát. A felhasználó láthatja, hogyan jutott el a modell a válaszhoz, ami növeli a bizalmat és lehetővé teszi a modell viselkedésének jobb megértését és hibakeresését.
+A Modell Belső Állapotának Módosítása
+
+Bár úgy tűnhet, hogy csak egy szöveges utasítást adunk, a "gondolkodj lépésről lépésre" utasítás mélyebben hat. Az LLM-ek prediktív modellek, és ez az utasítás valójában a modell súlyozását és a generálási stratégiáját befolyásolja, arra ösztönözve, hogy "lassabban" és "strukturáltabban" generáljon szöveget, ami egy komplexebb belső állapotot tükröz.
+Chain-of-Thought Prompting Típusok
+
+A CoT promptingnak több változata létezik, amelyek a konkrét felhasználási esettől és a kívánt részletességtől függően alkalmazhatók.
+Zero-Shot CoT Prompting
+
+Ez a legegyszerűbb forma, ahol mindössze egy explicit utasítást adunk a modellnek, hogy gondolkodjon lépésről lépésre, anélkül, hogy példákat mutatnánk be.
+
+Prompt Minta:
+javascript
+
+Kérdés: Egy boltban 5 alma van. Vettem még 3 almát. Később eladtam 2 almát. Hány almám van összesen?
+Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (példa):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1. Kezdetben 5 alma volt.
+2. Vettem még 3 almát, tehát 5 + 3 = 8 almám lett.
+3. Eladtam 2 almát, tehát 8 - 2 = 6 almám maradt.
+Végső válasz: 6 alma.
+
+Magyarázat: Ebben az esetben a modell az "Gondolkodjunk lépésről lépésre." utasítás hatására automatikusan elkezdi felosztani a problémát. Ez a módszer akkor hatékony, ha a modell már rendelkezik elegendő előképzettséggel hasonló típusú problémák megoldására.
+Few-Shot CoT Prompting
+
+Ez a megközelítés egy vagy több példát mutat be a modellnek, amelyek illusztrálják a kívánt lépésről lépésre gondolkodási folyamatot, mielőtt a tényleges kérdést feltennénk. Ez a módszer gyakran hatékonyabb, mint a Zero-Shot CoT, mivel konkrét iránymutatást ad a modellnek a kívánt kimeneti formátumról és az érvelés stílusáról.
+
+Prompt Minta:
+javascript
+
+Kérdés: Az autó 2 órát vezetett 60 km/h sebességgel, majd 3 órát vezetett 80 km/h sebességgel. Mekkora utat tett meg összesen?
+Gondolkodjunk lépésről lépésre.
+1. Első szakasz: 2 óra * 60 km/h = 120 km.
+2. Második szakasz: 3 óra * 80 km/h = 240 km.
+3. Összesen: 120 km + 240 km = 360 km.
+Végső válasz: 360 km.
+
+Kérdés: Egy dobozban 12 darab sütemény van. Ha 4 dobozt vásárolunk, majd 5 süteményt megeszünk, hány sütemény marad?
+Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (példa):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1. Sütemények száma 4 dobozban: 12 sütemény/doboz * 4 doboz = 48 sütemény.
+2. Miután megettünk 5 süteményt: 48 sütemény - 5 sütemény = 43 sütemény.
+Végső válasz: 43 sütemény.
+
+Magyarázat: A példa bemutatása segít a modellnek megérteni, milyen formában kell a gondolatmenetet bemutatnia, és hogyan kell feldolgoznia a numerikus adatokat. Ez különösen hasznos lehet, ha a feladat specifikus érvelési mintákat igényel.
+Automatikus CoT Prompting
+
+Az automatikus CoT (Auto-CoT) továbbfejleszti a Few-Shot CoT-t azáltal, hogy automatikusan generál példákat a modell számára. Ez általában egy komplexebb folyamat, amely magában foglalja a kérdések klaszterezését és az egyes klaszterekhez tartozó reprezentatív példák generálását a modell segítségével, mielőtt a célfeladaton futtatnánk. Ennek megvalósítása jellemzően programozott környezetet igényel, és nem csupán egy prompt-módosítást.
+Haladó CoT Prompting Technikák
+
+A CoT prompting alapjain túl számos haladó technika létezik, amelyek tovább növelhetik az LLM-ek teljesítményét összetett feladatok esetén.
+Self-Consistency (Önkonzisztencia)
+
+Ez a technika azt jelenti, hogy a modellt többször is megkérjük, hogy generáljon CoT érveléseket egy adott kérdésre, majd kiválasztjuk azt a választ, amelyik a leggyakrabban fordul elő a generált gondolatmenetek végén. Ez segít kiszűrni az alkalmi hibákat és növeli a végső válasz megbízhatóságát.
+
+Prompt Minta (ismétléshez):
+javascript
+
+Kérdés: Egy kosárban 10 alma van. Ha András elvesz 3 almát, majd Péter hozzáad 5 almát, hány alma lesz a kosárban?
+Gondolkodjunk lépésről lépésre.
+
+Többszöri futtatás után: 1. futás:
+
+    Kezdetben 10 alma van.
+    András elvesz 3 almát: 10 - 3 = 7 alma.
+    Péter hozzáad 5 almát: 7 + 5 = 12 alma. Végső válasz: 12 alma.
+
+2. futás:
+
+    Volt 10 alma.
+    András elvesz 3-at, marad 7.
+    Péter hozzátesz 5-öt, lesz 12. Végső válasz: 12 alma.
+
+3. futás:
+
+    10 alma volt.
+    -3 alma = 7 alma.
+    +5 alma = 12 alma. Végső válasz: 12 alma.
+
+Magyarázat: Ebben az esetben minden futtatás ugyanazt az eredményt adta, ami magas konzisztenciát jelez. Ha eltérő válaszok születnének, a leggyakoribb lenne kiválasztva.
+Tree-of-Thought (ToT) Prompting
+
+A ToT egy még fejlettebb megközelítés, amely a gondolatmeneteket nem egy lineáris láncként, hanem egy fa struktúraként kezeli, ahol az egyes "csomópontok" különböző lehetséges gondolatokat vagy cselekvési terveket reprezentálnak. A modell képes "keresni" ebben a fában, értékelni a különböző utak eredményeit, és visszalépni, ha egy út zsákutcának bizonyul. Ez rendkívül alkalmas olyan problémákra, ahol több lehetséges megoldási stratégia létezik, és azok közül a legjobbat kell kiválasztani. Ennek megvalósítása szintén programozott keretrendszert igényel, ahol a modell generálja a lehetséges "gondolati állapotokat", majd egy értékelő függvény kiválasztja a következőt.
+
+Példa a konceptuális működésre (programozott környezetben):
+
+Prompt (első lépés a ToT-ban):
+javascript
+
+Kérdés: Generálj 3 lehetséges kezdő lépést a következő probléma megoldására: "Hogyan optimalizáljuk egy online bolt konverziós arányát?"
+
+LLM Válasz (példa):
+javascript
+
+1. Vizsgáljuk meg a felhasználói élményt (UX) és a weboldal sebességét.
+2. Elemezzük a marketing kampányok hatékonyságát és a forgalom minőségét.
+3. Optimalizáljuk a termékoldalakat és a fizetési folyamatot.
+
+Ezután a modell (vagy a program) kiválaszt egy lépést, és arra épít tovább, vagy mindegyikre építve keresi a legjobb megoldást. Például, ha az 1. lépést választjuk:
+
+Prompt (második lépés, az 1. pontra építve):
+javascript
+
+Kérdés: Milyen konkrét lépéseket tehetünk az UX és a weboldal sebességének javítására?
+Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (példa):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1. Végezzünk hőtérkép és munkamenet-felvétel elemzést a felhasználói viselkedés megértéséhez.
+2. Használjunk GTmetrix vagy Lighthouse eszközöket a sebességi problémák azonosítására.
+3. Optimalizáljuk a képeket és videókat a gyorsabb betöltés érdekében.
+4. Minimalizáljuk a JavaScript és CSS fájlokat.
+5. Vizsgáljuk felül a navigációt és a kosárfolyamatot az egyszerűség érdekében.
+Végső válasz: Konkrét lépések a UX és sebesség javítására a fentiek szerint.
+
+Magyarázat: A ToT megközelítés lehetővé teszi, hogy a modell mélyebben explorálja a probléma terét, különböző "ágakon" haladva, mielőtt a legjobb megoldást kiválasztaná. Ez a módszer jobban utánozza az emberi gondolkodás összetettebb formáit.
+CoT Prompting Implementációja és Tippek
+
+A CoT prompting bevezetése viszonylag egyszerű, de van néhány kulcsfontosságú szempont, amelyet érdemes figyelembe venni a maximális hatékonyság érdekében.
+A Megfelelő Prompt Kialakítása
+
+A "Gondolkodjunk lépésről lépésre." vagy "Vázold fel a megoldás menetét." kifejezések általában elegendőek a legtöbb modell számára. Fontos, hogy a prompt világos és egyértelmű legyen.
+
+Példa egyértelmű promptra:
+javascript
+
+Kérdés: Hogyan számítsuk ki egy kör területét, ha tudjuk a sugarát? Mutasd be a lépéseket.
+
+Kerülendő prompt (túl általános):
+javascript
+
+Kérdés: Kör területe?
+
+Példák Használata (Few-Shot CoT)
+
+Ha a feladat specifikus formátumot vagy érvelési stílust igényel, a Few-Shot CoT prompting alkalmazása rendkívül hasznos. A példák legyenek relevánsak és jól strukturáltak.
+
+Tipp: Kezdje egy-két példával, és szükség esetén adjon hozzá többet. Túl sok példa túlságosan hosszúvá teheti a promptot, ami a modell teljesítményét is befolyásolhatja.
+Iteratív Finomítás
+
+A CoT prompting, akárcsak minden prompt engineering technika, iteratív folyamat. Kísérletezzen különböző megfogalmazásokkal, példákkal és a gondolkodási lépések részletezettségével. Figyelje meg, hogyan reagál a modell, és finomítsa a promptot ennek megfelelően.
+Kontextus Hosszának Figyelembe Vétele
+
+Ne feledje, hogy az LLM-eknek korlátozott kontextusablakuk van. A túl hosszú CoT gondolatmenetek vagy túl sok Few-Shot példa túllépheti ezt a limitet, ami a modell "memóriájának" elvesztéséhez vagy a teljesítmény romlásához vezethet. Törekedjen a tömörségre, miközben fenntartja az érvelés érthetőségét.
+Összetett Problémák Bontása
+
+Még a CoT promptinggal is előfordulhat, hogy egyetlen kérdés túl bonyolult a modell számára. Ilyenkor érdemes a problémát több kisebb, egymásra épülő CoT promptra bontani, és az egyes válaszokat "láncolni".
+
+Példa komplex probléma bontására:
+
+Prompt 1 (Részprobléma):
+javascript
+
+Kérdés: Egy weboldal havi 1000 látogatót vonz. A konverziós arány jelenleg 2%. Hány konverzió történik havonta?
+Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (példa):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1. Látogatók száma: 1000.
+2. Konverziós arány: 2% = 0.02.
+3. Konverziók száma: 1000 * 0.02 = 20.
+Végső válasz: 20 konverzió.
+
+Prompt 2 (A Részprobléma eredményét felhasználva):
+javascript
+
+A havi konverziók száma 20. Ha a konverziós arányt 3%-ra növelnénk, hány további konverziót eredményezne ez havonta?
+Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (példa):
+javascript
+
+Gondolkodjunk lépésről lépésre.
+1. Jelenlegi konverziók száma: 20.
+2. Új konverziós arány: 3% = 0.03.
+3. Új konverziók száma 1000 látogatóval: 1000 * 0.03 = 30.
+4. További konverziók száma: 30 - 20 = 10.
+Végső válasz: 10 további konverzió.
+
+===========================================================================================================================================================================================================
+
+Az Eredeti Mechanizmus Megértése (Understanding the Underlying Mechanism)
+
+CoT prompting doesn't merely append a "let's think step by step" phrase to a prompt. It fundamentally shifts how an LLM processes information and generates responses. By instructing the model to verbalize its intermediate steps, we essentially encourage it to create a series of internal "scratchpads" or "reasoning traces."
+
+When an LLM generates text, it predicts the next most probable token based on its training data and the preceding tokens. In a standard prompt, the model aims directly for the final answer. With CoT, the instruction to think step-by-step becomes part of the context the model uses for prediction. This forces the model to:
+
+    Deconstruct the Problem: Break down complex problems into smaller, manageable sub-problems.
+    Generate Intermediate Thoughts: Create tokens that represent logical steps, calculations, or justifications.
+    Maintain Context: Each step builds upon the previous one, maintaining a coherent reasoning path.
+    Self-Correction (Implicit): By seeing its own intermediate thoughts, the model has a better chance to identify inconsistencies or errors before reaching the final answer.
+
+Essentially, CoT prompting guides the LLM to traverse its internal knowledge graph more systematically, rather than jumping to a potentially incorrect direct answer.
+Egyszerű CoT Prompting (Simple CoT Prompting)
+
+The most basic form of CoT prompting involves appending a phrase like "Gondolkozzunk lépésről lépésre." (Let's think step by step.) or "Mutasd be a gondolatmenetedet." (Show your thought process.) to the user's query. This simple addition can significantly improve performance on arithmetic, common sense, and symbolic reasoning tasks.
+Példa: Egyszerű Matematikai Feladat (Example: Simple Math Problem)
+
+Prompt:
+javascript
+
+Egy pék 12 tucat süteményt sütött. Ha minden süteményt 3 fős csoportokra osztott, hány csoportot tudott készíteni?
+Gondolkozzunk lépésről lépésre.
+
+Modell válasza (Model's Response):
+javascript
+
+Gondolkozzunk lépésről lépésre.
+1. Először is, tudjuk, hogy egy tucat 12 darabot jelent.
+2. A pék 12 tucat süteményt sütött, tehát összesen 12 * 12 = 144 süteménye van.
+3. Minden csoport 3 főből áll, és minden csoport egy süteményt kap. Ezért minden csoport 3 süteményt fogyaszt.
+4. Ha 144 süteménye van, és minden csoport 3 süteményt fogyaszt, akkor 144 / 3 = 48 csoportot tud készíteni.
+
+Tehát, 48 csoportot tudott készíteni.
+
+In this example, the model explicitly breaks down the problem, performs the multiplication, and then the division, leading to the correct answer. Without the "Gondolkozzunk lépésről lépésre" instruction, the model might directly output "48", or even an incorrect answer if it misinterprets the problem.
+Zero-Shot CoT Prompting
+
+Zero-shot CoT prompting extends the idea of simple CoT by providing a fixed "thought trigger" phrase, often just "Gondolkozzunk lépésről lépésre." or "Let's think step by step.", without any preceding examples. This is effective because the LLM has already learned to associate such phrases with the need for step-by-step reasoning during its vast pre-training.
+Példa: Logikai Feladat (Example: Logic Problem)
+
+Prompt:
+javascript
+
+Anna magasabb, mint Péter. Péter magasabb, mint Dóra. Ki a legalacsonyabb?
+Gondolkozzunk lépésről lépésre.
+
+Modell válasza (Model's Response):
+javascript
+
+Gondolkozzunk lépésről lépésre.
+1. Adott az első állítás: Anna magasabb, mint Péter. Ezt jelölhetjük így: Anna > Péter.
+2. Adott a második állítás: Péter magasabb, mint Dóra. Ezt jelölhetjük így: Péter > Dóra.
+3. Ezekből az állításokból következik, hogy Anna > Péter > Dóra.
+4. Ebben a sorrendben a legalacsonyabb személy Dóra.
+
+Tehát, Dóra a legalacsonyabb.
+
+Here, the model constructs a mental hierarchy based on the given relational statements, demonstrating its ability to apply logical deduction when prompted to do so.
+Few-Shot CoT Prompting (Példákkal Támogatott CoT)
+
+Few-shot CoT prompting takes the concept further by including a few example question-answer pairs that demonstrate the CoT reasoning process. This approach is particularly powerful because it provides the LLM with a template or a pattern to follow, guiding its internal reasoning more explicitly. It acts as an in-context learning mechanism, showing the model how to reason.
+Példa: Összetett Szöveges Feladat (Example: Complex Word Problem)
+
+Prompt:
+javascript
+
+Kérdés: Egy boltban 5 kosár alma van. Minden kosárban 8 alma van. Ha eladtak 3 kosár almát, hány alma maradt?
+Válasz: Gondolkozzunk lépésről lépésre.
+1. Először is, számoljuk ki az összes alma számát: 5 kosár * 8 alma/kosár = 40 alma.
+2. Aztán, számoljuk ki, hány alma volt a 3 eladott kosárban: 3 kosár * 8 alma/kosár = 24 alma.
+3. Végül, vonjuk ki az eladott almák számát az összes almából: 40 alma - 24 alma = 16 alma.
+Tehát, 16 alma maradt.
+
+Kérdés: Jánosnak van 7 doboz ceruzája. Minden dobozban 10 ceruza van. Elveszítette 2 dobozt. Hány ceruzája maradt?
+Válasz: Gondolkozzunk lépésről lépésre.
+1. Először is, számoljuk ki az összes ceruza számát: 7 doboz * 10 ceruza/doboz = 70 ceruza.
+2. Aztán, számoljuk ki, hány ceruza volt az elveszített 2 dobozban: 2 doboz * 10 ceruza/doboz = 20 ceruza.
+3. Végül, vonjuk ki az elveszített ceruzák számát az összes ceruzából: 70 ceruza - 20 ceruza = 50 ceruza.
+Tehát, 50 ceruzája maradt.
+
+Kérdés: Egy könyvtárban 4 polc van. Minden polcon 15 könyv van. Ha 2 polcot áthelyeztek egy másik terembe, hány könyv maradt az eredeti helyén?
+Válasz:
+
+Modell válasza (Model's Response):
+javascript
+
+Gondolkozzunk lépésről lépésre.
+1. Először is, számoljuk ki az összes könyv számát az eredeti helyen: 4 polc * 15 könyv/polc = 60 könyv.
+2. Aztán, tudjuk, hogy 2 polcot áthelyeztek. Ez azt jelenti, hogy 4 - 2 = 2 polc maradt az eredeti helyén.
+3. Végül, számoljuk ki, hány könyv maradt az eredeti helyén a megmaradt polcokon: 2 polc * 15 könyv/polc = 30 könyv.
+Tehát, 30 könyv maradt az eredeti helyén.
+
+In this few-shot example, the model not only performs the calculations but also clearly articulates the reasoning, mirroring the structured approach demonstrated in the provided examples. This significantly enhances its ability to generalize to new, similar problems.
+Automatikus CoT Prompting (Automatic CoT Prompting)
+
+Automatikus CoT a few-shot CoT továbbfejlesztése, ahol a rendszer automatikusan generálja a CoT példákat, vagy finomhangolja a modellt, hogy CoT-stílusú válaszokat adjon. Ezáltal nincs szükség kézi prompt tervezésre minden egyes feladatnál. Ez különösen hasznos nagyméretű, változatos feladatok esetén.
+Önprompting (Self-Prompting)
+
+Az önprompting egy olyan technika, ahol az LLM-et arra kérjük, hogy generáljon egy "okfejtő promptot" a probléma megoldása előtt. Ez a prompt aztán beépül a fő kérdésbe, és arra ösztönzi a modellt, hogy lépésről lépésre gondolkodjon.
+
+Példa: Összetett Döntéshozatali Feladat (Example: Complex Decision-Making Task)
+
+1. lépés: Okfejtő prompt generálása (Generate Reasoning Prompt)
+
+Prompt:
+javascript
+
+Kérlek, generálj egy rövid promptot, amely arra ösztönzi a modellt, hogy lépésről lépésre gondolkodjon, mielőtt megold egy problémát, amely magában foglalja a feltételezések azonosítását és az adatok elemzését a legjobb megoldás kiválasztásához.
+
+Modell válasza (Model's Response) - Generált Okfejtő Prompt:
+javascript
+
+"Ahhoz, hogy a legjobb megoldást válasszuk, először elemezzük a probléma minden aspektusát. Kezdjük a releváns információk azonosításával, majd soroljuk fel a lehetséges megoldásokat, mérlegeljük azok előnyeit és hátrányait, és végül jussunk el a legmegfelelőbb következtetéshez. Gondolkozzunk lépésről lépésre."
+
+2. lépés: Az eredeti probléma megoldása a generált prompttal (Solve the original problem with the generated prompt)
+
+Prompt:
+javascript
+
+Egy cégednek új irodaterületre van szüksége, mivel a jelenlegi túl kicsi. Két opciót vizsgálsz:
+1. Felújítod a jelenlegi irodát, ami 3 hónapig tart és 5 millió forintba kerül. Ez idő alatt a munkatársaknak otthonról kell dolgozniuk, ami csökkentheti a termelékenységet.
+2. Bérelsz egy új, nagyobb irodát a város szélén, ami azonnal beköltözhető és havonta 1 millió forintba kerül, de a munkatársaknak hosszabb utazási idővel kell számolniuk.
+Melyik a jobb opció, és miért?
+
+Ahhoz, hogy a legjobb megoldást válasszuk, először elemezzük a probléma minden aspektusát. Kezdjük a releváns információk azonosításával, majd soroljuk fel a lehetséges megoldásokat, mérlegeljük azok előnyeit és hátrányait, és végül jussunk el a legmegfelelőbb következtetéshez. Gondolkozzunk lépésről lépésre.
+
+Modell válasza (Model's Response):
+javascript
+
+Ahhoz, hogy a legjobb megoldást válasszuk, először elemezzük a probléma minden aspektusát. Kezdjük a releváns információk azonosításával, majd soroljuk fel a lehetséges megoldásokat, mérlegeljük azok előnyeit és hátrányait, és végül jussunk el a legmegfelelőbb következtetéshez. Gondolkozzunk lépésről lépésre.
+
+1.  **Releváns információk azonosítása:**
+    *   **Jelenlegi helyzet:** Iroda túl kicsi.
+    *   **1. opció (Felújítás):**
+        *   Idő: 3 hónap.
+        *   Költség: 5 millió Ft.
+        *   Hatás: Otthoni munka, termelékenység csökkenhet.
+    *   **2. opció (Új iroda):**
+        *   Idő: Azonnal beköltözhető.
+        *   Költség: 1 millió Ft/hó.
+        *   Hatás: Hosszabb utazási idő a munkatársaknak.
+
+2.  **Lehetséges megoldások és elemzés:**
+
+    *   **Felújítás:**
+        *   **Előnyök:** Hosszú távon valószínűleg olcsóbb, marad a megszokott helyszín (ha a felújítás után visszatérnek). Hosszú távon a cég tulajdona lehet.
+        *   **Hátrányok:** 3 hónapig romló termelékenység, kezdeti nagy beruházás.
+        *   **Kockázat:** A termelékenység csökkenésének mértéke nehezen számszerűsíthető, de jelentős lehet.
+
+    *   **Új iroda bérlése:**
+        *   **Előnyök:** Azonnali megoldás, nincs termelékenység-kiesés a költözés/felújítás miatt. Rugalmasabb (könnyebb felmondani a bérletet, ha változnak az igények).
+        *   **Hátrányok:** Hosszabb utazási idő a munkatársaknak (elégedetlenséghez vezethet, fluktuációt okozhat). Hosszú távon drágább lehet (3 hónap alatt 3 millió Ft, egy év alatt 12 millió Ft). A cég nem lesz tulajdonosa az ingatlannak.
+        *   **Kockázat:** Munkatársak elégedetlensége, tehetségek elvesztése a hosszabb ingázás miatt.
+
+3.  **Összehasonlítás és következtetés:**
+
+    *   **Költség:** Rövid távon a bérlés olcsóbbnak tűnik (3 hónap alatt 3 millió vs. 5 millió), de hosszú távon (pl. 6 hónap után már 6 millió vs. 5 millió) a felújítás lehet a gazdaságosabb. Azonban az "otthoni munka okozta termelékenység-csökkenés" költsége is jelentős lehet, amit nehéz számszerűsíteni.
+    *   **Munkatársak:** A felújítás ideiglenes, de intenzív kellemetlenséget okoz. Az új iroda állandó, de enyhébb kellemetlenséget (ingázás) okozhat. Az ingázás hosszú távon jobban kiégési forrás lehet.
+    *   **Rugalmasság:** A bérlés rugalmasabb, könnyebb váltani, ha a cég növekszik vagy zsugorodik.
+    *   **Időzítés:** Az új iroda azonnali megoldás, a felújítás 3 hónap várakozási idővel jár.
+
+    **A jobb opció a cég prioritásaitól függ:**
+
+    *   **Ha az azonnali megoldás és a folyamatos termelékenység a legfontosabb, és a költségek hosszú távú megtérülése másodlagos:** Akkor az új iroda bérlése lehet a jobb választás, feltéve, hogy a munkatársak ingázási terhét valamilyen módon enyhíteni tudják (pl. rugalmas munkaidő, útiköltség-térítés).
+    *   **Ha a hosszú távú költséghatékonyság, az iroda tulajdonlása és a munkatársak jelenléte az irodában a cél, tolerálva az ideiglenes fennakadásokat:** Akkor a felújítás lehet a jobb választás. Azonban itt kulcsfontosságú, hogy a 3 hónapos otthoni munkavégzés alatt minimalizálják a termelékenység-csökkenést.
+
+    Figyelembe véve, hogy a jelenlegi iroda "túl kicsi", ami azonnali problémát jelent, és az azonnali költözés lehetősége, valamint a rugalmasság, valószínűleg **az új iroda bérlése a jobb rövid és középtávú megoldás.** A hosszú távú költségekkel és az ingázással járó problémákkal lehet később foglalkozni, vagy mérlegelni a felújítást, miután stabilizálták a helyzetet. Azonnali költözéssel a cég gyorsabban megoldja a helyszűkét és elkerüli a 3 hónapos termelékenységi kiesést, ami egy növekedésben
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Miért Hatékony a CoT Prompting?
+
+A CoT prompting hatékonysága több tényezőre vezethető vissza, amelyek mélyen befolyásolják az LLM belső működését. Nem csupán egy felszínes utasításról van szó, hanem egy olyan módszerről, amely a modell kognitív folyamatait stimulálja.
+
+    Komplexitás Kezelése: Az LLM-ek gyakran nehezen kezelik a többlépcsős logikai következtetést igénylő feladatokat. A CoT arra kényszeríti a modellt, hogy ezeket a feladatokat kisebb, szekvenciális lépésekre bontsa, hasonlóan ahhoz, ahogyan egy ember oldana meg egy problémát.
+    Belső Állapot Módosítása: A CoT prompt bevezetésekor a modell nem csupán "válaszol" egy kérdésre, hanem egy belső állapotot vesz fel, amelyben aktívan generál gondolatokat, mielőtt a végső választ megfogalmazza. Ez az állapot segít a modellnek mélyebben elmerülni a probléma logikájában.
+    Hibák Redukciója: Amikor a modell lépésről lépésre gondolkodik, könnyebben azonosíthatja és korrigálhatja a hibákat a folyamat korábbi szakaszaiban, mielőtt azok a végső választ befolyásolnák. Ez egyfajta "önellenőrzés" mechanizmusként működik.
+    Átláthatóság és Magyarázhatóság: Bár az LLM-ek belső működése továbbra is "fekete doboz", a CoT prompting révén generált gondolati lánc bizonyos szintű átláthatóságot biztosít. Ez lehetővé teszi a felhasználó számára, hogy jobban megértse, hogyan jutott el a modell a végső eredményhez.
+
+A CoT Prompting Alapvető Formái
+
+A CoT prompting két fő formában létezik: a "Few-shot CoT" és a "Zero-shot CoT". Mindkét megközelítésnek megvannak a maga előnyei és alkalmazási területei.
+Few-shot CoT Prompting
+
+Ez a forma azt jelenti, hogy a prompt tartalmaz néhány példát (azaz "few-shot" példát), ahol a kérdés, a lépésről lépésre haladó gondolati folyamat és a végső válasz is szerepel. Ezek a példák "tanítják" a modellt a kívánt viselkedésre.
+
+Példa 1: Matematikai Szöveges Feladat
+
+Prompt:
+javascript
+
+Kérdés: Egy pék 30 kiflit sütött. Eladott 12 kiflit a délelőtt folyamán, és további 8 kiflit a délután folyamán. Hány kifli maradt a péknek?
+
+Gondolkodás:
+A pék eredetileg 30 kiflit sütött.
+Délelőtt eladott 12 kiflit, tehát 30 - 12 = 18 kifli maradt.
+Délután további 8 kiflit eladott, tehát 18 - 8 = 10 kifli maradt.
+Válasz: 10 kifli.
+
+Kérdés: Anna 15 könyvet olvasott el a nyáron. Testvére, Péter, 7 könyvvel kevesebbet olvasott el nála. Hány könyvet olvasott el Péter?
+
+Gondolkodás:
+Anna 15 könyvet olvasott el.
+Péter 7 könyvvel kevesebbet olvasott el Annánál.
+Tehát Péter 15 - 7 = 8 könyvet olvasott el.
+Válasz: 8 könyv.
+
+Kérdés: Mari 20 almát vett a piacon. Hazafelé 5 almát megevett, majd 3 almát adott a barátjának. Hány alma maradt Marinak?
+
+Gondolkodás:
+
+LLM Válasz (feltételezett):
+javascript
+
+Gondolkodás:
+Mari eredetileg 20 almát vett.
+Hazafelé megevett 5 almát, tehát 20 - 5 = 15 alma maradt.
+Ezután 3 almát adott a barátjának, tehát 15 - 3 = 12 alma maradt.
+Válasz: 12 alma.
+
+Magyarázat: Ebben a példában két teljes CoT példát adtunk meg, amelyek lépésről lépésre bemutatják a problémamegoldást. Az LLM ezek alapján képes utánozni a mintát és alkalmazni azt a harmadik kérdésre.
+Zero-shot CoT Prompting
+
+Ez a módszer nem igényel előzetes példákat. Egyszerűen hozzáadunk egy olyan kifejezést a prompt végéhez, mint például "Gondolkodjunk lépésről lépésre.", amely arra ösztönzi az LLM-et, hogy önállóan generáljon egy gondolati láncot. Meglepő módon ez a nagyon egyszerű kiegészítés is jelentős mértékben javíthatja az LLM teljesítményét.
+
+Példa 2: Logikai Következtetés
+
+Prompt:
+javascript
+
+Kérdés: Ha minden macska szereti a halat, és Zizi egy macska, akkor Zizi szereti a halat? Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (feltételezett):
+javascript
+
+Gondolkodás:
+Az első állítás szerint minden macska szereti a halat.
+A második állítás szerint Zizi egy macska.
+Ha Zizi macska, és minden macska szereti a halat, akkor logikusan következik, hogy Zizi is szereti a halat.
+Válasz: Igen.
+
+Magyarázat: Ebben az esetben nem adtunk meg példát, csupán a "Gondolkodjunk lépésről lépésre" utasítást. Az LLM mégis képes volt egy logikai levezetést generálni.
+
+Példa 3: Kisebb Komplexitású Összehasonlítás
+
+Prompt:
+javascript
+
+Kérdés: Hány évvel ezelőtt volt 1990, ha most 2023 van? Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (feltételezett):
+javascript
+
+Gondolkodás:
+A jelenlegi év 2023.
+Az év, amire kíváncsiak vagyunk, 1990.
+A két év közötti különbség megállapításához ki kell vonni az 1990-et a 2023-ból.
+2023 - 1990 = 33.
+Válasz: 33 évvel ezelőtt.
+
+Magyarázat: Egy egyszerű matematikai művelethez is hasznos lehet a CoT, különösen, ha a kérdés valamilyen formában kétértelmű vagy rejtett lépéseket tartalmazhat.
+Speciális CoT Technikák és Alkalmazások
+
+A CoT prompting nem korlátozódik a fenti alapformákra. Vannak speciális technikák, amelyekkel tovább finomítható és optimalizálható a modell viselkedése.
+Autó-CoT (Automated Chain-of-Thought)
+
+Az Autó-CoT egy olyan fejlett technika, amely automatikusan generál CoT láncokat, anélkül, hogy manuálisan kellene példákat adnunk. Ez különösen hasznos nagyméretű adatkészletek vagy komplex feladatok esetén. Az Autó-CoT általában az alábbi lépéseket követi:
+
+    Klaszterezés: A feladatokat tematikusan klaszterekbe rendezi.
+    Reprezentatív Kérdések Kiválasztása: Minden klaszterből kiválaszt néhány reprezentatív kérdést.
+    CoT Láncok Generálása: Ezekre a reprezentatív kérdésekre CoT láncokat generál (például zero-shot CoT-val).
+    Generált CoT-ok Felhasználása: A generált CoT láncokat felhasználja a többi, nem reprezentatív kérdés megválaszolásához, mint few-shot példákat.
+
+Példa 4: Autó-CoT Elv (koncepcionális példa)
+
+Képzeljük el, hogy egy jogi dokumentum elemző rendszert építünk.
+
+    Klaszter 1: Szerződések felmondási feltételei
+        Reprezentatív kérdés: "Milyen feltételekkel mondható fel ez a szerződés rendes felmondással?"
+        Generált CoT: Az LLM elemzi a szerződést, azonosítja a releváns szakaszokat, majd lépésről lépésre levezeti a felmondási feltételeket. Ez lesz a "few-shot" példa a klaszter többi kérdéséhez.
+    Klaszter 2: Felelősségi nyilatkozatok
+        Reprezentatív kérdés: "Ki a felelős a károkért a 'X' esetben a dokumentum szerint?"
+        Generált CoT: Az LLM elemzi a felelősségi nyilatkozatokat, azonosítja a felelős felet, és levezeti, hogyan jutott el ehhez a következtetéshez.
+
+Prompt (az Autó-CoT által generált few-shot példával):
+javascript
+
+Kérdés: Milyen feltételekkel mondható fel ez a szerződés rendes felmondással?
+
+Gondolkodás:
+A szerződés 7.2 pontja a felmondási feltételekről szól.
+A 7.2.1 pont szerint a szerződés határozatlan idejű.
+A 7.2.2 pont előírja, hogy a rendes felmondási idő 30 nap.
+A 7.2.3 pont kimondja, hogy a felmondást írásban kell közölni.
+Válasz: A szerződés határozatlan idejű, 30 napos írásbeli felmondási idővel mondható fel.
+
+Kérdés: Az alábbi jogi dokumentum szerint milyen feltételekkel lehet érvényteleníteni az adásvételi szerződést?
+
+LLM Válasz (feltételezett):
+javascript
+
+Gondolkodás:
+Az adásvételi szerződés 9. fejezete foglalkozik az érvénytelenségi okokkal.
+A 9.1 pont szerint a szerződés érvénytelen, ha az aláírás hamisított.
+A 9.2 pont szerint az érvénytelen, ha bármelyik fél cselekvőképtelen volt a szerződés megkötésekor.
+A 9.3 pont szerint az érvénytelen, ha jogszabályba ütközik.
+Válasz: Az adásvételi szerződés érvényteleníthető hamisított aláírás, cselekvőképtelen fél vagy jogszabályba ütközés esetén.
+
+Önmegerősítő CoT (Self-Refine CoT)
+
+Ez a technika lehetővé teszi a modell számára, hogy a generált válaszát kritizálja és javítsa. Az LLM először generál egy választ a CoT segítségével, majd egy újabb promptot kap, amely arra kéri, hogy értékelje saját válaszát, és ha szükséges, javítsa azt. Ez egy iteratív folyamat lehet.
+
+Példa 5: Önmegerősítő CoT
+
+Prompt (1. lépés: Eredeti kérdés CoT-val):
+javascript
+
+Kérdés: Két szám összege 15. Az egyik szám 5-tel nagyobb, mint a másik. Mik ezek a számok? Gondolkodjunk lépésről lépésre.
+
+LLM Válasz (feltételezett - 1. lépés):
+javascript
+
+Gondolkodás:
+Legyen az egyik szám x, a másik szám y.
+x + y = 15.
+x = y + 5.
+Helyettesítsük be az x-et az első egyenletbe: (y + 5) + y = 15.
+2y + 5 = 15.
+2y = 10.
+y = 5.
+Akkor x = 5 + 5 = 10.
+Válasz: A számok 10 és 5.
+
+Prompt (2. lépés: Önértékelés és javítás):
+javascript
+
+Az előző válaszod a következő volt:
+Gondolkodás:
+Legyen az egyik szám x, a másik szám y.
+x + y = 15.
+x = y + 5.
+Helyettesítsük be az x-et az első egyenletbe: (y + 5) + y = 15.
+2y + 5 = 15.
+2y = 10.
+y = 5.
+Akkor x = 5 + 5 = 10.
+Válasz: A számok 10 és 5.
+
+Kérlek, gondold át újra a megoldásodat. Ellenőrizd a számításaidat és a logikádat. Van-e valami, amit jobban lehetne csinálni, vagy hibás a válasz? Ha igen, javítsd ki.
+
+LLM Válasz (feltételezett - 2. lépés, ebben az esetben helyes volt az első, így csak megerősíti):
+javascript
+
+Értékelés és javítás:
+Az eredeti gondolkodási folyamatom és a végső válasz is helyesnek tűnik.
+Ellenőrzés:
+A számok 10 és 5.
+Összegük: 10 + 5 = 15. Ez helyes.
+Az egyik szám (10) 5-tel nagyobb, mint a másik (5). 10 - 5 = 5. Ez is helyes.
+Nincs szükség javításra.
+A gondolkodás logikus és a számítások pontosak voltak.
+Válasz: A számok 10 és 5.
+
+Ez a "hacker in the loop" megközelítés lehetővé teszi, hogy az LLM egy "belső auditot" végezzen, jelentősen növelve a megbízhatóságot, különösen kritikus alkalmazásokban.
+A CoT Prompting Előnyei és Hátrányai
+
+Mint minden technika, a CoT prompting is rendelkezik előnyökkel és hátrányokkal.
+Előnyök
+
+    Javított Pontosság: Különösen komplex, többlépcsős logikai feladatoknál drámaian növelheti a válaszok pontosságát.
+    Magyarázhatóság (Részleges): A lépésről lépésre haladó gondolati lánc bizonyos betekintést nyújt abba, hogyan jutott el a modell a válaszhoz, ami növeli a felhasználói bizalmat.
+    Robustabb Modellek: Az CoT segítségével finomhangolt modellek jobban ellenállnak a kisebb input variációknak.
+    Kevesebb Felhasználói Beavatkozás (Autó-CoT esetén): Az automatizált technikákkal csökkenthető a manuális prompt engineeringre fordított idő.
+
+Hátrányok
+
+    Prompt Hossz Növekedése: A gondolati láncok hozzáadása megnöveli a prompt méretét, ami több token felhasználásával jár, és lassabb lehet a feldolgozás.
+    Költségek Növekedése: Több token = magasabb költség, különösen nagy
