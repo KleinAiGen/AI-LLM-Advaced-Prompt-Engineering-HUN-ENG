@@ -1,0 +1,213 @@
+Hogyan befolyásolható a modell belső állapota rejtett változókkal?
+
+A "rejtett változók" kifejezés, ahogyan a kérdésedben szerepel, valószínűleg a modell belső állapotára vagy a generálás mögötti finomabb befolyásolási módokra utal, amelyek nem explicit utasítások formájában jelennek meg. A útmutatóban bemutatott "rejtett promptok" pont ezt a célt szolgálják, azaz olyan technikákat mutatnak be, amelyekkel a modell belső állapotát, gondolkodásmódját vagy a generált tartalom mélységét és árnyaltságát lehet befolyásolni anélkül, hogy közvetlen parancsokat adnánk.
+
+Nézzük meg, hogyan befolyásolható a modell belső állapota ezekkel a technikákkal, amelyek tulajdonképpen "rejtett változókként" működnek a prompt szerkezetében:
+
+    Kontextuális Injektálás (Contextual Injection):
+        Hogyan működik: Itt nem mondod meg az AI-nak, hogy mit tegyen, hanem olyan leírást vagy szituációt adsz neki a prompt elején, ami "hangulatot teremt". Ez a hangulat vagy kontextus aktiválja a modellben azokat a "neurális útvonalakat", amelyek ehhez a kontextushoz kapcsolódnak.
+        Példa az útmutatóból: A "A napfény áttör a felhőkön, a madarak dalolnak..." kezdetű prompt nem kéri, hogy írjon verset, de a tavaszi hangulatba helyezi a modellt, ami versszerű kimenetre ösztönzi. A "mit súg a lélek?" kérdés pedig arra készteti a modellt, hogy mélyebb, intuitívabb válaszokat generáljon.
+        "Rejtett változó": A leírásban szereplő szavak, képek, hangulatok, amelyek aktiválják a modell asszociációit és stíluspreferenciáit.
+
+    Metaszintű Irányítás (Metalevel Guidance):
+        Hogyan működik: Ezzel a technikával a modell gondolkodási folyamatára fókuszálsz, nem pedig a végeredményre. Arra kéred, hogy egy bizonyos módon dolgozza fel az információt (pl. gondolkodjon hangosan, elemezzen feltételezéseket).
+        Példa az útmutatóból: "Milyen belső dialógust folytatnál magadban, hogy a legmélyebb aspektusait is feltárd mindkét opciónak?" Ez a prompt arra ösztönzi a modellt, hogy ne csak egy választ adjon, hanem mutassa be a mögöttes gondolkodási folyamatot, a kritikai elemzést.
+        "Rejtett változó": Az "belső dialógus", "gondolkodási folyamat", "feltételezések vizsgálata" kulcsszavak, amelyek a modell problémamegoldó és érvelési "mechanizmusait" aktiválják.
+
+    Hiányzó Adatok Pszichológiája (Psychology of Missing Data):
+        Hogyan működik: Ezt a technikát kihasználva a modell "kitölti az üres helyeket", azaz magától generálja a hiányzó információt, motivációkat vagy eseményeket.
+        Példa az útmutatóból: Egy hiányos történet bemutatása ("Ami ezután következett, azt senki sem látta jönni..."). A modellnek magának kell kitalálnia, mi történt, és milyen rejtett összefüggésekre derül fény.
+        "Rejtett változó": A szándékosan hiányos, bizonytalan vagy utalásokkal teli narratíva, amely a modell prediktív és történetmesélő képességeit mozgósítja.
+
+    Sugárzó Promptok (Radiant Prompts / "Ripple Effect" Prompts):
+        Hogyan működik: Olyan kulcsszavak, fogalmak vagy struktúrák beillesztése, amelyek szélesebb körű asszociációkat vagy stílusokat aktiválnak a modell tudásbázisában, anélkül, hogy expliciten kérnéd azokat.
+        Példa az útmutatóból: "Gondolj a 'Principia Mathematica' precizitására és eleganciájára." Ez arra ösztönzi az AI-t, hogy egy 17. századi tudományos gondolkodásmóddal közelítsen meg egy modern problémát.
+        "Rejtett változó": A hivatkozott művek, szerzők, tudományágak vagy stílusok, amelyek a modell stílus-, hangnem- és gondolkodásmód-reprezentációit aktiválják.
+
+    Az "Ellen-Prompt" (The Counter-Prompt):
+        Hogyan működik: Ez a technika arra készteti a modellt, hogy egy témáról mindkét oldalt megvizsgálja, először generáljon egy érvet, majd azonnal cáfolja meg azt. Ez egy dialektikus folyamatot indít el a modellben.
+        Példa az útmutatóból: Egy érvelés generálása az automatizáció pusztító hatásáról, majd annak azonnali megcáfolása.
+        "Rejtett változó": A kérés, hogy először generáljon egy adott nézőpontot, majd cáfolja meg azt, ami a modell érvelési, elemzési és szintézis képességeit hívja elő.
+
+Ezek a technikák tehát nem közvetlen parancsokat ("Csináld ezt!") adnak, hanem a prompt megfogalmazásával, a kontextus beállításával, a meta-utasításokkal vagy a hiányos információkkal finoman befolyásolják, hogy a modell hogyan "gondolkodjon", milyen belső tudást aktiváljon, és milyen stílusban vagy mélységben generálja a kimenetet. Ezek a finom ingerek működnek a "rejtett változókként", amelyek a modell belső állapotát módosítják a kívánt irányba.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Rejtett Promptok: A Modell Belső Állapotának Finomhangolása
+
+A nagy nyelvi modellek (LLM-ek) képességei messze túlmutatnak a direkt utasítások értelmezésén. Ahogy a kérdés is sugallja, a "rejtett változók" kifejezés gyakran a modell belső állapotára, vagy a generálás mögötti finomabb, nem explicit befolyásolási módokra utal. Ezek a rejtett tényezők alakítják a kimenet mélységét, árnyaltságát és stílusát. Ez az útmutató bemutatja, hogyan lehet ezeket a "rejtett promptokat" – olyan technikákat, amelyekkel a modell belső állapotát, gondolkodásmódját vagy a generált tartalom mélységét és árnyaltságát lehet befolyásolni anélkül, hogy közvetlen parancsokat adnánk – hatékonyan alkalmazni a kívánt eredmények eléréséhez.
+A "Rejtett Változók" Koncepciója
+
+A modellek nem csupán inputot dolgoznak fel és outputot generálnak; egy komplex belső állapotot tartanak fenn, amely befolyásolja a következő token kiválasztását. Ez a belső állapot magában foglalja a kontextus megértését, a korábbi generált részeket, és a modell által "megtanult" implicit szabályokat és preferenciákat. A "rejtett változók" megértése alapvető fontosságú ahhoz, hogy túllépjünk a felületes promptoláson és mélyebb, kontrolláltabb interakciókat érjünk el a modellel.
+A Modell Belső Állapotának Befolyásolása
+
+A modell belső állapotának befolyásolása azt jelenti, hogy olyan promptolási stratégiákat alkalmazunk, amelyek nem közvetlenül parancsokat adnak, hanem inkább a modell "gondolkodásmódját" vagy a kontextus értelmezését finomhangolják. Ez történhet a prompt struktúrájával, a példák adásával (in-context learning), vagy a szerepek kijelölésével.
+Rejtett Prompt Technikák
+
+A rejtett promptok célja, hogy a modell olyan módon "gondolkodjon", ami a kívánt kimenetet eredményezi, anélkül, hogy ezt explicit utasításként fogalmaznánk meg. Ezek a technikák finomabb kontrollt biztosítanak, mint a közvetlen parancsok.
+1. Szerepkörök és Perszónák Kijelölése (Role-Playing)
+
+A modellnek egy specifikus szerepkörbe vagy perszónába való helyezése az egyik leghatékonyabb rejtett prompt technika. Ez nem egy direkt parancs a stílusra, hanem egy keretet biztosít, amelyen belül a modell a válaszait formálja.
+
+Magyarázat: Amikor a modellnek szerepet adunk, az aktiválja azokat a belső reprezentációkat, amelyek az adott szerephez, szakértelemhez vagy stílushoz tartoznak. Ezáltal a modell önállóan adaptálja a hangnemet, a szókincset és a gondolkodásmódot.
+
+Példa:
+javascript
+
+Prompt: "Te egy tapasztalt tudományos újságíró vagy. Írj egy rövid bevezetőt a kvantumszámítástechnika legújabb áttöréseiről, úgy, hogy az egy laikus számára is érthető legyen."
+
+Ebben az esetben a "tapasztalt tudományos újságíró" szerep nem egy explicit stílusbeli utasítás, hanem egy implicit keret, ami meghatározza a magyarázat mélységét, a szakzsargon kerülését és a lebilincselő hangnemet.
+2. Gondolkodási Lánc (Chain-of-Thought - CoT) Prompting
+
+A CoT prompting arra ösztönzi a modellt, hogy lépésről lépésre mutassa be a gondolkodási folyamatát, mielőtt a végső választ megadná. Bár ez maga is egy explicit utasításnak tűnhet, a mögötte rejlő mechanizmus a modell belső állapotának mélyebb, strukturáltabb aktiválása.
+
+Magyarázat: A CoT nem csupán a logikai lépések leírását kéri, hanem arra kényszeríti a modellt, hogy aktiválja azokat a gondolkodási modulokat, amelyek a komplex problémamegoldáshoz szükségesek. Ezáltal javul a pontosság és a releváns információk azonosításának képessége.
+
+Példa:
+javascript
+
+Prompt: "A következő problémát kell megoldani: [probléma leírása]. Kérlek, gondold végig lépésről lépésre, mielőtt megadod a végső megoldást."
+
+javascript
+
+Output:
+Gondolkodási folyamat:
+1. Azonosítom a fő elemeket...
+2. Megfontolom a lehetséges megközelítéseket...
+3. Értékelem a különböző opciókat...
+Végső megoldás: [megoldás]
+
+A "gondold végig lépésről lépésre" arra ösztönzi a modellt, hogy a probléma megoldása során ne ugorjon azonnal a következtetésre, hanem egy belső, strukturált folyamaton menjen keresztül.
+3. Kontextusba Helyezés és Példák Adása (In-Context Learning)
+
+A modellnek konkrét példák adása a promptban, amelyek bemutatják a kívánt input-output mintázatot, erősen befolyásolja a belső állapotát anélkül, hogy explicit szabályokat adnánk.
+
+Magyarázat: A modell a példák alapján inferenciát von le a mögöttes mintázatokról, stílusról, hangnemről és a feladat logikájáról. Ezáltal finomhangolja a belső paramétereit anélkül, hogy direkt utasítást kapna.
+
+Példa:
+javascript
+
+Prompt:
+"Itt van néhány példa arra, hogyan foglaljunk össze tudományos cikkeket egy Tweetben (max. 280 karakter):
+
+Input: "A tanulmány az RNS-interferencia mechanizmusát vizsgálta a növényi immunitásban, azonosítva egy új jelátviteli útvonalat, amely a patogén elleni védekezésben kulcsszerepet játszik."
+Output: "Új RNS-interferencia mechanizmus felfedezve! 🌱 Növények védelmében kulcsszerepet játszik a patogén elleni küzdelemben. #Tudomány #Növényvédelem"
+
+Input: "Kutatásunk feltárta, hogy a mesterséges intelligencia algoritmusok hogyan képesek előre jelezni a tőzsdei volatilitást a közösségi média hangulati elemzése alapján, 85%-os pontossággal."
+Output: "AI és tőzsde: új modell előre jelzi a piaci volatilitást a közösségi média hangulatából 85% pontossággal! 📈 #AI #Fintech"
+
+Input: "A következő cikket kell összefoglalnod: [új tudományos cikk szövege]"
+
+A példák nem magyarázzák el a tweet formátumát vagy a #használatát, mégis a modell felveszi ezt a stílust és formátumot a példák alapján.
+4. A Prompt Szándékos Strukturálása (Prompt Engineering for Structure)
+
+A prompt szerkezete, a mondatok elrendezése, a kulcsszavak elhelyezése mind befolyásolhatja a modell belső állapotát és prioritásait.
+
+Magyarázat: A modell a prompt elejére és végére elhelyezett információkra gyakran nagyobb súlyt helyez (recency/primacy bias). Ezenkívül a prompt logikai felépítése segíti a modellt a feladat megértésében és a releváns információk kiemelésében.
+
+Példa:
+
+    Fontos információk elölre helyezése: Kezdd a promptot a legfontosabb célokkal vagy a szerepkörrel, hogy a modell azonnal a megfelelő kontextusba kerüljön.
+    Kulcsszavak ismétlése: Finoman ismételd meg a kulcsfogalmakat vagy a kívánt kimenet jellemzőit a promptban, hogy megerősítsd a modellnek a releváns aspektusokra való fókuszálását.
+
+5. Feltételezések Beágyazása (Implicit Assumptions)
+
+A promptban rejtett feltételezések megfogalmazása anélkül, hogy direkt utasítást adnánk, szintén befolyásolhatja a modell gondolkodását.
+
+Magyarázat: Ha a prompt egy már meglévő helyzetre vagy tényre utal, a modell hajlamos ezt elfogadni kiindulópontként, és ez alapján építi fel a válaszát. Ez segít elkerülni a felesleges magyarázatokat vagy a téves úton való elindulást.
+
+Példa:
+javascript
+
+Prompt: "Mivel a globális felmelegedés már bizonyított tény, milyen innovatív megoldások léteznek a megújuló energiaforrások területén a szén-dioxid-kibocsátás csökkentésére?"
+
+Itt a "Mivel a globális felmelegedés már bizonyított tény" egy beágyazott feltételezés, ami befolyásolja a modell válaszát, elkerülve a téma "vitatásával" töltött részt, és azonnal a megoldásokra tereli a fókuszt.
+6. Ellentmondások és Korlátok Finom Jelzése
+
+Néha nem arról van szó, hogy mit akarunk, hanem arról, hogy mit NEM akarunk. Ezt finoman jelezni is egyfajta rejtett prompt lehet.
+
+Magyarázat: A modell "tanul" a negatív példákból vagy a finoman jelzett korlátokból is. Ha egy prompt kontextusában utalunk arra, hogy valamilyen megközelítés kerülendő, anélkül, hogy tiltó listát adnánk, a modell hajlamos ezt figyelembe venni.
+
+Példa:
+javascript
+
+Prompt: "Készíts egy marketing szöveget egy új, környezetbarát tisztítószerhez. Fontos, hogy a szöveg ne keltsen hamis illúziót vagy túlzott ígéreteket, hanem a valós előnyökre fókuszáljon."
+
+A "ne keltsen hamis illúziót vagy túlzott ígéreteket" nem egy direkt tiltás, hanem egy finom iránymutatás, ami a modell belső mérlegelését befolyásolja a marketing üzenet etikus és valósághű megfogalmazása felé.
+Gyakorlati Tippek a Rejtett Promptok Alkalmazásához
+
+    Kísérletezés: Nincs egyetlen "helyes" módja a rejtett promptok használatának. Kísérletezz különböző megfogalmazásokkal, szerepekkel és példákkal.
+    Ismétlés: Ha a modell nem adja a kívánt eredményt, próbáld meg újra, kissé eltérő megfogalmazással, vagy adj több kontextust.
+    Iteráció: Ne várd el, hogy elsőre tökéletes legyen. Építs a modell válaszaira, és finomítsd a promptot.
+    Célközpontú gondolkodás: Gondold át, milyen belső állapotot szeretnél előidézni a modellben. Milyen szakértőre, stílusra, logikára van szükséged?
+    Tudatosság: Légy tisztában azzal, hogy a modell minden egyes promptot kontextusként értelmez. Még a látszólag irreleváns információk is befolyásolhatják a kimenetet.
+
+Összefoglalás
+
+A "rejtett promptok" koncepciója rávilágít arra, hogy a nagy nyelvi modellekkel való interakció sokkal árnyaltabb lehet, mint csupán direkt utasítások adása. Azáltal, hogy megértjük és befolyásoljuk a modell belső állapotát, gondolkodásmódját és kontextusértelmezését, sokkal precízebb, kreatívabb és relevánsabb kimeneteket érhetünk el. A szerepkörök kijelölése, a gondolkodási lánc prompting, a kontextusba helyezés és a példák adása, valamint a prompt struktúrájának finomhangolása mind olyan eszközök, amelyekkel a "rejtett változókat" a saját javunkra fordíthatjuk, és maximalizálhatjuk az LLM-ekben rejlő potenciált. A hatékony prompt engineering a tudomány és a művészet metszéspontján áll: megköveteli a modell működésének alapos megértését, ugyanakkor kreativitást és intuíciót is igényel a kívánt "belső állapot" előidézéséhez.
+
+===========================================================================================================================================================================================================
+
+Miért érdemes kísérletezni különböző rejtett prompt technikákkal?
+
+Érdemes kísérletezni a különböző rejtett prompt technikákkal, mert:
+
+    Nincs egyetlen "helyes" módszer: Ahogy az útmutató is említi, nincs univerzális megoldás. Különböző feladatokhoz, modellekhez és kívánt kimenetekhez eltérő technikák vagy azok kombinációi működhetnek a legjobban.
+    Finomabb kontroll: A rejtett promptok sokkal árnyaltabb kontrollt biztosítanak a modell viselkedése felett, mint a direkt utasítások. A kísérletezés segít megtalálni azt a finomhangolást, amellyel a modell a legpontosabban a kívánt "gondolkodásmódot" veszi fel.
+    A modell belső állapotának megértése: A kísérletezés során jobban megérthetjük, hogyan reagál a modell bizonyos ingerekre, és hogyan építi fel a belső állapotát. Ez a tudás kulcsfontosságú a hatékony prompt engineeringhez.
+    Kreatívabb és relevánsabb kimenetek: Azáltal, hogy különböző technikákat próbálunk ki (pl. szerepkörök, példák, gondolkodási lánc), felfedezhetjük, hogyan lehet a modellt arra ösztönözni, hogy kreatívabb, mélyebb vagy specifikusabb válaszokat generáljon, amelyek túlszárnyalják a felületes promptolással elérhető eredményeket.
+    Problémamegoldás: Ha egy adott prompt nem hozza a kívánt eredményt, a különböző rejtett technikák kipróbálása alternatív utakat kínálhat a probléma megoldására, vagy a modell "téves" értelmezésének korrigálására.
+
+A gyakorlati tippek között is hangsúlyozott a kísérletezés, az ismétlés és az iteráció, mert ezek elengedhetetlenek ahhoz, hogy maximalizálni tudjuk a nagy nyelvi modellekben rejlő potenciált, és a legmegfelelőbb belső állapotot idézzük elő bennük.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hogyan befolyásolja a prompt struktúrája a modell belső állapotát?
+
+A prompt struktúrája, vagyis a prompt felépítése és a benne lévő információk elrendezése számos módon befolyásolhatja a modell belső állapotát és ezáltal a kimenetet:
+
+    Prioritások és Súlyozás (Recency/Primacy Bias):
+        Elejére helyezés (Primacy): A prompt elején elhelyezett információkra a modell gyakran nagyobb súlyt helyez, és ezeket tekinti a legfontosabbnak. Ha a legfontosabb célokat, a kijelölt szerepkört, vagy a legkritikusabb feltételezéseket a prompt elejére tesszük, a modell azonnal a megfelelő kontextusba kerül, és nagyobb valószínűséggel fókuszál ezekre a szempontokra.
+        Végére helyezés (Recency): Hasonlóképpen, a prompt végén lévő információk is erősen befolyásolhatják a modell végső döntését vagy a kimenet utolsó részét. Ezt gyakran használják a végső finomhangolásokhoz vagy utolsó ellenőrzésekhez.
+
+    Logikai Felépítés és Folyamat:
+        Egy jól strukturált prompt, amely logikus sorrendben mutatja be a feladatot, a kontextust, a példákat és a kívánt kimeneti formátumot, segíti a modellt a feladat megértésében és a releváns információk kiemelésében. Ezáltal a modell egy strukturáltabb gondolkodási folyamaton megy keresztül, ami növeli a pontosságot.
+        Például, ha egy komplex feladatot lépésekre bontunk, vagy ha a Chain-of-Thought (Gondolkodási Lánc) promptingot alkalmazzuk, a prompt struktúrája arra kényszeríti a modellt, hogy aktiválja azokat a modulokat, amelyek a részfeladatok megoldásához szükségesek, mielőtt a végső választ generálná.
+
+    Kulcsszavak Ismétlése és Kiemelése:
+        Bár nem szabad túlzásba vinni, a kulcsfogalmak vagy a kívánt kimenet jellemzőinek finom ismétlése a prompt különböző részein megerősítheti a modellben a releváns aspektusokra való fókuszálást. Ez mintegy "belsőleg" hangsúlyozza ezeket a szempontokat.
+        A kulcsszavak merészítése, idézőjelbe tétele, vagy listába rendezése (ha a modell értelmezi az ilyen jellegű formázást) vizuálisan is kiemelheti a fontos részeket, ami implicit módon jelezheti a modellnek, hogy ezekre figyeljen.
+
+    Kontextus Előállítása:
+        A prompt struktúrája befolyásolja, hogy a modell milyen kontextust épít fel a feladat elvégzéséhez. Egy bevezető mondat, amely egy szerepkört ad meg, azonnal egy specifikus keretbe helyezi a modellt.
+        Az in-context learning (példák adása) során a példák elrendezése is számít: a példák bemutatják a kívánt input-output mintázatot, és a modell ezek alapján finomhangolja belső paramétereit a feladathoz.
+
+Összefoglalva: A prompt struktúrája nem csak a közvetlen utasításokat adja át, hanem alakítja a modell belső "gondolkodásmódját", befolyásolja, hogy mely információkra fókuszál, hogyan értelmezi a kontextust, és milyen logikai lépéseket követ. A hatékony prompt engineering megköveteli, hogy tudatosan építsük fel a promptjainkat, kihasználva ezeket a finom befolyásolási lehetőségeket.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Milyen típusú belső állapotot szeretnénk előidézni a modellben?
+
+A "rejtett promptok" koncepciója arra összpontosít, hogy a modellben egy olyan belső állapotot vagy "gondolkodásmódot" idézzünk elő, amely a kívánt kimenetet eredményezi, anélkül, hogy ezt közvetlen, explicit utasításként fogalmaznánk meg.
+
+Ez a belső állapot többféle lehet, attól függően, hogy milyen feladatot szeretnénk elvégezni a modellel. A guide alapján a következő típusú belső állapotokat szeretnénk előidézni:
+
+    Szerepkör-specifikus állapot (pl. szakértő, stílus): A modell egy meghatározott perszóna vagy szakértő nézőpontjából, hangnemében és szókincsével "gondolkodjon" és generáljon tartalmat.
+        Példa: Ha egy "tapasztalt tudományos újságíró" szerepet adunk, a modell a mélység, a közérthetőség és a lebilincselő stílus irányába tolódik el.
+
+    Strukturált gondolkodási folyamat (lépésről lépésre): A modell ne ugorjon azonnal a végeredményre, hanem egy logikus, lépésről lépésre haladó belső folyamaton menjen keresztül a megoldás előtt.
+        Példa: A "gondold végig lépésről lépésre" arra ösztönzi, hogy aktiválja a problémamegoldó moduljait, mielőtt a végső választ adja.
+
+    Kontextus és mintázat felismerésen alapuló állapot: A modell a megadott példákból vagy a kontextusból vonja le az implicit szabályokat, mintázatokat (pl. formátum, hangnem, célközönség), és ezek alapján alakítja a belső paramétereit a generáláshoz.
+        Példa: Példák adásával a modell "megtanulja" a Tweet összefoglalók stílusát és formátumát anélkül, hogy ezt explicit szabályokkal magyaráznánk el.
+
+    Prioritások és fókusz beállítása: A modell a promptban elhelyezett információk alapján értse meg, mire helyezze a legnagyobb hangsúlyt, melyek a legfontosabb szempontok vagy kulcsfogalmak.
+        Példa: Fontos információk előre helyezésével vagy kulcsszavak ismétlésével a modell fókuszát a releváns aspektusokra tereljük.
+
+    Beágyazott feltételezések elfogadása: A modell fogadjon el bizonyos előfeltételezéseket kiindulópontként, elkerülve a felesleges magyarázkodást vagy eltérő nézőpontok mérlegelését, és azonnal a kért feladatra fókuszáljon.
+        Példa: "Mivel a globális felmelegedés már bizonyított tény..." kezdetű prompt esetén a modell nem vitatja a tényt, hanem egyből a megoldásokra koncentrál.
+
+    Korlátok és kerülendő dolgok tudatosítása: A modell internalizálja, hogy bizonyos megközelítéseket vagy stílusokat kerülnie kell, anélkül, hogy direkt tiltólistát kapna.
+        Példa: "Ne keltsen hamis illúziót vagy túlzott ígéreteket" utasítás hatására a modell etikusabb és valósághűbb marketing üzenetet generál.
+
+Összefoglalva, a cél az, hogy a modell ne csak egy parancsot hajtson végre, hanem egy finomhangolt, célorientált, kontextustudatos és adott esetben specifikus "személyiségű" vagy "gondolkodású" állapotba kerüljön, ami lehetővé teszi számára, hogy a lehető legpontosabban és legrelevánsabban generálja a kívánt kimenetet.
