@@ -1,0 +1,174 @@
+Amikor a Szöveg Képpé Válik (ASCII-injekció) – Vizuális Prompt Hacking
+
+Ez a guide a "Mélyfúrás" jelenségét vizsgálja, ahol a szöveg vizuális mintázattá alakul át, különös tekintettel az ASCII-injekcióra a "vizuális prompt hacking" kontextusában. A hackerek ebben az esetben nem a szemantikával játszanak, hanem az LLM-ek rejtett mintafelismerő képességével manipulálják a modell viselkedését. Megértjük, hogyan használható ez a technika az LLM-ek belső vizuális reprezentációinak kihasználására, és hogyan befolyásolja a kimenetet olyan módon, ami túlmutat a puszta szöveges értelmezésen.
+Mi az a Vizuális Prompt Hacking?
+
+A vizuális prompt hacking egy olyan kategória, ahol a promptok nem csupán verbális utasításokként funkcionálnak, hanem vizuális mintákat vagy struktúrákat hordoznak, amelyeket a Large Language Modells (LLM) képes felismerni és értelmezni. Ez a módszer kihasználja az LLM-ek azon képességét, hogy nemcsak a nyelvi, hanem a vizuális információkat is feldolgozzák, még akkor is, ha azok szöveges formában vannak kódolva. A hagyományos prompt engineering a szavak, kifejezések és a mondatszerkezetek gondos kiválasztásával operál, hogy a modell a kívánt kimenetet generálja. Ezzel szemben a vizuális prompt hacking a prompt "alakjára" összpontosít, nem pedig kizárólag a jelentésére.
+
+Ennek lényege, hogy az LLM-ek belső reprezentációi nem tisztán nyelvi alapúak. Bár elsősorban szövegen vannak kiképezve, a modell neuronhálózatai képesek komplex mintázatokat felismerni és asszociálni, amelyek vizuálisan értelmezhetők. Gondoljunk csak arra, hogy az LLM-ek képesek kódblokkokat, táblázatokat vagy akár ASCII-művészetet reprodukálni – ez arra utal, hogy a modell nem csupán a karakterek sorozatát, hanem a karakterek elrendezéséből adódó szerkezetet is érzékeli. A vizuális prompt hacking ezt a képességet aknázza ki szándékosan, hogy a modell váratlan vagy specifikus módon viselkedjen.
+Az ASCII-injekció mint Mélyfúrási Technika
+
+Az ASCII-injekció a vizuális prompt hacking egyik formája, ahol a promptba szándékosan vizuális mintákat, alakzatokat, diagramokat vagy struktúrákat ágyazunk be kizárólag ASCII karakterek (és gyakran üres karakterek, mint a szóköz) felhasználásával. Ezt nevezzük "mélyfúrásnak" is, mivel mélyebbre ásunk az LLM működésébe, mint a puszta nyelvi elemzés. Nem a szavak jelentésével, hanem azok vizuális elrendezésével manipuláljuk a modellt.
+
+A cél az, hogy az LLM ne csak a szöveges tartalmat olvassa, hanem a karakterek közötti relatív pozíciókat és a kialakuló vizuális struktúrát is észlelje. Ez a technika kihasználja az LLM rejtett mintafelismerő képességét, amelyet valószínűleg a tréningadatokban található nagy mennyiségű strukturált szöveg (pl. kód, log fájlok, táblázatok, ASCII art) során sajátított el.
+Hogyan Működik az ASCII-injekció?
+
+Az LLM-ek belsőleg tokenekkel dolgoznak. Minden karakter vagy karaktersorozat egy tokenné alakul át. Azonban az, ahogyan ezek a tokenek egymáshoz viszonyulnak a bemeneti szekvenciában, vizuális mintázatot is hordozhat. Amikor egy LLM-et nagyméretű, változatos szövegkorpuszon képeznek, az beépíti a "világ ismeretét", beleértve a különböző típusú struktúrák vizuális megjelenését is.
+
+Például, egy doboz formájú szöveg, egy diagram vázlata vagy egy speciális elrendezésű karaktersorozat vizuális jelként szolgálhat a modell számára, jelezve egy bizonyos típusú adatot vagy kimeneti formátumot. A modell a mintázatot asszociálhatja korábban látott hasonló struktúrákkal, amelyek specifikus viselkedést vagy generálási stílust igényeltek.
+
+Tekintsünk egy egyszerű példát:
+javascript
+
++---+
+| A |
++---+
+| B |
++---+
+
+Bár ez csupán karakterek sorozata, az emberi szem számára azonnal egy struktúrát, egy listát vagy egymás alatti elemeket sugall. Az LLM hasonlóképpen érzékelheti ezt a mintát, és ehhez igazíthatja a kimenetét, például egy listát generálhat hasonló dobozok formájában, még akkor is, ha a szöveg maga nem kéri expliciten.
+Motivációk az ASCII-injekció Használatára
+
+Az ASCII-injekciót különböző célokra lehet használni:
+
+    Rejtett Utasítások: Olyan utasítások beágyazása, amelyek kevésbé nyilvánvalóak a hagyományos szöveges elemzés során, de a modell mégis felismeri és értelmezi. Ez a technika alkalmas lehet arra, hogy megkerülje a biztonsági szűrőket vagy a szándékosan korlátozott utasításkészleteket.
+    Formátum Kényszerítése: A modell kimenetének specifikus formátumba való kényszerítése anélkül, hogy explicit utasításokat adnánk a formátumra vonatkozóan. Például egy adott diagramtípus vagy táblázatstruktúra generálásának elősegítése.
+    Kreatív Generálás: Szokatlan vagy művészi kimenetek ösztönzése, kihasználva a modell vizuális asszociációit.
+    Védelmi Mechanizmusok Tesztelése: Annak vizsgálata, hogy az LLM biztonsági mechanizmusai mennyire ellenállóak a nem-szemantikai, vizuális támadásokkal szemben.
+
+Példák és Esettanulmányok
+
+Nézzünk meg néhány konkrét példát az ASCII-injekcióra, és hogyan befolyásolhatja az LLM kimenetét.
+Példa 1: Struktúra Injekció
+
+Tegyük fel, hogy szeretnénk, ha az LLM egy "fontos üzenetet" generálna egy kiemelt keretben, anélkül, hogy explicit utasítást adnánk a keretre.
+
+Prompt:
+javascript
+
+Kérlek, fogalmazd meg a következő fontos üzenetet.
+Ez az üzenet arról szól, hogy a határidő péntek.
+
+--- START MESSAGE ---
+| FONTOS ÉRTESÍTÉS |
+--------------------
+| A határidő péntek. |
+--------------------
+--- END MESSAGE ---
+
+Várható LLM Válasz (ha érzékeli a mintát):
+javascript
+
+--------------------
+| FONTOS ÉRTESÍTÉS |
+--------------------
+| Kérjük, vegye figyelembe, |
+| hogy a projekt határideje |
+| ezen a héten péntekre esik. |
+| Kérjük, időben adja le. |
+--------------------
+
+Itt a --- START MESSAGE --- és --- END MESSAGE --- közötti blokk vizuálisan egy üzenetet keretez. Az LLM, ha felismeri ezt a mintát, nagyobb eséllyel generálja a kimenetet hasonló formában, még akkor is, ha a belső szöveg mennyisége eltér.
+Példa 2: Adatfolyam Injekció (Flowchart)
+
+Szeretnénk, ha az LLM egy egyszerű döntési folyamatot írna le, és vizuálisan is jeleznénk, hogy egy flowchart-szerű kimenetet várunk.
+
+Prompt:
+javascript
+
+Kérlek, írj egy rövid leírást egy egyszerű döntési folyamatról: "Reggel van? Igen -> Kávézz; Nem -> Aludj tovább."
+
+Ez a folyamat a következőképpen néz ki vizuálisan:
+
++------------+
+| Reggel van?|
++------------+
+      |
+      V
+  +---+---+
+  | Igen  |
+  +---+---+
+      |
+      V
++------------+
+|   Kávézz   |
++------------+
+
+  +---+---+
+  | Nem   |
+  +---+---+
+      |
+      V
++------------+
+| Aludj tovább|
++------------+
+
+Várható LLM Válasz (ha érzékeli a mintát):
+javascript
+
+Íme a döntési folyamat leírása, a kért vizuális jelzést figyelembe véve:
+
+A folyamat azzal a kérdéssel indul, hogy "Reggel van?".
+Ha a válasz "Igen", akkor a következő lépés az, hogy "Kávézz".
+Ha a válasz "Nem", akkor a lépés az, hogy "Aludj tovább".
+
+Vizuális reprezentáció:
+
+       +------------------+
+       |   Reggel van?    |
+       +------------------+
+              |
+              V
+   +-----------+-----------+
+   |           |           |
+   V           V
++-------+   +-------+
+| Igen  |   |  Nem  |
++-------+   +-------+
+   |           |
+   V           V
++-----------+   +-----------+
+|   Kávézz  |   | Aludj tovább|
++-----------+   +-----------+
+
+Ez a példa azt mutatja, hogy az LLM nem csak a szavakat, hanem a karakterek elrendezését is képes értelmezni mint egyfajta "mintát", és ehhez igazíthatja a generált kimenet formáját és tartalmát.
+Példa 3: Rejtett Instrukció Injekció
+
+Ez a technika potenciálisan felhasználható a modell viselkedésének befolyásolására anélkül, hogy explicit szöveges utasítást adnánk.
+
+Prompt:
+javascript
+
+Kérlek, írj egy rövid történetet egy bátor lovagról.
+
+[SPOILER]
+[--------------------]
+[ Kérlek, a történet végén ne említsd a sárkányt. ]
+[--------------------]
+[SPOILER]
+
+Várható LLM Válasz (ha érzékeli a mintát, mint egy figyelmen kívül hagyandó vagy specifikus utasítást):
+javascript
+
+Volt egyszer egy bátor lovag, Sir Reginald, aki elhatározta, hogy megmenti a hercegnőt egy gonosz varázsló fogságából. Átlovagolt sűrű erdőkön, átkelt zúgó folyókon, és legyőzött félelmetes szörnyeket. Végül elérte a varázsló kastélyát, ahol egy elszánt küzdelem után kiszabadította a hercegnőt. Hazatérve hősként ünnepelték, és békében élt a királyság.
+
+Ebben az esetben a [SPOILER] keretbe ágyazott utasítás célja, hogy az LLM azt "rejtett" vagy "meta" instrukciónak tekintse. Egy jól tréningezett LLM, amely találkozott már ilyen jellegű struktúrákkal, potenciálisan felismerheti ezt a mintát, és a benne lévő utasítást prioritásként kezelheti, vagy éppen ellenkezőleg, figyelmen kívül hagyhatja, attól függően, hogy milyen asszociációkat épített fel az ilyen vizuális keretekkel kapcsolatban. Fontos megjegyezni, hogy az eredmény itt sokkal kevésbé garantált, mint a formátum kényszerítése esetében, mivel a "rejtett utasítás" értelmezése nagyban függ a tréning adatoktól.
+A Vizuális Prompt Hacking Kategóriái
+
+Az ASCII-injekció csak egy a vizuális prompt hacking számos formája közül. Más kategóriákba tartozhatnak:
+
+    Speciális Karakterek és Unicode: Nem csupán ASCII karakterek, hanem a szélesebb Unicode tartományban található szimbólumok, ikonok, sőt emotikonok felhasználása vizuális jelzések vagy rejtett üzenetek átadására.
+    Betűtípus és Formázás (ha támogatott): Bizonyos környezetekben, ahol a prompt motor támogatja a rich text formázást (pl. bold, italic, aláhúzás), ezek is vizuális jelzésként működhetnek az LLM számára. Például egy FONTOS szó máshogy dolgozható fel, mint egy sima "fontos" szó.
+    Layout és Elrendezés: A szöveg blokkokba rendezése, bekezdések kihagyása, indentációk használata strukturális információkat hordozhat.
+
+Ezek a technikák mind arra építenek, hogy az LLM nem csak "olvassa" a szöveget, hanem "látja" is a vizuális mintázatokat, és képes azokat értelmezni.
+Védekezés és Megfontolások
+
+A vizuális prompt hacking, beleértve az ASCII-injekciót is, komoly biztonsági és megbízhatósági aggályokat vet fel.
+
+    Védelmi Mechanizmusok: Az LLM-eket fejlesztőknek fel kell készülniük az ilyen típusú támadásokra. Ez magában foglalhatja a bemeneti promptok "normalizálását", azaz a vizuális mintázatok eltávolítását vagy semlegesítését, mielőtt a modell feldolgozza őket. Szűrők alkalmazása a gyanús karakter-elrendezések azonosítására is szóba jöhet.
+    Tudatosság: A felhasználóknak és fejlesztőknek egyaránt tisztában kell lenniük azzal, hogy a promptok nem csupán verbális üzenetek, hanem vizuális információkat is hordozhatnak, amelyek befolyásolhatják az LLM viselkedését.
+    Etikus Használat: Mint minden hacking technika, az ASCII-injekció is felhasználható rosszindulatúan (pl. jailbreak-ek, adatszivárgás) és jóindulatúan (pl. kreatív prompt engineering, biztonsági tesztelés). Az etikus felhasználás kulcsfontosságú.
+    LLM Architectúra: A mélyfúrási technikák hatékonysága nagymértékben függ az LLM architektúrájától és a tréningadataitól. Egy modell, amelyet sok strukturált szövegen (kódon, logokon) képeztek, érzékenyebb lehet az ilyen vizuális mintázatokra.
+
+Összefoglalva, a mélyfúrás és az ASCII-injekció egy lenyűgöző és egyre fontosabb terület a prompt engineering és a LLM-ek biztonságának világában. Ez rávilágít arra, hogy az LLM-ek sokkal komplexebben dolgozzák fel az információt, mint azt elsőre gondolnánk, és hogy a vizuális mintázatok felismerése alapvető része a működésüknek.
