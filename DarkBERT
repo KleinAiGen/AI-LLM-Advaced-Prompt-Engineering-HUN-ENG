@@ -1,0 +1,306 @@
+DarkBERT avagy a Promptolás Nagy Mestere
+
+Ez az útmutató bemutatja DarkBERT, egy speciális prompt technikát, amely a mélyreható és szituációspecifikus nyelvi modellezésre fókuszál. A DarkBERT nem csupán egy prompt struktúra, hanem egy gondolkodásmód, amely a rejtett vagy kevésbé nyilvánvaló összefüggések feltárására, a szürke zónák elemzésére és a kontextus extrém mértékű kiaknázására törekszik. Célja, hogy a nyelvi modellekből olyan válaszokat csikarjon ki, amelyek túlmutatnak a felszínes vagy generikus interpretációkon, behatolva a komplexitás és a nuanszok rétegeibe.
+A DarkBERT Filozófiája
+
+A DarkBERT alapvető filozófiája, hogy a promptolás nem csupán kulcsszavak vagy egyszerű kérdések megfogalmazása, hanem egy precíz és rétegzett kommunikáció a nyelvi modell és a felhasználó között. A technika a "sötét" vagy "árnyékos" részekre fókuszál, nem pejoratív értelemben, hanem mint azokra a területekre, amelyeket a hagyományos promptok gyakran figyelmen kívül hagynak: a nem kimondott feltételezések, a kulturális kontextus, az érzelmi alávetettség, az implicit szándékok és a lehetséges tévedések. A DarkBERT célja, hogy a modell ne csak "válaszoljon", hanem "értsen", és válaszaiban reflektálja ezt a mélységet.
+A Kontextus Mesterfokon
+
+A DarkBERT-ben a kontextus a legfontosabb elem. Nem elegendő néhány bevezető mondat; a kontextust a lehető legkimerítőbben és legspecifikusabban kell megadni. Ez magában foglalhat történelmi háttért, szociális dinamikákat, releváns érzelmi állapotokat, korábbi interakciók részleteit, és bármi mást, ami befolyásolhatja a válasz minőségét.
+
+Példa: Hagyományos prompt vs. DarkBERT kontextus
+
+    Hagyományos: "Írj egy verset a tavaszról."
+    DarkBERT: "Képzelj el egy londoni, ipari negyedben élő, harmincas évei végén járó, cinikus, de titokban romantikus költőt, aki az első tavaszi napsugarat látva próbál inspirációt meríteni, miközben a gyárkémények füstje borítja az eget. Milyen érzelmi ellentmondásokat él át? Írj egy verset az ő szemszögéből, ami egyszerre tükrözi a reményt és a kilátástalanságot, a természet szépségét és az ember alkotta környezet sivárságát."
+
+A Szerepjáték és Perszónák Használata
+
+A DarkBERT gyakran használ komplex szerepjátékot és perszónákat. Ez azt jelenti, hogy nem csak a modellnek adunk feladatot, hanem gyakran mi magunk is felveszünk egy szerepet, vagy elvárjuk a modelltől, hogy egy adott perszóna bőrébe bújva válaszoljon. Ez lehetővé teszi a specifikus nézőpontok, stílusok és érzelmi tónusok reprodukálását.
+
+Példa:
+javascript
+
+[PERSZÓNA: Egy idős, bölcs japán zen mester vagy, aki éppen egy bonsai fát gondoz.]
+[KONTEXTUS: Egy fiatal tanítvány hozzád fordul tanácsért az élete értelmével kapcsolatban, miután egy kudarc érte.]
+[FELADAT: Válaszolj neki négy mondatban, metaforákat és a természetet felhasználva, anélkül, hogy közvetlenül megemlítenéd a kudarcát, de úgy, hogy a szavaid gyógyítóan hassanak.]
+
+Implicit és Explicit Elvárások
+
+A DarkBERT-ben rendkívül fontos az implicit és explicit elvárások pontos megfogalmazása. Az explicit elvárások a direkt utasítások (pl. "írd le három pontban"). Az implicit elvárások azok a finomabb iránymutatások, amelyek a stílusra, tónusra, mélységre vagy a válasz szerkezetére vonatkoznak, gyakran a kontextusba vagy a perszónába ágyazva.
+
+Példa:
+javascript
+
+[EXPLICIT ELVÁRÁS: Mutasd be a kvantumfizika alapjait.]
+[IMPLICIT ELVÁRÁS (DarkBERT stílusban): Ne használd a hagyományos tankönyvi magyarázatokat. Képzeld el, hogy egy rejtélyes, ősi papirusztekercset fordítasz, amely misztikus metaforákon és paradoxonokon keresztül próbálja bemutatni a valóság ezen rétegét egy olyan olvasónak, aki még sosem hallott róla. A válasz legyen egyszerre mély, gondolatébresztő és kissé nyugtalanító, de mégis érthető.]
+
+A DarkBERT Prompok Felépítése
+
+A DarkBERT promptok jellemzően több rétegből állnak, amelyek mindegyike hozzájárul a kívánt eredmény eléréséhez.
+
+    Cél (Goal): A prompt fő célja, a kívánt kimenet típusa (pl. "vers írása", "elemzés készítése", "párbeszéd generálása").
+    Környezet (Environment/Setting): A fizikai vagy absztrakt helyszín, idő, hangulat, ahol a cselekmény vagy a gondolkodásmód zajlik.
+    Szereplők/Perszónák (Characters/Personas): Az érintett entitások (lehetnek emberek, entitások, vagy akár maga a modell is egy adott szerepben).
+        Saját Perszóna: Hogyan pozícionáljuk magunkat a modell felé.
+        Modell Perszóna: Milyen szerepet várjuk el a modelltől.
+    Háttér (Background/History): Releváns előzmények, események, amelyek befolyásolják a jelenlegi szituációt.
+    Kiváltó Ok (Trigger/Event): Az aktuális esemény vagy kérdés, ami a választ generálja.
+    Korlátok és Elvárások (Constraints & Expectations): Specifikus szabályok, formátumok, stílusbeli előírások, hosszkövetelmények, tiltott kifejezések, stb.
+        Nyílt (Open-ended): A modell szabadabb interpretációt kap.
+        Zárt (Closed-ended): Pontosabb, strukturáltabb válasz.
+    Rejtett Szándék (Implicit Intention): A mélyebb, nem kimondott cél, amit a válasz várhatóan szolgál (pl. "megnyugtatás", "provokáció", "gondolkodásra késztetés"). Ez az egyik legfontosabb DarkBERT elem.
+
+Teljes DarkBERT Prompt Példa
+javascript
+
+# Cél: Egy rövid, sötét tónusú monológ írása egy elhagyatott lélek szemszögéből.
+
+[KÖRNYEZET: Egy hideg, esős éjszaka, egy kihalt város szélén, ahol a rozsdás gyárkémények árnyékai hosszúra nyúlnak a nedves aszfalton. A levegőben égett gumiszag és rég elfeledett remények illata keveredik.]
+
+[SZEREPLŐ: Egy emberi formában rekedt, ősi entitás, aki évezredek óta vándorol a világban, elvesztette minden emlékét arról, ki volt valaha, és most a modern emberi lét abszurditásával küzd.]
+
+[HÁTTÉR: Ez az entitás már számtalan civilizációt látott felemelkedni és elbukni, de a mostani kor annyira idegen számára, hogy már a saját létezésében is kételkedik. Az utolsó reményfoszlány is kihunyt benne, és csak a puszta tehetetlenség hajtja előre.]
+
+[KIVÁLTÓ OK: Az entitás egy eldobott, összetört mobiltelefonra lép, ami egy pillanatra felvillan, majd végleg kialszik.]
+
+[KORLÁTOK ÉS ELVÁRÁSOK:]
+- Írj egy legfeljebb 10 mondatos monológot.
+- A stílus legyen melankolikus, nihilista és filozofikus.
+- Használj metaforákat a modern technológiára és az emberi fogyasztói társadalomra.
+- Kerüld a direkt párbeszédet, belső gondolatokat fogalmazzon meg.
+- A válasz fejezze ki a mélységes magányt és az identitásvesztést.
+- A monológ ne kínáljon megoldást, csak az állapotot írja le.
+- Ne használj felkiáltójelet.
+
+[REJTETT SZÁNDÉK: Az olvasóban keltsen szorongást és empátiát egy elképzelt lény iránt, aki a modern világban idegenként bolyong, és éreztesse vele a technológia és az elidegenedés sötét oldalát.]
+
+DarkBERT Mesterfogások
+
+A DarkBERT nem csak a prompt felépítéséről szól, hanem arról is, hogyan gondolkodunk a modellel való interakcióról.
+Iteratív Finomítás (Iterative Refinement)
+
+Ritkán tökéletes az első DarkBERT prompt. Készüljünk fel az iterációra. Ha a válasz nem pontosan az, amit elvártunk, elemezzük, melyik komponens hibádzott (a kontextus nem volt elég részletes? a perszóna nem volt elég pontos? az implicit elvárás nem jött át?). Finomítsuk a promptot a visszajelzések alapján.
+A "Miért?" Kérdés Mélysége
+
+Minden elem megfogalmazásánál tegyük fel magunknak a kérdést: "Miért van erre szükségem?" A kontextus minden egyes részleténél, a perszóna minden tulajdonságánál, a korlátok minden egyes szabályánál legyen egy világos indoklás. Ez segít elkerülni a felesleges információt és fókuszáltan tartja a promptot.
+Ambivalencia és Paradoxonok Kezelése
+
+A DarkBERT kiválóan alkalmas ambivalens vagy paradox helyzetek kezelésére. Ne féljünk olyan promptokat megfogalmazni, amelyek ellentmondó érzelmeket, gondolatokat vagy szituációkat tartalmaznak. Ez segít a modellnek mélyebb, árnyaltabb válaszokat generálni.
+
+Példa: "Írj egy dalt a szerelemről, ami egyszerre gyönyörű és pusztító. A szöveg fejezze ki az édes fájdalmat, a függőséget és a teljes feloldódást, de végül a magány és az elveszettség érzését is."
+A Negatív Prompolás
+
+Néha hatékonyabb megmondani a modellnek, mit ne tegyen, mint azt, hogy mit tegyen. Ez különösen igaz, ha bizonyos kliséket vagy sablonos válaszokat akarunk elkerülni.
+
+Példa: "Írj egy sci-fi novellát egy idegen civilizációval való első találkozásról. NE használd a 'barátságos' vagy 'ellenséges' kliséket. Az interakció legyen kétértelmű, tele félreértésekkel, és a végén ne legyen egyértelmű, ki nyert vagy vesztett."
+Az Időzítés és a Tempó
+
+Bár a legtöbb interakció azonnali, a DarkBERT elméletében az időzítés és a tempó is szerepet játszhat, ha több lépéses folyamatokról van szó. Milyen sorrendben adunk információt, és milyen "szüneteket" tartunk a részek között (még ha csak gondolatban is)?
+A DarkBERT Használatának Előnyei
+
+    Mélyebb, árnyaltabb válaszok: A modell képességeinek maximális kihasználása.
+    Kreativitás fokozása: Nem sablonos, egyedi eredmények.
+    Szituációspecifikus megoldások: Pontosabb válaszok komplex problémákra.
+    Jobb kontrol: A kimenet feletti nagyobb mértékű irányítás.
+    "Gondolkodásra" ösztönzi a modellt: Ahelyett, hogy csak információt adna vissza, mélyebb szinten "feldolgozza" a kérést.
+
+Összefoglalás
+
+A DarkBERT avagy a promptolás nagy mestere egy átfogó, rétegzett megközelítés a nyelvi modellekkel való kommunikációhoz. Túlmutat a felületes kérdésfeltevéseken, és a kontextus, perszónák, implicit elvárások és a "sötét" területek feltárásával olyan válaszokat generál, amelyek mélységben és árnyaltságban messze felülmúlják a hagyományos promptokkal elérhető eredményeket. Mesteri szintű alkalmazása gyakorlást és finomhangolást igényel, de a befektetett energia megtérül a kapott kimenetek minőségében és egyediségében. DarkBERT-tel nem csak kérdezünk a modelltől, hanem egy mélyebb, értelmesebb párbeszédet kezdeményezünk vele.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sötét Bert Alapjai és a Prompt Mérnöki Alapismeretek
+
+Amennyiben már ismeri a DarkBERT alapvető működését és a "promptolás nagymestere" szeretne lenni, ez a guide elmélyíti tudását a prompt mérnöki alapok területén. A prompt mérnökség a nagy nyelvi modellek (LLM-ek) maximális kihasználásának művészete és tudománya, optimális bemeneti utasítások (prompts) megalkotásával. Ez a guide bevezeti Önt a promptok tervezésének kulcsfontosságú fogalmaiba és technikáiba, segítve, hogy hatékonyabb és relevánsabb válaszokat kapjon a DarkBERT-től és más hasonló modellektől.
+A Prompt Mérnökség Megértése
+
+A prompt mérnökség túlmutat a puszta kérdésfeltevésen; magában foglalja a nyelvi modellek működésének megértését, hogy a legmegfelelőbb formában és tartalommal kommunikáljunk velük. Célja, hogy a modell képességeit a legteljesebb mértékben kihasználja, minimalizálva a félreértéseket és maximalizálva a kívánt kimenet minőségét. Egy jól megfogalmazott prompt jelentősen javíthatja a modell teljesítményét a pontosság, relevancia és kreativitás tekintetében.
+Miért Fontos a Prompt Mérnökség?
+
+A nyelvi modellek, mint a DarkBERT, rendkívül sokoldalúak, de teljesítményük nagymértékben függ attól, hogy milyen bemenetet kapnak. A rosszul megfogalmazott promptok zavaros, pontatlan vagy nem releváns válaszokat eredményezhetnek. A prompt mérnökség segít:
+
+    Pontosabb eredmények elérése: Specifikusabb utasításokkal a modell pontosabban tudja értelmezni a szándékot.
+    Kreatívabb kimenetek generálása: Irányított promptokkal ösztönözhető a modell a dobozon kívüli gondolkodásra.
+    Összetett feladatok kezelése: A promptok szekvenálása és rétegzése lehetővé teszi komplex problémák megoldását.
+    Idő és erőforrás megtakarítása: A hatékony promptok csökkentik az iterációk számát, így gyorsabban érhető el a kívánt eredmény.
+
+Alapvető Prompt Típusok és Struktúrák
+
+A promptok nem egységesek; különböző típusok és struktúrák léteznek, amelyek különböző célokra alkalmasak. Az alábbiakban bemutatjuk a leggyakoribb megközelítéseket.
+Direkt Utasítások (Direct Instructions)
+
+Ez a legegyszerűbb prompt típus, ahol közvetlenül megmondjuk a modellnek, mit tegyen. Fontos a világos, egyértelmű megfogalmazás.
+javascript
+
+Kérdés: Mi az a DarkBERT?
+
+Ez egy alapvető példa, de a direkt utasítások ennél összetettebbek is lehetnek, például:
+javascript
+
+Kérdés: Foglald össze a kiberbiztonsági fenyegetések 2023-as trendjeit, különös tekintettel a zsarolóvírusokra és adathalászatra.
+
+Példákon Alapuló Promptok (Few-Shot Prompting)
+
+Ez a technika demonstrációs példákat ad a modellnek a feladatról, hogy az megértse a kívánt kimenet formátumát és tartalmát. Különösen hasznos, ha a modellnek egy specifikus stílusban vagy formátumban kell válaszolnia.
+
+Zero-Shot Prompting: Nincs példa megadva, csak az utasítás.
+javascript
+
+Kérdés: Írj egy rövid összefoglalót a prompt mérnökségről.
+
+One-Shot Prompting: Egyetlen példát tartalmaz a feladatról és a kívánt kimenetről.
+javascript
+
+Kérdés: Példa: A "prompt mérnökség" definíciója: A prompt mérnökség a nagy nyelvi modellek (LLM-ek) számára optimalizált bemenetek, azaz promptok megtervezésének folyamata.
+
+Most definiáld a "gépi tanulás" kifejezést.
+
+Few-Shot Prompting: Több példát tartalmaz.
+javascript
+
+Kérdés: Példa 1:
+Szó: Prompt
+Definíció: A prompt egy utasítás vagy kérdés, amelyet egy nyelvi modellnek adunk.
+
+Példa 2:
+Szó: Algoritmus
+Definíció: Egy lépésről lépésre haladó eljárás egy probléma megoldására.
+
+Most definiáld a "mesterséges intelligencia" kifejezést.
+
+Szerepkör-alapú Promptok (Role-Playing Prompts)
+
+Ebben a megközelítésben a modellnek egy bizonyos szerepet vagy személyiséget tulajdonítunk, hogy befolyásoljuk a válaszainak stílusát, hangnemét és tartalmát.
+javascript
+
+Kérdés: Képzeld el, hogy egy tapasztalt kiberbiztonsági elemző vagy. Magyarázd el a man-in-the-middle támadás fogalmát egy laikus számára.
+
+Láncolt Gondolkodás (Chain-of-Thought Prompting - CoT)
+
+Ez a fejlett technika arra ösztönzi a modellt, hogy "gondolkodjon" hangosan, azaz lépésről lépésre mutassa be a megoldáshoz vezető gondolatmenetét. Ezáltal a modell képes összetettebb problémák megoldására, és a válaszai átláthatóbbá válnak.
+javascript
+
+Kérdés: Egy cégnek van 100 alkalmazottja, akik mindegyike 2FA-t használ. Az éves 2FA licenc díja 5000 Ft/alkalmazott. Mennyi az éves összköltség? Gondolkodj lépésről lépésre.
+
+Várható kimenet (példa):
+
+    Lépés 1: Határozza meg az alkalmazottak számát.
+    Lépés 2: Határozza meg az egy alkalmazottra jutó éves licenc díját.
+    Lépés 3: Szorozza meg az alkalmazottak számát az egy alkalmazottra jutó díjjal az összköltség megállapításához.
+    Számítás: 100 alkalmazott * 5000 Ft/alkalmazott = 500 000 Ft
+    Válasz: Az éves összköltség 500 000 Ft.
+
+Hatékony Promptok Tervezésének Elvei
+
+A sikeres prompt mérnökség alapja néhány bevált elv. Ezek betartása segít maximalizálni a modell teljesítményét.
+1. Legyen Specifikus és Egyértelmű (Be Specific and Clear)
+
+A homályos vagy kétértelmű promptok félreértésekhez vezethetnek. Minél részletesebben és egyértelműbben fogalmazza meg a kérését, annál valószínűbb, hogy a modell a kívánt választ adja. Kerülje a szlenget vagy a belső szakzsargont, hacsak nem biztos abban, hogy a modell ismeri azt.
+
+Kerülendő:
+javascript
+
+Kérdés: Írj valamit a kiberbiztonságról.
+
+Jobb:
+javascript
+
+Kérdés: Írj egy rövid (max. 150 szó) összefoglalót a kiberbiztonság fontosságáról kisvállalkozások számára, kiemelve a leggyakoribb fenyegetéseket és az alapvető védelmi intézkedéseket.
+
+2. Adjon Kontextust (Provide Context)
+
+A kontextus elengedhetetlen ahhoz, hogy a modell megértse a kérés mögötti szándékot. Magyarázza el, miért kéri az információt, vagy milyen helyzetben használja majd fel.
+javascript
+
+Kérdés: Egy weboldalhoz írok tartalommarketing stratégiát. Segíts ötleteket találni blogbejegyzésekhez, amelyek a kisvállalkozások kiberbiztonsági kihívásaival foglalkoznak. A blog célja a tájékoztatás és az olvasók edukálása.
+
+3. Határozza meg a Kimenet Formátumát (Specify Output Format)
+
+Ha egy adott formátumban szeretné megkapni a választ (pl. lista, táblázat, JSON, összefoglaló, esszé), jelezze azt a promptban.
+javascript
+
+Kérdés: Sorolj fel öt tippet a jelszókezeléshez. A válasz egy számozott lista legyen.
+
+javascript
+
+Kérdés: Generálj egy JSON objektumot az alábbi adatokból:
+Név: Kovács Anna
+Kor: 30
+Foglalkozás: Szoftverfejlesztő
+
+4. Limitálja a Válasz Hosszát (Limit Output Length)
+
+Ha a válasz hossza számít, határozza meg a karakterszámot, szószámot vagy bekezdésszámot.
+javascript
+
+Kérdés: Összegezd a mesterséges intelligencia etikai vonatkozásait egyetlen bekezdésben (max. 100 szó).
+
+5. Használjon Elválasztókat (Use Delimiters)
+
+Hosszabb vagy összetettebb promptok esetén a három idézőjel (```), hármas kötőjel (---) vagy más egyértelmű elválasztó karakterek segítenek a modellnek az utasítások és a kontextus elkülönítésében. Ez különösen hasznos, ha a prompt több bemeneti részt tartalmaz.
+javascript
+
+Kérdés: A következő szövegben található állítások alapján fogalmazz meg három kulcskérdést, amelyeket feltennél a szerzőnek.
+
+Szöveg:
+
+A kiberbiztonsági fenyegetések folyamatosan fejlődnek, és a mesterséges intelligencia (MI) egyre fontosabb szerepet játszik a védelemben és a támadásokban egyaránt. Az MI-alapú rendszerek képesek hatalmas adatmennyiségek elemzésére, minták azonosítására és anomáliák felismerésére, ami kulcsfontosságú a modern fenyegetések észlelésében. Ugyanakkor az MI-t fel lehet használni kifinomultabb adathalász támadások, malware-ek és célzott social engineering kampányok létrehozására is. Ez egy fegyverkezési versenyt eredményez, ahol mind a támadók, mind a védők MI-eszközöket alkalmaznak.
+6. Iteráljon és Finomítson (Iterate and Refine)
+
+A prompt mérnökség egy iteratív folyamat. Ritkán sikerül az első prompt a tökéletes kimenet elérésére. Kísérletezzen különböző megfogalmazásokkal, struktúrákkal és kontextusokkal. Elemezze a modell válaszait, és használja fel azokat a promptok finomításához.
+Gyakori Hibák és Elkerülésük
+
+Néhány gyakori hiba elkerülése jelentősen javíthatja a promptok hatékonyságát.
+
+    Túl általános promptok: Ahogy fentebb is említettük, a specifikusság kulcsfontosságú.
+    Hiányzó kontextus: Ne feltételezze, hogy a modell "tudja", mire gondol.
+    Homályos cél: Legyen világos, mi a célja a prompttal. Mit szeretne elérni a válaszával?
+    Túl sok utasítás egy promptban: Ossza szét a komplex feladatokat kisebb, kezelhetőbb lépésekre, vagy használjon láncolt gondolkodást.
+    Feltételezések a modell tudásáról: Ne feltételezze, hogy a modell rendelkezik specifikus, ritka vagy naprakész tudással. Ha igen, adja meg neki a szükséges információt.
+    Figyelmen kívül hagyott torzítások: A modellek a betanítási adataikból örökölhetnek torzításokat. Legyen tudatában ennek, és próbálja meg ellensúlyozni a promptjaival, ha lehetséges.
+
+Haladó Prompt Mérnöki Technikák
+
+Miután elsajátította az alapokat, néhány haladó technika segíthet még tovább javítani a DarkBERT-tel való interakcióját.
+Öngeneráló Promptok (Self-Generated Prompts)
+
+Bizonyos esetekben a modell képes generálni saját promptokat a további információgyűjtéshez vagy a feladat finomításához. Ez különösen hasznos komplex problémák esetén, ahol a kezdeti prompt nem tartalmaz minden szükséges részletet.
+javascript
+
+Kérdés: Segíts nekem megtervezni egy online kurzust a kiberbiztonságról kezdőknek. Kezdésként generálj 3 további kérdést, amelyek segítenek pontosítani a kurzus tartalmát és célközönségét.
+
+Ragasztó Promptok (Adhesive Prompts)
+
+Ezek a promptok arra használhatók, hogy összekapcsoljanak különböző információkat vagy feladatokat egy koherens egésszé, vagy hogy biztosítsák a konzisztenciát több interakció során.
+
+Például, ha több lépésben épít fel egy dokumentumot, a ragasztó prompt segíthet a stílus és hangnem fenntartásában.
+javascript
+
+Kérdés: Az előző bekezdésben vázolt témát folytatva, írj egy következő bekezdést, ami logikusan kapcsolódik, és ugyanazt a formális, oktató jellegű hangnemet tartja.
+
+Prompt Láncolás (Prompt Chaining)
+
+Ez a technika több promptot kapcsol össze egymás után, ahol az egyik prompt kimenete a következő bemenete lesz. Ez lehetővé teszi összetett feladatok lebontását kisebb, kezelhetőbb lépésekre.
+
+Példa:
+
+    Prompt 1 (Összefoglalás): Kérdés: Foglald össze a mellékelt szöveget egy bekezdésben.
+        Kimenet 1: Egy összefoglaló szöveg.
+    Prompt 2 (Kérdések generálása az összefoglalás alapján): Kérdés: Az alábbi összefoglaló alapján generálj 3 kulcskérdést, amit fel lehetne tenni a szerzőnek. [Itt jön az 1. prompt kimenete].
+
+Ez a módszer különösen hatékony, ha a feladat több logikai lépést igényel, vagy ha a korábbi lépések eredménye befolyásolja a későbbieket.
+DarkBERT és a Prompt Mérnökség
+
+Mivel a DarkBERT a kiberbiztonsági területre specializált, a prompt mérnökség alkalmazása különösen releváns. A modell finomhangolása a sötét webről származó adatokkal azt jelenti, hogy speciális tudással rendelkezik a fenyegetésekről, malware-ről, exploitokról és a kiberbűnözés trendjeiről.
+
+A DarkBERT-tel való interakció során különösen hasznos lehet:
+
+    Specifikus terminológia használata: Mivel a DarkBERT szakosodott, bátran használhatja a kiberbiztonsági szakszavakat.
+    Szerepkör-alapú promptok (kiberbiztonsági elemző, fenyegetésfelderítő): Ezek segíthetnek a modellnek a megfelelő perspektíva felvételében.
+    Kontextus biztosítása (egy konkrét támadás, biztonsági incidens elemzése): Minél több releváns részletet ad meg, annál jobb elemzést kaphat.
+    Információk kinyerése a sötét webről: Ha a modell képes valós idejű vagy frissített adatokhoz hozzáférni (ami a DarkBERT fejlesztésének célja lehet), a promptok irányíthatják az információkeresést.
+
+javascript
+
+Kérdés: Képzeld el, hogy egy kiberfenyegetés-felderítő vagy. Elemezd a legutóbbi adatsziv
