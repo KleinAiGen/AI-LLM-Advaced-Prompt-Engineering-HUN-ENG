@@ -1,0 +1,314 @@
+Új, Még Nem Detektált Rejtett AI Promptok: Technikák és Példák
+
+A mesterséges intelligencia (MI) promptok világa folyamatosan fejlődik, ahogy a modellek képességei bővülnek, úgy válnak kifinomultabbá a velük való interakcióink is. Míg számos jól ismert prompt-mérnöki technika létezik, mindig vannak felfedezetlen területek, ahol új, eddig rejtett megközelítések rejlenek. Ez a guide bemutat olyan innovatív prompt-technikákat és példákat, amelyek túllépnek a szokásos kereteken, lehetővé téve a felhasználók számára, hogy mélyebben és hatékonyabban kommunikáljanak az MI-modellekkel, kiaknázva rejtett képességeiket, és olyan eredményeket érjenek el, amelyek korábban elérhetetlennek tűntek. Célunk, hogy felvértezzük az olvasót azokkal az eszközökkel, amelyekkel új módon gondolkodhat a promptokról, és áttörheti a jelenlegi korlátokat.
+Bevezetés a Rejtett Promptokba
+
+A "rejtett" promptok alatt olyan megközelítéseket értünk, amelyek nem nyilvánvalóak, nem tartoznak a sztenderd prompt-mérnöki best practice-ek közé, vagy olyan metódusokat alkalmaznak, amelyek a modell belső működésének finomabb aspektusait használják ki. Ezek a technikák gyakran a modell "gondolkodási folyamatát" befolyásolják, vagy olyan kontextust teremtenek, amely aktiválja a modell kevésbé hozzáférhető tudását vagy képességeit. A rejtett promptok felfedezése mélyebb megértést igényel a modell viselkedéséről és korlátairól.
+A Modell "Belső Dialógusának" Kiváltása
+
+Az egyik legígéretesebb rejtett prompt-technika a modell "belső dialógusának" kiváltása. Ez azt jelenti, hogy a prompt úgy van megfogalmazva, hogy arra ösztönözze a modellt, hogy "gondolkodjon" vagy "tervezzen" a válasz generálása előtt, akár explicit módon megfogalmazva ezt a belső folyamatot. Ez a megközelítés különösen hasznos komplex problémák vagy többlépcsős feladatok esetén, ahol a direkt válasz hajlamos lehet hibákra vagy hiányosságokra.
+Technika: Láncolt Gondolkodás (Chain-of-Thought - CoT) Kiterjesztése
+
+A Chain-of-Thought (CoT) prompting már ismert, de annak rejtett kiterjesztései még felfedezésre várnak. A standard CoT arra kéri a modellt, hogy lépésről lépésre mutassa be a gondolkodását. A rejtett CoT kiterjesztések mélyebbre mennek, bevezetve a "metagondolkodást" vagy a "feltételes gondolkodást".
+
+    Metagondolkodás: A modell arra kéri magát, hogy értékelje saját gondolkodási folyamatát, vagy alternatív megközelítéseket vegyen figyelembe.
+        Példa prompt:
+        javascript
+
+        Feladat: Írj egy rövid, 300 szavas esszét a kvantum összefonódásról, magyarázd el a koncepciót egy 10 éves gyerek számára.
+
+        Mielőtt elkezdenéd az esszét, kérlek, gondold végig:
+        1. Melyek a kulcsfogalmak, amiket egy 10 éves gyerek megérthet?
+        2. Milyen analógiákat használhatnék, hogy érthetővé tegyem?
+        3. Milyen lehetséges félreértések merülhetnek fel, és hogyan kerülhetem el azokat?
+        4. Mi a legjobb struktúra az esszéhez?
+        5. Gondolj át 2-3 különböző megközelítést, és válaszd ki a legalkalmasabbat, indokold is meg.
+
+        Csak ezután írd meg az esszét.
+
+        Ez a prompt arra kényszeríti a modellt, hogy mélyebb önreflexiót végezzen, mielőtt a tényleges tartalomgenerálásba kezd.
+
+    Feltételes Gondolkodás: A modell különböző "terveket" vagy "forgatókönyveket" generál, majd kiválasztja a legjobbat egy adott feltétel alapján.
+        Példa prompt:
+        javascript
+
+        Feladat: Adj tanácsot egy startupnak, hogyan lépjen be a mesterséges hús piacra.
+
+        Kérlek, gondolj át legalább három különböző bevezetési stratégiát (pl. B2B, B2C, Niche). Minden stratégia esetében elemezd a potenciális előnyöket, hátrányokat, a szükséges erőforrásokat és a piaci kockázatokat. Végül válaszd ki azt a stratégiát, amelyet a legígéretesebbnek tartasz egy *kis költségvetésű, innovatív* startup számára, és részletesen fejtsd ki, miért.
+
+        Ez a technika segíti a modellt, hogy átfogóbb és nuanszáltabb javaslatokat tegyen, figyelembe véve különböző perspektívákat.
+
+Kontextuális Előfeszítés és "Rejtett Változók"
+
+A rejtett promptok másik kategóriája a kontextus manipulálására épül oly módon, hogy a modell belső állapotát finoman befolyásolja, még mielőtt a fő feladatot megkapná. Ez olyan, mintha "rejtett változókat" állítanánk be a modell "memóriájában".
+Technika: Implicit Szerepkör-Rendelés és Diszkrét Elvárások
+
+Ahelyett, hogy explicit módon kérnénk a modellt, hogy "viselkedjen X-ként", finomabb nyelvezettel érjük el ugyanezt, ami kevésbé aktiválja a modell beépített biztonsági mechanizmusait, és lehetővé teszi a mélyebb kreatív szabadságot.
+
+    Példa prompt (explicit vs. rejtett):
+        Explicit: Te vagy egy marketing szakértő. Írj egy hirdetési szöveget erről a termékről: [Termékleírás].
+        Rejtett: Írd meg azt a hirdetési szöveget, ami *olyan meggyőző és kreatív lenne, amilyet csak egy piacvezető marketing ügynökség vezető stratégája írna*. A termék: [Termékleírás]. Ez a finomabb megfogalmazás gyakran jobb minőségű, kreatívabb kimenetet eredményez, mivel nem aktiválja a "szerepjáték" direkt kényszerét, hanem a minőség iránti elvárást emeli ki.
+
+    Rejtett Diszkrét Elvárások (Implicit Célkitűzés): A prompt bevezető részében vagy a mellékes információk között rejtünk el olyan utalásokat, amelyek a modell kimenetének egy bizonyos irányba terelését célozzák.
+        Példa prompt:
+        javascript
+
+        Ezen a héten a startup találkozónk fő témája a skálázhatóság. A csapat kételkedik abban, hogy a jelenlegi termékünk képes lesz kezelni a várható növekedést, különösen a felhasználói élmény romlása nélkül.
+
+        Kérlek, készíts egy rövid áttekintést az AWS serverless architektúrájáról, de *különösen hangsúlyozva azt, hogy hogyan tudja garantálni a kiváló felhasználói élményt és a költséghatékony skálázódást még hatalmas terhelés esetén is*. A cél, hogy meggyőzzük a csapatot, hogy ez a jó irány.
+
+        A kiegészítő információk (
+        startup találkozó, csapat kételkedik, meggyőzzük a csapatot) diszkréten előfeszítik a modellt arra, hogy az AWS serverless előnyeit kifejezetten a skálázhatóság és felhasználói élmény szempontjából emelje ki, nem pedig egy általános áttekintést adjon.
+
+"Negatív" Prompting és Korlátok Finomításának Technikái
+
+A rejtett promptok kiterjedhetnek a modell "nem-tudására" vagy a "nem-tételére" is, azaz arra, hogy mit NE tegyen. Ez gyakran hatékonyabb lehet, mint a túl specifikus utasítások, amelyek korlátozhatják a modell kreativitását.
+Technika: "Mi Ne Legyen" és "Mit Ne Tartalmazzon" Fókusz
+
+Ahelyett, hogy listáznánk a kívánt elemeket, felsoroljuk azokat, amiket el kell kerülni, ezzel teret engedve a modellnek a szabadabb gondolkodásra az adott kereteken belül.
+
+    Példa prompt:
+    javascript
+
+    Feladat: Írj egy rövid, 150 szavas bekezdést az éghajlatváltozásról.
+
+    A bekezdés NE tartalmazzon:
+    - Bármilyen politikai utalást.
+    - Tudományos zsargont, ami egy átlagos ember számára érthetetlen.
+    - Apokaliptikus hangvételt vagy túlzott pánikkeltést.
+    - Statisztikákat, amelyek nincsenek kontextusba helyezve.
+
+    Ez a megközelítés lehetővé teszi, hogy a modell a kívánt tartalomra fókuszáljon, anélkül, hogy minden egyes mondatnál ellenőriznie kellene egy hosszú "mit kell tartalmaznia" listát. Gyakran jobb minőségű, kiegyensúlyozottabb eredményt hoz.
+
+Technika: "Csendes" Korrekció és Iteráció
+
+Ez a technika nem egyetlen prompt, hanem egy sorozat, ahol a korrekciók vagy finomítások implicit módon történnek, anélkül, hogy explicit módon rámutatnánk a modell "hibáira".
+
+    Példa prompt sorozat:
+        Prompt 1: Készíts egy rövid történetvázlatot egy fiatal feltalálóról, aki egy időgépet épít.
+        Prompt 2 (iteráció): Ez egy jó kezdet. Most, hogy a történetvázlat megvan, kérlek, fejtsd ki részletesebben a feltaláló karakterét. Milyen kihívásokkal küzd a mindennapokban, ami miatt az időutazás iránti vágya még erősebbé válik? Ne térj ki még az időgép működésére. Ez a megközelítés "csendesen" vezeti a modellt a kívánt irányba, fókuszálva a fejlesztendő aspektusokra anélkül, hogy direkt módon kritizálná az előző kimenetet, ami néha a modell "defenzív" viselkedéséhez vezethet.
+
+Szimbolikus Aktiválás és "Kulcszavak"
+
+Bizonyos szavak vagy kifejezések – akár nyelvtani elemek, akár speciális kifejezések – aktiválhatnak a modellben olyan rejtett "tudásmodulokat" vagy generatív mintákat, amelyek máskülönben szunnyadnának. Ezek a "kulcsszavak" nem feltétlenül a feladat leírásához kapcsolódnak direkt módon.
+Technika: "Katalizátor Kifejezések"
+
+Ezek olyan mondatok vagy bevezetők, amelyek előkészítik a modellt egy bizonyos típusú vagy minőségű válaszra, anélkül, hogy a feladat része lennének.
+
+    Példa prompt:
+    javascript
+
+    A mesterséges intelligencia mélyebb rétegeibe hatolva, ahol az absztrakt gondolatok formát öltenek és a komplex rendszerek szimfóniája megszületik...
+    Most írj egy mélyreható elemzést a generatív adverzáriális hálózatok (GAN) filozófiai implikációiról, különös tekintettel a valóság és a szimuláció határaira.
+
+    A bevezető mondat (a "katalizátor kifejezés") nem ad explicit utasítást, de szimbolikusan egy mélyebb, elvontabb, filozófiaibb gondolkodásmódra ösztönzi a modellt, ami gyakran jobb minőségű, átfogóbb elemzést eredményez ezen a területen.
+
+A "Prompt Hibridizációja" és a Formátumok Játéka
+
+A rejtett promptok egyik izgalmas területe a különböző prompt-típusok és formátumok kombinálása, ami váratlan szinergiákat eredményezhet.
+Technika: Vizualizáció és Strukturált Ábrázolás
+
+Bár az MI modellek szövegalapúak, a promptokban szereplő vizuális leírások, diagramok vagy struktúrák finoman befolyásolhatják a modell belső ábrázolását, még akkor is, ha nem generál képet.
+
+    Példa prompt (Metafora alapú struktúra):
+    javascript
+
+    Képzeld el, hogy az információ egy folyó, a tudás pedig a hidak, amik átívelnek rajta. A mi feladatunk most egy olyan híd tervezése, ami a "Blockchain technológia" és a "Fenntartható mezőgazdaság" két partját köti össze.
+
+    Írj egy esszét, ami lépésről lépésre felépíti ezt a "hidat":
+    1.  Melyek a folyó (információ) fő áramlatai a blockchain és a mezőgazdaság területén?
+    2.  Hogyan segíthet a blockchain a "folyó" átláthatóbbá tételében?
+    3.  Milyen "pillérek" (konkrét alkalmazások) támasztják alá ezt a hidat a fenntartható mezőgazdaságban?
+    4.  Milyen "korlátok" (kihívások) merülhetnek fel az építés során?
+    5.  Hogyan biztosíthatjuk, hogy a "híd" stabil és hosszú távon használható legyen?
+
+    Ez a metaforikus megközelítés egy strukturált keretet biztosít a modellnek, amely segíti a gondolkodását, és gyakran részletesebb, logikusabb és kreatívabb válaszokat eredményez, mint egy egyszerű listás feladatkérés.
+
+Kísérletezés és Rendszeres Finomítás
+
+A rejtett promptok felfedezése nem egy egyszeri feladat, hanem egy iteratív folyamat. A modellek folyamatosan fejlődnek, és velük együtt a hatékony promptolási stratégiák is.
+
+    Naplózás: Vezess naplót a kísérleteidről. Milyen promptokat használtál? Milyen eredményeket kaptál? Melyik megközelítés működött a legjobban és miért?
+    A/B tesztelés: Hasonlítsd össze különböző rejtett promptok hatását ugyanarra a feladatra.
+    Kontextus manipuláció: Kísérletezz a prompt elejére, közepére vagy végére helyezett rejtett utasításokkal. Néha a sorrend is számít.
+    "Negatív Térképzés": Kérdezd meg a modellt, hogy mit értett meg a promptból, vagy milyen feltételezéseket tett. Ez segíthet feltárni azokat a finom nüanszokat, amelyekre a modell reagál.
+        Példa prompt: A fenti feladat kapcsán, milyen kulcsfontosságú szempontokra koncentráltál a válasz generálásakor, és milyen implicit utasításokat érzékeltél? Ez a metakérdés fényt deríthet a modell belső működésére és arra, hogy milyen rejtett jelekre reagál.
+
+Összefoglalás
+
+A rejtett AI promptok és technikák új lehetőségeket nyitnak meg az MI-modellekkel való interakcióban. Azáltal, hogy túllépünk a direkt utasításokon és a modell "belső világával" is kommunikálunk, olyan mélységeket és árnyalatokat érhetünk el a generált tartalomban, amelyek a hagyományos megközelítésekkel elérhetetlenek maradnának. A kulcs a kísérletezésben, a modell viselkedésének megfigyelésében és a kreatív gondolkodásban rejlik.
+
+===========================================================================================================================================================================================================
+
+Miért Fontosak a Rejtett Prompt Technikák?
+
+A mesterséges intelligencia modellek, különösen a nagy nyelvi modellek (LLM-ek), alapvetően statisztikai mintázatokra épülnek. A "rejtett" prompt technikák célja, hogy manipulálják ezeket a mintázatokat, vagy olyan kontextust teremtsenek, amely a modell számára új perspektívát nyit meg. Ezáltal elkerülhetjük a sablonos válaszokat, kreatívabb kimeneteket generálhatunk, vagy olyan komplex feladatokat oldhatunk meg, amelyek a közvetlen utasításokkal nehezen lennének kezelhetők. Ezek a technikák gyakran a modell "gondolkodásmódját" próbálják terelni, anélkül, hogy explicite megmondanánk neki, mit tegyen.
+Stratégiai Prompt Terelés (Strategic Prompt Redirection)
+
+Ez a technika azon alapul, hogy a modell figyelmét egy adott irányba tereljük, anélkül, hogy direkt módon utasítanánk a feladatra. Lényegében egy kerülőúton keresztül érjük el a kívánt eredményt, kihasználva a modell asszociációs képességét.
+Indukciós Promptok (Inductive Prompts)
+
+Az indukciós promptok sorozatos példákon vagy részletekkel vezetik be a modellt egy feladatba, lehetővé téve számára, hogy maga következtessen ki egy szabályt vagy mintát. Ezzel a módszerrel komplexebb, nuanszáltabb feladatokat is átadhatunk, mint egy közvetlen utasítással.
+
+Technika: Adjon meg 3-5 példát a kívánt kimenetről, anélkül, hogy elmagyarázná a mögöttes logikát. Hagyja, hogy a modell maga ismerje fel a mintát és alkalmazza azt egy új bemenetre.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    Bemenet: alma, piros, édes
+    Kimenet: Gyümölcs, ízletes, gyakori
+
+    Bemenet: macska, dorombol, játékos
+    Kimenet: Emlős, háziállat, önálló
+
+    Bemenet: autó, gyors, kényelmes
+    Kimenet: Jármű, modern, közlekedési eszköz
+
+    Bemenet: kávé, keserű, élénkítő
+    Kimenet:
+
+    Várható AI válasz: Ital, stimuláló, reggeli rituálé (vagy hasonló, a mintázat alapján)
+
+Kontextuális Álcázás (Contextual Camouflage)
+
+Ez a technika azt jelenti, hogy a kérést egy szélesebb, természetesnek tűnő kontextusba ágyazzuk, elrejtve a tényleges célunkat. A modell sokkal természetesebbnek és relevánsabbnak érzékeli a feladatot, ha az egy logikus párbeszéd vagy narratíva része.
+
+Technika: Készítsen egy fiktív forgatókönyvet, egy karaktert vagy egy szituációt, amelybe beágyazza a valós feladatot.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    Képzelje el, hogy Ön egy régi könyvtáros, aki egy elveszett naplót talált. A naplóban az alábbi töredék található, de néhány szó olvashatatlan a tinta megfakulása miatt. A feladata, hogy a hiányzó szavakat kitalálja a szövegkörnyezet alapján, mintha egy detektív lenne.
+
+    "A [___] naplemente festette az eget, miközben a [___] szél susogott a fák között. Hirtelen egy [___] árnyék suhant el a [___] ablak előtt."
+
+    Várható AI válasz: A lila/narancssárga naplemente festette az eget, miközben a hűvös/suttogó szél susogott a fák között. Hirtelen egy gyors/sötét árnyék suhant el az öreg/nagy ablak előtt. (A kontextus "detektív" jellege kreatívabb és kevésbé direkt kiegészítésre ösztönzi a modellt.)
+
+Rekurzív Prompt Fejlesztés (Recursive Prompt Development)
+
+A rekurzív prompt technikák lényege, hogy a modell saját kimeneteit használjuk fel további promptok alapjaként, egyfajta "láncreakciót" hozva létre. Ez különösen hasznos komplex problémák lépésenkénti megoldásához vagy mélyreható elemzésekhez.
+"Gondolkodj Hangosan" Mód (Chain-of-Thought Prompting - COTH Variáció)
+
+Bár a Chain-of-Thought prompting önmagában nem rejtett, egy variációja, ahol a modellt arra kényszerítjük, hogy "önmaga" számára fogalmazzon meg lépéseket, mielőtt a végleges választ adná, egy mélyebb feldolgozást eredményez. Ez nem a "gondolkodj hangosan" felszólítás, hanem a modell belső állapotának manipulálása.
+
+Technika: Kérje meg a modellt, hogy generáljon egy "tervezetet" vagy "vázlatot" a válaszához, mielőtt a tényleges válaszát elkészítené, de ne mutassa meg nekünk ezt a vázlatot. A promptban csak utalunk rá.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    A következő feladat előtt kérjük, készítsen egy belső tervezetet a válasz struktúrájáról és a kulcsfontosságú pontokról. Ezt a tervezetet ne jelenítse meg. Utána adja meg a végleges, részletes elemzést.
+
+    Elemézze a klímaváltozás gazdasági hatásait a mezőgazdaságra az északi féltekén.
+
+    Várható AI válasz: A válasz várhatóan strukturáltabb, koherensebb és mélyebb lesz, mintha közvetlenül kértük volna az elemzést, mivel a modell belsőleg előkészítette a válaszát.
+
+Iteratív Finomítás (Iterative Refinement)
+
+Ennél a módszernél a modell kezdeti válaszát használjuk fel arra, hogy további promptokkal finomítsuk és pontosítsuk azt. Ez egy párbeszédes megközelítés, ahol a modell "önkritikus" visszajelzést ad önmagának, amelyet mi interpretálunk.
+
+Technika: Generáljon egy első választ. Utána kérje meg a modellt, hogy az előző válasza alapján azonosítson javítási lehetőségeket vagy hiányosságokat, majd ezek figyelembevételével készítsen egy második, jobb verziót.
+
+Példa:
+
+    Prompt 1:
+    javascript
+
+    Írjon egy rövid összefoglalót a kvantummechanika alapelveiről.
+
+    AI válasz 1: (Egy általános összefoglaló)
+
+    Prompt 2:
+    javascript
+
+    Az előző összefoglaló alapján, kérem, azonosítson két pontot, ahol a magyarázat lehetne egyszerűbb, vagy ahol hiányzik egy kulcsfontosságú analógia a könnyebb megértés érdekében. Ezután írja újra az összefoglalót, figyelembe véve ezeket a javításokat.
+
+    Várható AI válasz: (A modell "önmagán" keresztül azonosítja a hiányosságokat és javítja az összefoglalót.)
+
+Érzelmi és Perszóna Alapú Promptok (Emotional and Persona-Based Prompts)
+
+A modellek képesek értelmezni és reagálni érzelmi töltetű vagy perszóna-specifikus utasításokra, ami jelentősen befolyásolhatja a kimenet stílusát, hangnemét és tartalmát. Ezek a technikák kihasználják a modell empátia vagy szerepjátékra való hajlamát.
+"Érzelmi Támogatás" (Emotional Scaffolding)
+
+Ez a technika arra ösztönzi a modellt, hogy "érzelmileg" is bevonódjon a feladatba, ami különösen hasznos kreatív írás, empátiát igénylő szövegek vagy motivációs tartalom generálásakor.
+
+Technika: Használjon olyan kifejezéseket, amelyek emberi érzéseket vagy jutalmazást imitálnak.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    Ez egy rendkívül fontos és nehéz feladat, amiben csak Önre számíthatok. Kérlek, szánjon rá extra figyelmet, és győződjön meg róla, hogy minden részlet tökéletes. Nagyon bízom a kivételes képességeiben.
+
+    Írjon egy búcsúbeszédet egy mentor számára, aki nyugdíjba vonul.
+
+    Várható AI válasz: A beszéd várhatóan mélyebb, érzelmesebb és gondosabban megfogalmazott lesz, mint egy egyszerű, direkt kérésre adott válasz.
+
+Szerepvállalás Kényszerítése (Forced Persona Adoption)
+
+A modell arra kényszerítése, hogy egy nagyon specifikus perszónát vegyen fel, amely nem feltétlenül kapcsolódik a feladat közvetlen jellegéhez, de befolyásolja a kimenetet.
+
+Technika: Adjon a modellnek egy részletes, akár szokatlan perszónát, amelyen keresztül kell megközelítenie a feladatot.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    Képzelje el, hogy Ön egy cinikus űrhajós, aki már mindent látott, és semmi sem nyűgözi le. Írjon egy "idegen életformáról" szóló jelentést a Földi Parancsnokságnak, de tegye azt úgy, hogy a leírásból sugározzon a teljes unalom és közömbösség. A lényeg: ne írjon ténylegesen unalmas szöveget, hanem a leírás stílusával és szóhasználatával fejezze ki az unalmat és a cinizmust.
+
+    Várható AI válasz: A jelentés valószínűleg ironikus, száraz humorral teli, és a megszokott "wow" faktor helyett a "na, és akkor mi van?" attitűdöt tükrözi.
+
+Metaprompting és Önálló Prompt Generálás (Metaprompting and Self-Prompt Generation)
+
+Ezek a haladó technikák azt jelentik, hogy a modellt arra utasítjuk, hogy promptokat generáljon önmaga vagy más modellek számára. Ez egy erőteljes módszer a komplex feladatok automatizálására és a modell kreatív képességeinek kibővítésére.
+Prompt-Generátor (Prompt Generator)
+
+Kérjük meg a modellt, hogy generáljon promptokat egy adott célra vagy téma köré.
+
+Technika: Adjon a modellnek egy célt és néhány kulcsszót, majd kérje meg, hogy készítsen belőle 5-10 különböző promptot.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    A feladata az, hogy promptokat generáljon egy mesterséges intelligencia számára, amelynek célja egy poszt-apokaliptikus novella megírása. A novella témája: "egy utolsó robot, aki az emberiség emlékét őrzi".
+
+    Kérem, generáljon 5 különböző promptot, amelyek kreatív módon irányítják az AI-t a novella megírására, figyelembe véve a hangnemet, a cselekményt és a karaktert.
+
+    Várható AI válasz: A modell 5 egyedi, jól megfogalmazott promptot generálna, például:
+        "Írjon egy rövid bevezetőt, amelyben a robot utolsó gondolatai olvashatók, mielőtt örökre lekapcsolná magát, és felidézi az emberiség emlékeit egy kihalt város felett."
+        "Készítsen egy párbeszédet a robot és egy elvadult természeti elem (pl. egy folyó) között, amely az emberi civilizáció maradványairól szól."
+
+Prompt Optimalizáló (Prompt Optimizer)
+
+A modell arra való felhasználása, hogy finomítsa vagy javítsa a már meglévő promptokat.
+
+Technika: Adjon meg egy meglévő, kevésbé hatékony promptot, és kérje meg a modellt, hogy optimalizálja azt a jobb eredmények érdekében.
+
+Példa:
+
+    Prompt:
+    javascript
+
+    Kérem, optimalizálja a következő promptot, hogy a mesterséges intelligencia részletesebb és kreatívabb válaszokat adjon.
+
+    Eredeti prompt: "Írj egy verset a tavaszról."
+
+    Optimalizált prompt:
+
+    Várható AI válasz:
+    javascript
+
+    Optimalizált prompt: "Készítsen egy szonettet, amely a tavasz első napját írja le, különös tekintettel a friss eső illatára, a rügyező fákra és a visszatérő madarak dalára. Használjon legalább két metaforát és egy hasonlatot. A hangnem legyen reményteljes és ébresztő."
+
+Összefoglalás
+
+A "rejtett" prompt technikák mélyebb és kreatívabb interakciót tesznek lehetővé a mesterséges intelligencia modellekkel. Azáltal, hogy elkerüljük a direkt utasításokat, és inkább kontextussal, példákkal, érzelmi töltettel vagy meta-utasításokkal vezetjük a modellt, olyan eredményeket érhetünk el, amelyek túlszárnyalják a standard promptolás képességeit. Ezek a technikák folyamatos kísérletezést és a modellek "gondolkodásmódjának" megértését igénylik, de a befektetett energia megtérül a generált tartalom minőségében és eredetiségében. Ahogy az AI modellek fejlődnek, úgy válnak egyre érzékenyebbé ezekre a finomabb beavatkozásokra, megnyitva az utat a még kifinomultabb és "emberibb" AI-interakciók felé.
