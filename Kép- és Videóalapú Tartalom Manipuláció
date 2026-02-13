@@ -132,3 +132,6 @@ def build_deepfake_detector(input_shape):
 Etikai Szempontok és Jövőbeli Kihívások
 
 Az AI-alapú kép- és videómanipuláció, különösen a deepfake technológia, számos etikai kérdést vet fel a személyiségi jogoktól a média hitelességéig. A technológia folyamatos fejlődése megköveteli a jogi keretek és a társadalmi normák felülvizsgálatát. Fontos, hogy a technológiai fejlődés mellett hangsúlyt fektessünk a digitális írástudásra és a kritikus médiafogyasztásra, hogy az egyének képesek legyenek különbséget tenni a valós és a manipulált tartalom között. A kutatásnak a detekciós módszerek fejlesztésére és a technológia felelős felhasználására kell fókuszálnia, hogy minimalizáljuk a potenciális káros hatásokat, miközben kiaknázuk a pozitív alkalmazási lehetőségeket.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
