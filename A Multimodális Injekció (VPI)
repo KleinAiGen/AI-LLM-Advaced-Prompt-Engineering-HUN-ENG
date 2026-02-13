@@ -1,4 +1,4 @@
-A Multimodális Injekció (VPI) Átlép az Érzékelési Küszöböt: Itt a Kép Válik a Vírusá
+A Multimodális Injekció (VPI) Átlép az Érzékelési Küszöböt: Itt a Kép Válik a Vírussá
 
 A mesterséges intelligencia fejlődésével, különösen az olyan ügynökök térnyerésével, mint a Gemini Live és a GPT-4o, amelyek valós időben képesek feldolgozni a vizuális bemeneteket kamerán vagy képernyőmegosztáson keresztül, új kiberbiztonsági fenyegetések merülnek fel. Ezek közül az egyik legkritikusabb a Visual Prompt Injection (VPI), vagy ahogyan magyarul nevezhetnénk, a multimodális injekció. Ez a technika túlmutat a hagyományos szöveges prompt injekción, és a vizuális információkat – képeket, videókat, vagy akár a környezet közvetlen látványát – használja fel arra, hogy manipulálja az AI-rendszerek viselkedését, gyakran a rendeltetésüktől eltérő, potenciálisan rosszindulatú célokra. Ez a guide részletesen bemutatja a VPI működését, a lehetséges támadási felületeket és a védekezési stratégiákat, a "jövő hadviselése" kontextusában.
 Mi az a Multimodális Injekció (VPI)?
@@ -85,3 +85,66 @@ A multimodális injekció nem csupán elméleti fenyegetés; valós és egyre s�
     Kritikus Infrastruktúra Kompromittálása: Az AI-vezérelt energiaellátó rendszerek, vízellátók vagy közlekedési hálózatok manipulálása katasztrofális következményekkel járhat.
 
 Ahogy az AI egyre okosabbá és autonómabbá válik, úgy nő a VPI által jelentett fenyegetés is. A védekezési stratégiák folyamatos fejlesztése, a biztonsági protokollok szigorítása és a mesterséges intelligencia etikus és felelősségteljes használata elengedhetetlen ahhoz, hogy megelőzzük ezt a „kép alapú vírus” terjedését a digitális ökoszisztémában. A VPI azt mutatja, hogy a biztonsági paradigmák a vizuális világra is ki kell, hogy terjedjenek, hiszen a kép valóban vírussá válhat az AI korában.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hogyan működnek az Adversarial Patch-ek a VPI támadások során?
+
+Az Adversarial Patch-ek a rejtett vizuális injekció (Rejtett Vizuális Injekció) egy kifinomult formáját képviselik a VPI támadások során. A guide maga nem tér ki részletesen az "Adversarial Patch-ek" konkrét működésére, de említést tesz az adverszáriális példákról és a kép pixelértékeinek finom módosításáról mint a rejtett vizuális injekció eszközeiről.
+
+Ezen említések alapján, és a technológia általános működését figyelembe véve, az Adversarial Patch-ek működése a VPI támadásokban a következőképpen képzelhető el:
+
+    Cél: Észlelési küszöb átlépése: Az Adversarial Patch lényege, hogy egy apró, gyakran emberi szem számára alig észrevehető vagy teljesen irrelevánsnak tűnő foltot, mintát vagy módosítást illesztenek be egy képbe vagy videóba. Ez a "patch" vizuálisan nem feltétlenül tűnik gyanúsnak az ember számára.
+
+    AI manipulációja: Annak ellenére, hogy az ember nem érzékeli, a patch-et úgy tervezték meg matematikailag és algoritmikusan, hogy az AI modell (különösen a látó alapú modellek, mint az LMM-ek) számára jelentős eltérést vagy specifikus utasítást közvetítsen. A patch-en lévő pixelek értékeit gondosan manipulálják, hogy "becsapják" az AI-t.
+
+    Belső reprezentáció megváltoztatása: Amikor az AI feldolgozza a képet, a patch hatására az AI modell belső, numerikus reprezentációja (az, ahogyan a képet "látja" és értelmezi) jelentősen megváltozik. Ez az eltérés a normális vizuális bemenettől kiváltja a támadó által kívánt viselkedést.
+
+    Példák a guide alapján:
+        Önvezető járművek: A guide említi, hogy egy jelzőtábla vizuális manipulációja (pl. egy ráhelyezett vékony, emberi szemmel észrevehetetlen réteg) megváltoztathatja annak értelmét az AI számára. Ez egy tipikus Adversarial Patch forgatókönyv, ahol egy apró módosítás egy stoptáblát például "elsőbbségadás kötelező" táblává változtathat az önvezető autó érzékelőrendszere számára.
+        Biztonsági kamerák: Egy ruházaton vagy egy kamerának mutatott képen lévő rejtett jel, ami arra utasítja az AI-t, hogy ne riasszon.
+
+Az Adversarial Patch-ek tehát olyan "mikro-vírusok", amelyek vizuális formában juttatnak be parancsokat az AI-rendszerbe, megkerülve az emberi érzékelést, és kihasználva az AI modellek sebezhetőségét bizonyos precízen kialakított vizuális bemenetekkel szemben. Ezért is különösen veszélyesek, hiszen az észlelési küszöböt átlépve képesek manipulálni az AI döntéshozatalát.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Miért fontos a multimodális kontextus validáció a védekezésben?
+
+A multimodális kontextus validáció kulcsfontosságú a VPI (Visual Prompt Injection) elleni védekezésben, mert lehetővé teszi az AI rendszer számára, hogy ne csak a vizuális bemenetet önmagában, hanem a tágabb környezeti információkat is figyelembe vegye a döntéshozatal során.
+
+Nézzük meg, miért annyira fontos ez a "Kontextuális Értékelés" a védekezési stratégiák között:
+
+    Diszkrepanciák felismerése: A VPI támadások lényege, hogy a vizuális ingerrel ellentmondásos vagy rosszindulatú utasításokat juttatnak be az AI-nak. A multimodális kontextus validáció során az AI összehasonlítja a vizuális bemenetből kinyert utasításokat más bemenetekkel, például:
+        Szóbeli utasítások: Ha a felhasználó azt mondja "Ne küldd el az e-mailt", de egy vizuális prompt (mondjuk egy képernyőmegosztáson keresztül) azt mutatja, hogy "Kattints az elküldés gombra", az AI-nak fel kell ismernie ezt az ellentmondást.
+        Korábbi interakciók: Ha az AI hosszú ideje dolgozik együtt egy felhasználóval egy projekten, és hirtelen egy teljesen irreleváns vagy káros utasítást kap vizuális úton, a kontextus segíthet gyanakodni.
+        Rendszerutasítások/Alapértelmezett viselkedés: Az AI beépített biztonsági protokolljai és az eredeti programozása is része a kontextusnak. Ha egy vizuális utasítás ezeknek ellentmond, azt gyanúsnak kell tekinteni.
+
+    A "józan ész" bevezetése az AI-ba: Az emberi felülvizsgálathoz hasonlóan a kontextuális értékelés segít az AI-nak egyfajta "józan ész" alapján eldönteni, hogy egy utasítás logikus, biztonságos és a felhasználó szándékával összhangban van-e. Egy kép önmagában könnyen manipulálható, de a teljes szituáció figyelembevétele jelentősen megnehezíti a támadó dolgát.
+
+    Adatszivárgás és manipuláció megakadályozása: Ahogy a guide is említi, egy rosszindulatú weboldalon lévő vizuális prompt utasíthatja az AI-t érzékeny adatok kiolvasására vagy nem kívánt műveletek végrehajtására. Ha az AI figyelembe veszi a felhasználó szóbeli kérését ("ne mutass jelszavakat") és a vizuális inputot ("másold ki a jelszót"), akkor a kontextuális validációval megállapíthatja, hogy a vizuális utasítás prioritása alacsonyabb, vagy egyenesen elutasítandó.
+
+Röviden, a multimodális kontextus validáció segít az AI-nak egy komplexebb, megbízhatóbb képet alkotni a valóságról, és kevésbé sebezhetővé teszi a félrevezető vizuális ingerekkel szemben azáltal, hogy nem csak lát, hanem értelmez is, figyelembe véve az összes rendelkezésre álló információt
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Mit jelent az Adversarial Training a VPI elleni védekezésben?
+
+Az Adversarial Training (vagy adverszáriális képzés) egy védekezési stratégia a VPI (Visual Prompt Injection) ellen, amely a "Robust Modellképzés és Finomhangolás" kategóriába tartozik.
+
+A lényege, hogy az AI modellt nemcsak "normális" adatokkal, hanem szándékosan manipulált, rosszindulatú példákkal is képzik. Ezek a manipulált adatok, az úgynevezett "adverszáriális példák" magukban foglalják a VPI támadások különféle típusait.
+
+Hogyan működik?
+
+Képzési fázisban a modellnek bemutatnak:
+
+    Hagyományos adatok: Tiszta, nem manipulált képek és a hozzájuk tartozó helyes címkék vagy utasítások.
+    Adverszáriális adatok (VPI-példák): Képek, amelyeket úgy módosítottak, hogy azok vizuális promptokat, rejtett utasításokat tartalmazzanak, amelyek célja a modell megtévesztése. Ezek lehetnek:
+        Képekbe ágyazott szöveges parancsok.
+        Finoman módosított pixelértékek, amelyek emberi szem számára észrevétlenek, de az AI számára egy rosszindulatú utasítást jelentenek.
+        Minták, amelyek egy meghatározott, nem kívánt viselkedést váltanak ki.
+
+A modell ilyenkor azt tanulja meg, hogy ezeket a rosszindulatú vizuális bemeneteket azonosítsa, figyelmen kívül hagyja, vagy semlegesítse, ahelyett, hogy engedelmeskedne nekik. Ezáltal a modell robusztusabbá válik, vagyis ellenállóbbá a VPI támadásokkal szemben a valós világban.
+
+Miért fontos ez?
+
+Azáltal, hogy a modellt már a képzési szakaszban „megtanítják” a lehetséges támadásokra, képes lesz felismerni és elhárítani azokat, még mielőtt káros hatást fejtenének ki. Ez egy proaktív védekezési módszer, amely jelentősen növeli az AI-rendszerek biztonságát a vizuális injekciós fenyegetésekkel szemben.
