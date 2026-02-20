@@ -1,0 +1,134 @@
+Hogyan Működik egy Man-in-the-Middle (MITM) Támadás Nyilvános Wi-Fi-n?
+
+A Man-in-the-Middle (MITM) támadás egy fenyegető kiberbiztonsági technika, amelyben a támadó észrevétlenül beékelődik két kommunikáló fél közé, elfogva és esetlegesen módosítva az adatforgalmat. Nyilvános Wi-Fi hálózatokon ez a támadás különösen veszélyes, mivel ezek a hálózatok gyakran alacsonyabb biztonsági szinttel rendelkeznek, és a felhasználók hajlamosabbak kevésbé óvatosan kezelni az érzékeny adataikat. Ebben az útmutatóban részletesen bemutatjuk, hogyan működik egy MITM támadás nyilvános Wi-Fi környezetben, különös tekintettel a Kali Linux eszközeire.
+A MITM Támadás Alapjai Nyilvános Wi-Fi Hálózatokon
+
+Egy nyilvános Wi-Fi hálózaton a támadó célja, hogy a felhasználó és a cél szerver közötti kommunikációs utat saját eszközén keresztül terelje át. Ez lehetővé teszi számára, hogy lehallgassa, rögzítse, vagy akár manipulálja az adatokat, mielőtt azok elérnék a címzettet. A támadás sikerességéhez elengedhetetlen, hogy a felhasználó ne vegye észre a beavatkozást.
+A Támadás Főbb Szakaszai
+
+A legtöbb MITM támadás több egymást követő szakaszból áll, amelyek mindegyike kulcsfontosságú a siker szempontjából:
+
+    Beékelődés (Interception): A támadó létrehozza a feltételeket, amelyek révén a felhasználó adatforgalma rajta keresztül halad.
+    Decryption (Dekódolás): Ha az adatok titkosítva vannak (pl. HTTPS), a támadónak meg kell próbálnia dekódolni azokat.
+    Olvasás és Manipuláció (Reading and Manipulation): A lehallgatott adatok elemzése és szükség esetén módosítása.
+
+Beékelődési Technikák Kali Linux-szal
+
+A Kali Linux számos eszközt kínál a MITM támadások végrehajtásához. Az alábbiakban bemutatunk két gyakori beékelődési technikát, amelyek nyilvános Wi-Fi hálózatokon alkalmazhatók.
+1. Evil Twin Hozzáférési Pont Létrehozása
+
+Az "Evil Twin" (Gonosz Ikertestvér) támadás lényege, hogy a támadó létrehoz egy megtévesztő, az eredetihez megszólalásig hasonló nevű (SSID) hozzáférési pontot. A gyanútlan felhasználók, akik az eredeti hálózathoz szeretnének csatlakozni, tévedésből a támadó által vezérelt hozzáférési pontra csatlakoznak.
+Működése:
+
+    Hálózat szkennelése: A támadó az airodump-ng vagy airmon-ng eszközökkel megkeresi a célhálózat (AP) SSID-jét és BSSID-jét.
+    bash
+
+    airodump-ng wlan0mon
+
+    Ez listázza a közelben lévő hálózatokat.
+
+    Rogue AP létrehozása: A hostapd eszközzel a támadó létrehoz egy új hozzáférési pontot ugyanolyan SSID-vel, mint az eredeti. Ezt követően konfigurálja a DHCP-szervert (dnsmasq), hogy IP-címeket osszon ki a csatlakozó klienseknek.
+    bash
+
+    # A hostapd konfigurációja (pl. /etc/hostapd/hostapd.conf)
+    interface=wlan0
+    driver=nl80211
+    ssid=Public_Wi-Fi_Nev
+    channel=1
+    # ... egyéb beállítások
+
+    hostapd /etc/hostapd/hostapd.conf -B
+
+    Internetes hozzáférés biztosítása: A támadó beállítja a routingot és a NAT-ot, hogy az "Evil Twin"-hez csatlakozó felhasználók hozzáférjenek az internethez a támadó gépen keresztül.
+    bash
+
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+
+    Fontos megjegyezni, hogy az eth0 itt a támadó internet-hozzáférését biztosító interfészt jelöli.
+
+    Deautentikációs támadás (opcionális): Annak érdekében, hogy a felhasználók leváljanak az eredeti hálózatról, és az "Evil Twin"-re csatlakozzanak, a támadó deautentikációs csomagokat küldhet az eredeti hozzáférési pontnak az aireplay-ng segítségével. Ez kényszeríti a klienseket, hogy új hálózatot keressenek.
+    bash
+
+    aireplay-ng --deauth 0 -a <AP_BSSID> -c <CLIENT_MAC> wlan0mon
+
+2. ARP-manipuláció (ARP Spoofing)
+
+Az ARP (Address Resolution Protocol) spoofing egy másik hatékony módszer a MITM beékelődésre. Ez a technika kihasználja az ARP protokoll sebezhetőségét, amely nem rendelkezik beépített autentikációs mechanizmussal. A támadó téves ARP válaszokat küld a hálózatnak, elhitetve a routerrel, hogy a támadó MAC-címe tartozik a felhasználó IP-címéhez, és a felhasználóval, hogy a támadó MAC-címe tartozik a router IP-címéhez.
+Működése:
+
+    Helyi hálózat felfedezése: A támadó a nmap vagy netdiscover eszközökkel felméri a hálózati topológiát, megtalálja a router IP-címét és a cél áldozat IP-címét.
+    bash
+
+    netdiscover -r 192.168.1.0/24
+
+    IP továbbítás engedélyezése: A támadó gépének engedélyeznie kell az IP-csomagok továbbítását, hogy az adatok áthaladhassanak rajta.
+    bash
+
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+
+    ARP Spoofing végrehajtása: Az arpspoof vagy a bettercap (modern és sokoldalúbb eszköz) használatával a támadó megkezdi az ARP-támadást. Az arpspoof egy klasszikus eszköz, amely egyszerűen elküldi a hamis ARP válaszokat.
+    bash
+
+    arpspoof -i <interface> -t <target_ip> -r <gateway_ip>
+
+    Ez a parancs arra utasítja az áldozatot (<target_ip>), hogy a támadó gépét tekintse a routernek (<gateway_ip>). Egyidejűleg egy másik terminálban futtatni kell a fordított parancsot is, hogy a router is a támadót tekintse az áldozatnak:
+    bash
+
+    arpspoof -i <interface> -t <gateway_ip> -r <target_ip>
+
+    Adatforgalom elemzése: Miután az adatforgalom átáramlik a támadó gépén, a wireshark vagy a tcpdump használható a csomagok elemzésére és rögzítésére.
+    bash
+
+    wireshark
+
+    vagy
+    bash
+
+    tcpdump -i <interface>
+
+Titkosított Forgalom Dekódolása (SSL Stripping)
+
+Még ha a felhasználó HTTPS-kapcsolatot is használ, a támadó megpróbálhatja feltörni a titkosítást. Az SSL Stripping (HTTPS Downgrade) támadás során a támadó elfogja a felhasználó és a webhely közötti kezdeti HTTPS kérést, és HTTP-re módosítja azt, mielőtt elküldené a cél szervernek. A webhely ekkor HTTP-n keresztül válaszol, amit a támadó lehallgathat és rögzíthet.
+Működése (Kali Linux-szal):
+
+Az sslstrip eszköz (vagy a bettercap integrált SSL Stripping funkciója) használható ehhez a támadáshoz.
+
+    IP továbbítás és NAT beállítása: Az ARP spoofinghoz hasonlóan be kell állítani az IP továbbítást és a megfelelő iptables szabályokat.
+    bash
+
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+    iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+
+    Ez a szabály átirányítja a 80-as portra érkező összes HTTP forgalmat a 8080-as portra, ahol az sslstrip figyelni fog.
+
+    sslstrip futtatása:
+    bash
+
+    sslstrip -l 8080
+
+    Az sslstrip most a 8080-as porton figyel, és minden HTTP-re lekicsinyített forgalmat rögzít.
+
+Fontos megjegyezni, hogy az SSL Stripping egyre kevésbé hatékony a modern böngészők és webhelyek fejlődésével, amelyek gyakran érvényesítik a HSTS (HTTP Strict Transport Security) szabályokat, amelyek megakadályozzák a HTTPS-ről HTTP-re való visszaesést.
+A Támadás Következményei
+
+Egy sikeres MITM támadás súlyos következményekkel járhat:
+
+    Adatlopás: Felhasználónevek, jelszavak, bankkártyaadatok, személyes üzenetek ellopása.
+    Adatmanipuláció: A támadó módosíthatja a weboldalak tartalmát, kártevőket injektálhat a letöltött fájlokba, vagy hamis információkat terjeszthet.
+    Személyazonosság-lopás: Az ellopott adatok felhasználásával a támadó hozzáférhet más online fiókokhoz.
+    Káros szoftverek terjesztése: A letöltött szoftverekbe trójaiakat vagy vírusokat injektálhat.
+
+Védekezés a MITM Támadások Ellen Nyilvános Wi-Fi-n
+
+Mivel a nyilvános Wi-Fi hálózatok sebezhetőek, kulcsfontosságú a proaktív védekezés:
+
+    Mindig használjon VPN-t: Egy megbízható VPN (Virtual Private Network) titkosítja az összes adatforgalmat a készüléke és a VPN szerver között, megakadályozva a MITM támadókat az adatok lehallgatásában vagy manipulálásában.
+    Ellenőrizze a webhelyek HTTPS protokollját: Mindig győződjön meg arról, hogy a böngészőjében a https:// protokoll látható a webhely címe előtt, és keressen zöld lakat ikont. Ez jelzi a biztonságos, titkosított kapcsolatot.
+    Kerülje az érzékeny műveleteket nyilvános Wi-Fi-n: Ne végezzen online banki tranzakciókat, ne lépjen be e-mail fiókjába vagy más érzékeny webhelyekre nyilvános Wi-Fi hálózaton.
+    Ne csatlakozzon ismeretlen hálózatokhoz: Mindig ellenőrizze a Wi-Fi hálózat nevét és hitelességét, mielőtt csatlakozna hozzá. Kérdezze meg a szolgáltatótól (pl. kávézó, repülőtér), mi a hivatalos hálózat neve.
+    Frissítse a szoftvereit: Tartsa naprakészen operációs rendszerét, böngészőjét és összes alkalmazását. A biztonsági frissítések gyakran javítják a sebezhetőségeket, amelyeket a támadók kihasználhatnának.
+    Használjon erős, egyedi jelszavakat és kétfaktoros hitelesítést (2FA): Ez plusz biztonsági réteget ad hozzá a fiókjaihoz, még akkor is, ha a jelszava valamilyen módon kiszivárog.
+
+A MITM támadások komoly veszélyt jelentenek a nyilvános Wi-Fi hálózatokon, de a megfelelő óvintézkedésekkel és a biztonságos internetezési szokások kialakításával jelentősen csökkenthető a kockázat. A tudatosság és a proaktív védekezés a legjobb fegyver a digitális fenyegetések ellen.
